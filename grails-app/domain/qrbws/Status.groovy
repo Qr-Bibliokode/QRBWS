@@ -1,12 +1,11 @@
 package qrbws
 
-class Holiday {
+class Status {
 
     String description
-    Date startDate
-    Date finalDate
 
     static constraints = {
         description blank: false
     }
+
 }
