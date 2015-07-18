@@ -7,8 +7,8 @@ class Person {
     String phone
 
     static constraints = {
-        name size: 5..50, blank: false
-        email email: true, blank: false
-        phone nullable: true
+        name blank: false, maxSize: 254, matches: "[a-zA-Z]+"
+        email blank: false, email: true, maxSize: 254
+        phone nullable: true, maxSize: 254
     }
 }

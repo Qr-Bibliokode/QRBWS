@@ -7,6 +7,6 @@ class Holiday {
     Date finalDate
 
     static constraints = {
-        description blank: false
+        description blank: false, maxSize: 45, matches: "[a-zA-Z]+"
     }
 }

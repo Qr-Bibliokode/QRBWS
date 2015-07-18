@@ -4,9 +4,7 @@ class Category {
 
     String description
 
-    static hasMany = [books: Book]
-
     static constraints = {
-        books nullable: true
+        description maxSize: 254
     }
 }

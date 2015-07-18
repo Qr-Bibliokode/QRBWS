@@ -5,7 +5,7 @@ class Status {
     String description
 
     static constraints = {
-        description blank: false
+        description blank: false, maxSize: 45
     }
 
 }

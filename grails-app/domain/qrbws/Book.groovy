@@ -6,7 +6,8 @@ class Book {
     String title
     String synopsis
     Integer pages
-    Byte[] cover
+    // TODO Waiting for implement
+    // Clob cover
 
     Language language
     Status status
@@ -14,12 +15,13 @@ class Book {
 
     static hasMany = [authors: Author, comments: Comment]
 
-
     static constraints = {
-        isbn blank: false, size: 10..15, unique: true
-        title blank: false, size: 5..450, unique: true
+        isbn blank: false, maxSize: 17, unique: true
+        title blank: false, maxSize: 254, unique: true
         synopsis nullable: true, size: 5..5000
-        pages nullable: true, size: 1..5
-        cover nullable: true
+        pages nullable: true, maxSize: 5, validator: {
+            if (it < 0 && it != null) return ['book.pages.negative']
+        }
+        // cover nullable: true
     }
 }

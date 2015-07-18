@@ -5,6 +5,6 @@ class Employee extends Person{
     String code
 
     static constraints = {
-        code unique: true, blank: false, size: 5..5
+        code unique: true, blank: false, maxSize: 5
     }
 }
