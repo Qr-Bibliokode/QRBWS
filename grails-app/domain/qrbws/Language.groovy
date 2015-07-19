@@ -1,5 +1,8 @@
 package qrbws
 
+import grails.rest.Resource
+
+@Resource(uri='/language')
 class Language {
 
     String description

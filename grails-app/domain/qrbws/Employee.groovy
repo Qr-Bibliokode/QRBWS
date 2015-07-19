@@ -1,5 +1,8 @@
 package qrbws
 
+import grails.rest.Resource
+
+@Resource(uri='/employee')
 class Employee extends Person{
 
     String code

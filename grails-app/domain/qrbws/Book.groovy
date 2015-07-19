@@ -1,5 +1,8 @@
 package qrbws
 
+import grails.rest.Resource
+
+@Resource(uri='/book')
 class Book {
 
     String isbn
@@ -22,6 +25,9 @@ class Book {
         pages nullable: true, maxSize: 5, validator: {
             if (it < 0 && it != null) return ['book.pages.negative']
         }
+        language nullable: true
+        status nullable: true
+        category nullable: true
         // cover nullable: true
     }
 }
