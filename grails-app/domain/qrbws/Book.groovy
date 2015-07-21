@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri='/book')
+@Resource(uri = '/book')
 class Book {
 
     String isbn
@@ -12,7 +12,7 @@ class Book {
     // TODO Waiting for implement
     // Clob cover
 
-    Language language
+    Idiom idiom
     Status status
     Category category
 
@@ -25,7 +25,7 @@ class Book {
         pages nullable: true, maxSize: 5, validator: {
             if (it < 0 && it != null) return ['book.pages.negative']
         }
-        language nullable: true
+        idiom nullable: true
         status nullable: true
         category nullable: true
         // cover nullable: true

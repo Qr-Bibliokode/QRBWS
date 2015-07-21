@@ -3,9 +3,9 @@ package qrbws
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(EmployeeController)
-@Mock(Employee)
-class EmployeeControllerSpec extends Specification {
+@TestFor(IdiomController)
+@Mock(Idiom)
+class IdiomControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -19,8 +19,8 @@ class EmployeeControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.employeeList
-            model.employeeCount == 0
+            !model.idiomList
+            model.idiomCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -28,7 +28,7 @@ class EmployeeControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.employee!= null
+            model.idiom!= null
     }
 
     void "Test the save action correctly persists an instance"() {
@@ -36,25 +36,25 @@ class EmployeeControllerSpec extends Specification {
         when:"The save action is executed with an invalid instance"
             request.contentType = FORM_CONTENT_TYPE
             request.method = 'POST'
-            def employee = new Employee()
-            employee.validate()
-            controller.save(employee)
+            def idiom = new Idiom()
+            idiom.validate()
+            controller.save(idiom)
 
         then:"The create view is rendered again with the correct model"
-            model.employee!= null
+            model.idiom!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            employee = new Employee(params)
+            idiom = new Idiom(params)
 
-            controller.save(employee)
+            controller.save(idiom)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/employee/show/1'
+            response.redirectedUrl == '/idiom/show/1'
             controller.flash.message != null
-            Employee.count() == 1
+            Idiom.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -66,11 +66,11 @@ class EmployeeControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def employee = new Employee(params)
-            controller.show(employee)
+            def idiom = new Idiom(params)
+            controller.show(idiom)
 
         then:"A model is populated containing the domain instance"
-            model.employee == employee
+            model.idiom == idiom
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -82,11 +82,11 @@ class EmployeeControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def employee = new Employee(params)
-            controller.edit(employee)
+            def idiom = new Idiom(params)
+            controller.edit(idiom)
 
         then:"A model is populated containing the domain instance"
-            model.employee == employee
+            model.idiom == idiom
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -96,28 +96,28 @@ class EmployeeControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/employee/index'
+            response.redirectedUrl == '/idiom/index'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def employee = new Employee()
-            employee.validate()
-            controller.update(employee)
+            def idiom = new Idiom()
+            idiom.validate()
+            controller.update(idiom)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.employee == employee
+            model.idiom == idiom
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            employee = new Employee(params).save(flush: true)
-            controller.update(employee)
+            idiom = new Idiom(params).save(flush: true)
+            controller.update(idiom)
 
         then:"A redirect is issued to the show action"
-            employee != null
-            response.redirectedUrl == "/employee/show/$employee.id"
+            idiom != null
+            response.redirectedUrl == "/idiom/show/$idiom.id"
             flash.message != null
     }
 
@@ -128,23 +128,23 @@ class EmployeeControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/employee/index'
+            response.redirectedUrl == '/idiom/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def employee = new Employee(params).save(flush: true)
+            def idiom = new Idiom(params).save(flush: true)
 
         then:"It exists"
-            Employee.count() == 1
+            Idiom.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(employee)
+            controller.delete(idiom)
 
         then:"The instance is deleted"
-            Employee.count() == 0
-            response.redirectedUrl == '/employee/index'
+            Idiom.count() == 0
+            response.redirectedUrl == '/idiom/index'
             flash.message != null
     }
 }
