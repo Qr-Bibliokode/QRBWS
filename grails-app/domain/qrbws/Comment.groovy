@@ -10,7 +10,7 @@ class Comment {
     Date dateCreated
     Boolean recommendation
 
-    User user
+    UserAccount userAccount
     Book book
 
     static constraints = {

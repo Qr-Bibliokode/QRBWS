@@ -2,8 +2,8 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri='/language')
-class Language {
+@Resource(uri='/idiom')
+class Idiom {
 
     String description
 

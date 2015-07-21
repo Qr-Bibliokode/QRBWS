@@ -6,9 +6,9 @@ import grails.rest.Resource
 class Author {
 
     String name
-    String references
+    String notes
 
     static constraints = {
-        references nullable: true
+        notes nullable: true
     }
 }

@@ -2,8 +2,8 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri='/user')
-class User {
+@Resource(uri = '/userAccount')
+class UserAccount {
 
     String login
     String password

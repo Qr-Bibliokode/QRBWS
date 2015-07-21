@@ -4,91 +4,91 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
-class UserController {
+class IdiomController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond User.list(params), model:[userCount: User.count()]
+        respond Idiom.list(params), model:[idiomCount: Idiom.count()]
     }
 
-    def show(User user) {
-        respond user
+    def show(Idiom idiom) {
+        respond idiom
     }
 
     def create() {
-        respond new User(params)
+        respond new Idiom(params)
     }
 
     @Transactional
-    def save(User user) {
-        if (user == null) {
+    def save(Idiom idiom) {
+        if (idiom == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (user.hasErrors()) {
+        if (idiom.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond user.errors, view:'create'
+            respond idiom.errors, view:'create'
             return
         }
 
-        user.save flush:true
+        idiom.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                redirect user
+                flash.message = message(code: 'default.created.message', args: [message(code: 'idiom.label', default: 'Idiom'), idiom.id])
+                redirect idiom
             }
-            '*' { respond user, [status: CREATED] }
+            '*' { respond idiom, [status: CREATED] }
         }
     }
 
-    def edit(User user) {
-        respond user
+    def edit(Idiom idiom) {
+        respond idiom
     }
 
     @Transactional
-    def update(User user) {
-        if (user == null) {
+    def update(Idiom idiom) {
+        if (idiom == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (user.hasErrors()) {
+        if (idiom.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond user.errors, view:'edit'
+            respond idiom.errors, view:'edit'
             return
         }
 
-        user.save flush:true
+        idiom.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                redirect user
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'idiom.label', default: 'Idiom'), idiom.id])
+                redirect idiom
             }
-            '*'{ respond user, [status: OK] }
+            '*'{ respond idiom, [status: OK] }
         }
     }
 
     @Transactional
-    def delete(User user) {
+    def delete(Idiom idiom) {
 
-        if (user == null) {
+        if (idiom == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        user.delete flush:true
+        idiom.delete flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), user.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'idiom.label', default: 'Idiom'), idiom.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -98,7 +98,7 @@ class UserController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'idiom.label', default: 'Idiom'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
