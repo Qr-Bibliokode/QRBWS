@@ -13,3 +13,7 @@ before_install:
 
 after_sucess:
 - echo "`find ./ -name "*.war"`"
+
+deploy:
+  provider: heroku
+  api_key: "ba14f787-b19d-47f8-91a7-dc91d7894d40"
