@@ -1,2 +1,12 @@
 language: groovy
-gradle check
+sudo: false
+jdk:
+- oraclejdk8
+
+branches:
+  only:
+  - master
+
+before_install:
+- chmod +x gradlew
+
