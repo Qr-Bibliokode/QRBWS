@@ -1,4 +1,4 @@
-# QRBWS  [![Build Status](https://travis-ci.org/felansu/QRBWS.svg?branch=master)](https://travis-ci.org/felansu/QRBWS)
+# QRBWS  [![Build Status](https://travis-ci.org/felansu/QRBWS.svg?branch=QRBWS-3)](https://travis-ci.org/felansu/QRBWS)
 
 ## REST EXAMPLE
 
