@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri='/holiday')
+@Resource(uri = '/holiday')
 class Holiday {
 
     String description
@@ -10,6 +10,6 @@ class Holiday {
     Date finalDate
 
     static constraints = {
-        description blank: false, maxSize: 45, matches: '[^0-9\\-]+'
+        description unique: true, blank: false, maxSize: 45, matches: '[^0-9\\-]+'
     }
 }
