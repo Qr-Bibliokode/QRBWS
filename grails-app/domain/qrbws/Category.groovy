@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri='/category')
+@Resource(uri = '/category')
 class Category {
 
     String description

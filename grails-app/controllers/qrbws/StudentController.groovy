@@ -1,7 +1,8 @@
 package qrbws
 
-import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+
+import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
 class StudentController {
@@ -10,7 +11,7 @@ class StudentController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Student.list(params), model:[studentCount: Student.count()]
+        respond Student.list(params), model: [studentCount: Student.count()]
     }
 
     def show(Student student) {
@@ -31,11 +32,11 @@ class StudentController {
 
         if (student.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond student.errors, view:'create'
+            respond student.errors, view: 'create'
             return
         }
 
-        student.save flush:true
+        student.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -60,18 +61,18 @@ class StudentController {
 
         if (student.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond student.errors, view:'edit'
+            respond student.errors, view: 'edit'
             return
         }
 
-        student.save flush:true
+        student.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'student.label', default: 'Student'), student.id])
                 redirect student
             }
-            '*'{ respond student, [status: OK] }
+            '*' { respond student, [status: OK] }
         }
     }
 
@@ -84,14 +85,14 @@ class StudentController {
             return
         }
 
-        student.delete flush:true
+        student.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'student.label', default: 'Student'), student.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -101,7 +102,7 @@ class StudentController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'student.label', default: 'Student'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

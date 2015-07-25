@@ -1,7 +1,8 @@
 package qrbws
 
-import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+
+import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
 class IdiomController {
@@ -10,7 +11,7 @@ class IdiomController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Idiom.list(params), model:[idiomCount: Idiom.count()]
+        respond Idiom.list(params), model: [idiomCount: Idiom.count()]
     }
 
     def show(Idiom idiom) {
@@ -31,11 +32,11 @@ class IdiomController {
 
         if (idiom.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond idiom.errors, view:'create'
+            respond idiom.errors, view: 'create'
             return
         }
 
-        idiom.save flush:true
+        idiom.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -60,18 +61,18 @@ class IdiomController {
 
         if (idiom.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond idiom.errors, view:'edit'
+            respond idiom.errors, view: 'edit'
             return
         }
 
-        idiom.save flush:true
+        idiom.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'idiom.label', default: 'Idiom'), idiom.id])
                 redirect idiom
             }
-            '*'{ respond idiom, [status: OK] }
+            '*' { respond idiom, [status: OK] }
         }
     }
 
@@ -84,14 +85,14 @@ class IdiomController {
             return
         }
 
-        idiom.delete flush:true
+        idiom.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'idiom.label', default: 'Idiom'), idiom.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -101,7 +102,7 @@ class IdiomController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'idiom.label', default: 'Idiom'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

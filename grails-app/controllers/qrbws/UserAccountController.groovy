@@ -1,7 +1,8 @@
 package qrbws
 
-import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+
+import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
 class UserAccountController {
@@ -10,7 +11,7 @@ class UserAccountController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond UserAccount.list(params), model:[userAccountCount: UserAccount.count()]
+        respond UserAccount.list(params), model: [userAccountCount: UserAccount.count()]
     }
 
     def show(UserAccount userAccount) {
@@ -31,11 +32,11 @@ class UserAccountController {
 
         if (userAccount.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond userAccount.errors, view:'create'
+            respond userAccount.errors, view: 'create'
             return
         }
 
-        userAccount.save flush:true
+        userAccount.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -60,18 +61,18 @@ class UserAccountController {
 
         if (userAccount.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond userAccount.errors, view:'edit'
+            respond userAccount.errors, view: 'edit'
             return
         }
 
-        userAccount.save flush:true
+        userAccount.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), userAccount.id])
                 redirect userAccount
             }
-            '*'{ respond userAccount, [status: OK] }
+            '*' { respond userAccount, [status: OK] }
         }
     }
 
@@ -84,14 +85,14 @@ class UserAccountController {
             return
         }
 
-        userAccount.delete flush:true
+        userAccount.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), userAccount.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -101,7 +102,7 @@ class UserAccountController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

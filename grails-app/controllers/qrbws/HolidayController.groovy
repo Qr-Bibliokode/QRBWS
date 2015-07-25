@@ -1,7 +1,8 @@
 package qrbws
 
-import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+
+import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
 class HolidayController {
@@ -10,7 +11,7 @@ class HolidayController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Holiday.list(params), model:[holidayCount: Holiday.count()]
+        respond Holiday.list(params), model: [holidayCount: Holiday.count()]
     }
 
     def show(Holiday holiday) {
@@ -31,11 +32,11 @@ class HolidayController {
 
         if (holiday.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond holiday.errors, view:'create'
+            respond holiday.errors, view: 'create'
             return
         }
 
-        holiday.save flush:true
+        holiday.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -60,18 +61,18 @@ class HolidayController {
 
         if (holiday.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond holiday.errors, view:'edit'
+            respond holiday.errors, view: 'edit'
             return
         }
 
-        holiday.save flush:true
+        holiday.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'holiday.label', default: 'Holiday'), holiday.id])
                 redirect holiday
             }
-            '*'{ respond holiday, [status: OK] }
+            '*' { respond holiday, [status: OK] }
         }
     }
 
@@ -84,14 +85,14 @@ class HolidayController {
             return
         }
 
-        holiday.delete flush:true
+        holiday.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'holiday.label', default: 'Holiday'), holiday.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -101,7 +102,7 @@ class HolidayController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'holiday.label', default: 'Holiday'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

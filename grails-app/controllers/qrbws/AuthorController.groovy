@@ -1,7 +1,8 @@
 package qrbws
 
-import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+
+import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
 class AuthorController {
@@ -10,7 +11,7 @@ class AuthorController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Author.list(params), model:[authorCount: Author.count()]
+        respond Author.list(params), model: [authorCount: Author.count()]
     }
 
     def show(Author author) {
@@ -31,11 +32,11 @@ class AuthorController {
 
         if (author.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond author.errors, view:'create'
+            respond author.errors, view: 'create'
             return
         }
 
-        author.save flush:true
+        author.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -60,18 +61,18 @@ class AuthorController {
 
         if (author.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond author.errors, view:'edit'
+            respond author.errors, view: 'edit'
             return
         }
 
-        author.save flush:true
+        author.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'author.label', default: 'Author'), author.id])
                 redirect author
             }
-            '*'{ respond author, [status: OK] }
+            '*' { respond author, [status: OK] }
         }
     }
 
@@ -84,14 +85,14 @@ class AuthorController {
             return
         }
 
-        author.delete flush:true
+        author.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'author.label', default: 'Author'), author.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -101,7 +102,7 @@ class AuthorController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'author.label', default: 'Author'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }
