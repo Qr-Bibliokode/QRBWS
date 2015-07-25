@@ -1,4 +1,4 @@
-# QRBWS  [![Build Status](https://travis-ci.org/felansu/QRBWS.svg?branch=QRBWS-3)](https://travis-ci.org/felansu/QRBWS)
+# QRBWS  [![Codeship][codeship-badge]][codeship]
 
 ## REST EXAMPLE
 
@@ -9,4 +9,5 @@
  curl -i -H "Accept: application/json" -X PUT -d "name=Ferran" localhost:8080/author/update/{id}
 -curl -i -H "Accept: application/json" -X DELETE localhost:8080/author/delete/{id}+curl -i -H "Accept: application/json" -X DELETE localhost:8080/author/delete/{id}
 ```
-
+[codeship-badge]: https://codeship.com/projects/236e3190-14a3-0133-bdae-063b18755257/status?branch=master
+[codeship]: https://codeship.com/projects/93118
