@@ -1,6 +1,6 @@
 # QRBWS  [![Codeship][codeship-badge]][codeship]
 
-## REST EXAMPLE
+## REST EXAMPLES
 
 ```BASH
  curl -i -H "Accept: application/json" -X POST -d "name=authorName" localhost:8080/author/save/
