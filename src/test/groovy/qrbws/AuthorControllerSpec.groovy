@@ -8,10 +8,12 @@ import spock.lang.Specification
 @Mock(Author)
 class AuthorControllerSpec extends Specification {
 
-    def setup() {
-    }
+    def author
 
-    def cleanup() {
+    def setup() {
+        Author.withNewSession() { session ->
+            author = new Author(name: 'Author Test', notes: 'Tiroriro').save()
+        }
     }
 
     void "test allowed methods"() {
@@ -24,66 +26,40 @@ class AuthorControllerSpec extends Specification {
 
     void "test index() include an author"() {
         given:
-        new Author(name: 'Author Good').save()
+        author.save()
 
         when:
-        request.method = 'GET'
         response.format = 'json'
         controller.index()
 
         then:
         response.status == 200
-        response.contentAsString == '[{"class":"qrbws.Author","id":1,"name":"Author Good","notes":null}]'
+        response.contentAsString == '[{"class":"qrbws.Author","id":1,"name":"Author Test","notes":"Tiroriro"}]'
     }
 
-    void "test gorm hook is called in session Context"() {
-        given:
-        def author
-        Author.withNewSession() { session ->
-            author = new Author(name: 'Author Lylo', notes: 'Best author of Tests').save()
-        }
-
-        expect:
-        assert author.name == 'Author Lylo'
-        assert author.notes == 'Best author of Tests'
-    }
-
-    void "test update() is called after persist"() {
-        given:
-        def author
-        Author.withNewSession() { session ->
-            author = new Author(name: 'Author Puggy', notes: "The second best author of Tests").save()
-        }
-
+    void "test update is called after persist"() {
         when:
-        author.name = "Fake author"
+        author.name = "Author Edited"
         author.save()
+        response.format = 'json'
+        controller.show(author)
 
         then:
-        assert author.name == 'Fake author'
-        assert author.notes == 'The second best author of Tests'
+        response.contentAsString == '{"class":"qrbws.Author","id":1,"name":"Author Edited","notes":"Tiroriro"}'
     }
 
     void "test show() return an author when is called"() {
-        given:
-        def author
-        Author.withNewSession() { session ->
-            author = new Author(name: 'Author James').save()
-        }
-
         when:
-        request.method = 'GET'
         response.format = 'json'
         controller.show(author)
 
         then:
         response.status == 200
-        response.contentAsString == '{"class":"qrbws.Author","id":1,"name":"Author James","notes":null}'
+        response.contentAsString == '{"class":"qrbws.Author","id":1,"name":"Author Test","notes":"Tiroriro"}'
     }
 
     void "test create() return an author"() {
         when:
-        request.method = 'GET'
         response.format = 'json'
         params.name = "Pepito"
         params.notes = "Azul"
@@ -95,12 +71,6 @@ class AuthorControllerSpec extends Specification {
     }
 
     void "test save() persist an author"() {
-        given:
-        def author
-        Author.withNewSession() { session ->
-            author = new Author(name: 'Author Trufa', notes: 'Tiroriro')
-        }
-
         when:
         request.method = 'POST'
         response.format = 'json'
@@ -108,20 +78,13 @@ class AuthorControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == '{"class":"qrbws.Author","id":1,"name":"Author Trufa","notes":"Tiroriro"}'
+        response.contentAsString == '{"class":"qrbws.Author","id":1,"name":"Author Test","notes":"Tiroriro"}'
     }
 
     void "test edit() is called after persist"() {
-        given:
-        def author
-        Author.withNewSession() { session ->
-            author = new Author(name: 'Author Santo Pai').save()
-        }
-
         when:
         author.name = "Loli Pipokas"
         author.notes = "Nothing else matters"
-        request.method = 'GET'
         response.format = 'json'
         controller.edit(author)
 
@@ -131,12 +94,6 @@ class AuthorControllerSpec extends Specification {
     }
 
     void "test delete() is called after persist"() {
-        given:
-        def author
-        Author.withNewSession() { session ->
-            author = new Author(name: 'Author Santo Pai').save()
-        }
-
         when:
         request.method = 'DELETE'
         response.format = 'json'
@@ -147,7 +104,7 @@ class AuthorControllerSpec extends Specification {
         response.contentAsString == ''
 
         when:
-        controller.show(author) == null
+        controller.show(author)
 
         then:
         response.status == 204
