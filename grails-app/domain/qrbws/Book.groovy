@@ -19,7 +19,7 @@ class Book {
     static hasMany = [authors: Author, comments: Comment]
 
     static constraints = {
-        isbn blank: false, maxSize: 17, unique: true
+        isbn blank: false, nullable: false, maxSize: 17, unique: true
         title blank: false, maxSize: 254, unique: true
         synopsis nullable: true, size: 5..5000
         pages nullable: true, maxSize: 5, validator: {
