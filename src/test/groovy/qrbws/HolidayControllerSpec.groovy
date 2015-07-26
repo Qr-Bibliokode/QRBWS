@@ -14,12 +14,14 @@ class HolidayControllerSpec extends Specification {
 
     def setup() {
         Holiday.withNewSession() { session ->
-            holiday = new Holiday(description: 'Dia das mães', startDate: new Date('10/07/2015'),finalDate:new Date('10/07/2015')).save()
+            holiday = new Holiday(description: 'Dia das mães', startDate: new Date('10/07/2015'), finalDate: new Date('10/07/2015')).save()
         }
     }
 
     String makeJson(def value) {
-        """{"class":"qrbws.Holiday","id":1,"description":"${value}","finalDate":"2015-10-07T03:00:00Z","startDate":"2015-10-07T03:00:00Z"}"""
+        """{"class":"qrbws.Holiday","id":1,"description":"${
+            value
+        }","finalDate":"2015-10-07T03:00:00Z","startDate":"2015-10-07T03:00:00Z"}"""
     }
 
     String makeJsonList(def value) {
@@ -75,7 +77,7 @@ class HolidayControllerSpec extends Specification {
     void "test create() return a holiday"() {
         when:
         response.format = 'json'
-        params.description = "Dia da dor"
+        params.description = "Day of dor"
         controller.create()
 
         then:
