@@ -46,6 +46,7 @@
       <sourceFolder url="file://$MODULE_DIR$/grails-app/i18n" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/views" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
@@ -253,5 +254,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: commons-io:commons-io:2.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: xml-apis:xml-apis:1.4.01" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.gson:gson:2.3" level="project" />
+    <orderEntry type="library" name="grails-3.0.1" level="application" />
   </component>
 </module>
