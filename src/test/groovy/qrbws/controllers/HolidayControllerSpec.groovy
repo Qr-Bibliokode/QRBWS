@@ -11,7 +11,7 @@ import spock.lang.Specification
 @Mock(Holiday)
 class HolidayControllerSpec extends Specification {
 
-    def holiday
+    def holiday = new Holiday()
 
     def setup() {
         Holiday.withNewSession() { session ->
