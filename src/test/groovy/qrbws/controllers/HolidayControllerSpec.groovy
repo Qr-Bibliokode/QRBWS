@@ -10,7 +10,7 @@ import spock.lang.Specification
 @Mock(Holiday)
 class HolidayControllerSpec extends Specification {
 
-    def holiday
+    def holiday = new Holiday()
 
     def setup() {
         Holiday.withNewSession() { session ->
@@ -19,9 +19,7 @@ class HolidayControllerSpec extends Specification {
     }
 
     String makeJson(def value) {
-        """{"class":"qrbws.Holiday","id":1,"description":"${
-            value
-        }","finalDate":"2015-10-07T03:00:00Z","startDate":"2015-10-07T03:00:00Z"}"""
+        """{"class":"qrbws.Holiday","id":1,"description":"${value}","finalDate":"2015-10-07T03:00:00Z","startDate":"2015-10-07T03:00:00Z"}"""
     }
 
     String makeJsonList(def value) {
