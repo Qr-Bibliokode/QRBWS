@@ -11,7 +11,7 @@ import spock.lang.Specification
 @Mock(Holiday)
 class HolidayControllerSpec extends Specification {
 
-    def holiday
+    def holiday = new Holiday()
 
     def setup() {
         Holiday.withNewSession() { session ->
@@ -62,7 +62,8 @@ class HolidayControllerSpec extends Specification {
         controller.show(holiday)
 
         then:
-        response.contentAsString == makeJson(holiday.description)
+        Holiday holidayResponse = JSON.parse(response.contentAsString)
+        assert holidayResponse.description.equals('Dia dos pais')
     }
 
     void "test show() return a holiday when is called"() {
@@ -72,7 +73,8 @@ class HolidayControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(holiday.description)
+        Holiday holidayResponse = JSON.parse(response.contentAsString)
+        assert holidayResponse.description.equals('Dia das mães')
     }
 
     void "test create() return a holiday"() {
@@ -83,7 +85,8 @@ class HolidayControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonCreate(params.description)
+        Holiday holidayResponse = JSON.parse(response.contentAsString)
+        assert holidayResponse.description.equals('Day of dor')
     }
 
     void "test save() persist a holiday"() {
@@ -94,7 +97,8 @@ class HolidayControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == makeJson(holiday.description)
+        Holiday holidayResponse = JSON.parse(response.contentAsString)
+        assert holidayResponse.description.equals('Dia das mães')
     }
 
     void "test edit() is called after persist"() {
@@ -105,7 +109,8 @@ class HolidayControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(holiday.description)
+        Holiday holidayResponse = JSON.parse(response.contentAsString)
+        assert holidayResponse.description.equals('123123')
     }
 
     void "test delete() is called after persist"() {
