@@ -6,6 +6,7 @@ import qrbws.Status
 class BootStrap {
 
     def init = { servletContext ->
+        Locale.default = new Locale('pt', 'BR')
         new Category(description: 'Science fiction').save();
         new Idiom(description: 'Spanish').save();
         new Status(description: 'Active').save();

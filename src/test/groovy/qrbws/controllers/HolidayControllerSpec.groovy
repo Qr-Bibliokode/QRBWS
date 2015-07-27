@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Holiday
@@ -19,9 +20,7 @@ class HolidayControllerSpec extends Specification {
     }
 
     String makeJson(def value) {
-        """{"class":"qrbws.Holiday","id":1,"description":"${
-            value
-        }","finalDate":"2015-10-07T03:00:00Z","startDate":"2015-10-07T03:00:00Z"}"""
+        """{"class":"qrbws.Holiday","id":1,"description":"${value}","finalDate":"2015-10-07T03:00:00Z","startDate":"2015-10-07T03:00:00Z"}"""
     }
 
     String makeJsonList(def value) {
@@ -50,7 +49,9 @@ class HolidayControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonList(holiday.description)
+        Holiday holidayResponse = JSON.parse(response.contentAsString)
+        assert holidayResponse.description.equals('Dia das mães')
+        assert holidayResponse.startDate == new Date('10/07/2015')
     }
 
     void "test update is called after persist"() {
