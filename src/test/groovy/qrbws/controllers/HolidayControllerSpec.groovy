@@ -1,4 +1,4 @@
-package groovy.qrbws
+package groovy.qrbws.controllers
 
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor

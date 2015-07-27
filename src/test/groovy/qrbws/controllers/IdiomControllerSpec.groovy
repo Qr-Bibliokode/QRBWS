@@ -1,25 +1,25 @@
-package groovy.qrbws
+package groovy.qrbws.controllers
 
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
-import qrbws.Person
-import qrbws.PersonController
+import qrbws.Idiom
+import qrbws.IdiomController
 import spock.lang.Specification
 
-@TestFor(PersonController)
-@Mock(Person)
-class PersonControllerSpec extends Specification {
+@TestFor(IdiomController)
+@Mock(Idiom)
+class IdiomControllerSpec extends Specification {
 
-    def person
+    def idiom
 
     def setup() {
-        Person.withNewSession() { session ->
-            person = new Person(name: 'Person Test', email: 'person@test.com').save()
+        Idiom.withNewSession() { session ->
+            idiom = new Idiom(description: 'Spanish').save()
         }
     }
 
     String makeJson(def value) {
-        """{"class":"qrbws.Person","id":1,"email":"person@test.com","name":"${value}","phone":null}"""
+        """{"class":"qrbws.Idiom","id":1,"description":"${value}"}"""
     }
 
     String makeJsonList(def value) {
@@ -27,7 +27,7 @@ class PersonControllerSpec extends Specification {
     }
 
     String makeJsonCreate(def value) {
-        """{"class":"qrbws.Person","id":null,"email":null,"name":"${value}","phone":null}"""
+        """{"class":"qrbws.Idiom","id":null,"description":"${value}"}"""
     }
 
     void "test allowed methods"() {
@@ -38,9 +38,9 @@ class PersonControllerSpec extends Specification {
         allowedMethods == [save: 'POST', update: 'PUT', delete: 'DELETE']
     }
 
-    void "test index() include a person"() {
+    void "test index() include a idiom"() {
         given:
-        person.save()
+        idiom.save()
 
         when:
         response.format = 'json'
@@ -48,82 +48,82 @@ class PersonControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonList(person.name)
+        response.contentAsString == makeJsonList(idiom.description)
     }
 
     void "test update is called after persist"() {
         when:
-        person.name = 'Person Updated'
-        person.save()
+        idiom.description = 'Portuguese'
+        idiom.save()
         response.format = 'json'
-        controller.show(person)
+        controller.show(idiom)
 
         then:
-        response.contentAsString == makeJson(person.name)
+        response.contentAsString == makeJson(idiom.description)
     }
 
-    void "test show() return a person when is called"() {
+    void "test show() return a idiom when is called"() {
         when:
         response.format = 'json'
-        controller.show(person)
+        controller.show(idiom)
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(person.name)
+        response.contentAsString == makeJson(idiom.description)
     }
 
-    void "test create() return a person"() {
+    void "test create() return a idiom"() {
         when:
         response.format = 'json'
-        params.name = 'Person Created'
+        params.description = 'Korean'
         controller.create()
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonCreate(params.name)
+        response.contentAsString == makeJsonCreate(params.description)
     }
 
-    void "test save() persist a person"() {
+    void "test save() persist a idiom"() {
         when:
         request.method = 'POST'
         response.format = 'json'
-        controller.save(person)
+        controller.save(idiom)
 
         then:
         response.status == 201
-        response.contentAsString == makeJson(person.name)
+        response.contentAsString == makeJson(idiom.description)
     }
 
     void "test edit() is called after persist"() {
         when:
-        person.name = "Person Edited"
+        idiom.description = "French"
         response.format = 'json'
-        controller.edit(person)
+        controller.edit(idiom)
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(person.name)
+        response.contentAsString == makeJson(idiom.description)
     }
 
     void "test delete() is called after persist"() {
         when:
         request.method = 'DELETE'
         response.format = 'json'
-        controller.delete(person)
+        controller.delete(idiom)
 
         then:
         response.status == 204
         response.contentAsString == ''
 
         when:
-        controller.show(person)
+        controller.show(idiom)
 
         then:
         response.status == 204
     }
 
 
-    void "test return 'not found' when try delete an inexistent person"() {
+    void "test return 'not found' when try delete an inexistent idiom"() {
         when:
         request.method = 'DELETE'
         response.format = 'json'
@@ -133,7 +133,7 @@ class PersonControllerSpec extends Specification {
         response.status == 404
     }
 
-    void "test return 'not found' when try save an inexistent person"() {
+    void "test return 'not found' when try save an inexistent idiom"() {
         when:
         request.method = 'POST'
         response.format = 'json'
@@ -143,7 +143,7 @@ class PersonControllerSpec extends Specification {
         response.status == 404
     }
 
-    void "test return 'not found' when try update an inexistent person"() {
+    void "test return 'not found' when try update an inexistent idiom"() {
         when:
         request.method = 'PUT'
         response.format = 'json'
