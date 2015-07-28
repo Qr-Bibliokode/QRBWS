@@ -14,7 +14,7 @@ class Comment {
     Book book
 
     static constraints = {
-        avaliation maxSize: 5, validator: { if (it < 0) return ['comment.avaliation.negative'] }
+        avaliation max: 5, validator: { if (it < 0) return ['comment.avaliation.negative'] }
         description maxSize: 500
         avaliation nullable: true
     }

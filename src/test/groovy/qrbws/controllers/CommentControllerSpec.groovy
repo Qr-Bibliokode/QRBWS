@@ -12,7 +12,6 @@ class CommentControllerSpec extends Specification {
 
     Comment comment
     def book, user, person, status
-    def json, jsonCreate
 
     def setup() {
         Comment.withNewSession() { session ->
