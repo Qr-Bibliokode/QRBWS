@@ -101,7 +101,7 @@ class BookSpec extends Specification {
 
     void "Test that title is unique"() {
         given:
-        book = new Book(title: 'Book Test', isbn: '123').save(flush: true)
+        new Book(title: 'Book Test', isbn: '123').save(flush: true)
         def bookCopy
 
         when: 'the isbn repeated try save'
