@@ -21,8 +21,8 @@ class Book {
     static constraints = {
         isbn blank: false, nullable: false, maxSize: 17, unique: true
         title blank: false, maxSize: 254, unique: true
-        synopsis nullable: true, size: 5..5000
-        pages nullable: true, maxSize: 5, validator: {
+        synopsis nullable: true, blank: true, size: 5..5000
+        pages nullable: true, max: 9999, validator: {
             if (it < 0 && it != null) return ['book.pages.negative']
         }
         idiom nullable: true
