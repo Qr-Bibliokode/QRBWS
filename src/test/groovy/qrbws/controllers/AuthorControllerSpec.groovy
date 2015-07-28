@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Author
@@ -10,7 +11,7 @@ import spock.lang.Specification
 @Mock(Author)
 class AuthorControllerSpec extends Specification {
 
-    def author
+    Author author
 
     def setup() {
         Author.withNewSession() { session ->
@@ -36,7 +37,10 @@ class AuthorControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '[{"class":"qrbws.Author","id":1,"name":"Author Test","notes":"Tiroriro"}]'
+        Author authorResponse = JSON.parse(response.contentAsString)
+
+        authorResponse.name == author.name
+        authorResponse.notes == author.notes
     }
 
     void "test update is called after persist"() {
@@ -47,7 +51,10 @@ class AuthorControllerSpec extends Specification {
         controller.show(author)
 
         then:
-        response.contentAsString == '{"class":"qrbws.Author","id":1,"name":"Author Edited","notes":"Tiroriro"}'
+        Author authorResponse = JSON.parse(response.contentAsString)
+
+        authorResponse.name == author.name
+        authorResponse.notes == author.notes
     }
 
     void "test show() return an author when is called"() {
@@ -57,7 +64,10 @@ class AuthorControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '{"class":"qrbws.Author","id":1,"name":"Author Test","notes":"Tiroriro"}'
+        Author authorResponse = JSON.parse(response.contentAsString)
+
+        authorResponse.name == author.name
+        authorResponse.notes == author.notes
     }
 
     void "test create() return an author"() {
@@ -69,7 +79,10 @@ class AuthorControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '{"class":"qrbws.Author","id":null,"name":"Pepito","notes":"Azul"}'
+        Author authorResponse = JSON.parse(response.contentAsString)
+
+        authorResponse.name == params.name
+        authorResponse.notes == params.notes
     }
 
     void "test save() persist an author"() {
@@ -80,7 +93,10 @@ class AuthorControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == '{"class":"qrbws.Author","id":1,"name":"Author Test","notes":"Tiroriro"}'
+        Author authorResponse = JSON.parse(response.contentAsString)
+
+        authorResponse.name == author.name
+        authorResponse.notes == author.notes
     }
 
     void "test edit() is called after persist"() {
@@ -92,7 +108,10 @@ class AuthorControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '{"class":"qrbws.Author","id":1,"name":"Loli Pipokas","notes":"Nothing else matters"}'
+        Author authorResponse = JSON.parse(response.contentAsString)
+
+        authorResponse.name == author.name
+        authorResponse.notes == author.notes
     }
 
     void "test delete() is called after persist"() {

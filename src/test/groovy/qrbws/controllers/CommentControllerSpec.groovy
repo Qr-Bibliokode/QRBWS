@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.*
@@ -9,7 +10,8 @@ import spock.lang.Specification
 @Mock([Comment, Book, UserAccount, Person, Status])
 class CommentControllerSpec extends Specification {
 
-    def comment, book, user, person, status
+    Comment comment
+    def book, user, person, status
     def json, jsonCreate
 
     def setup() {
@@ -20,19 +22,6 @@ class CommentControllerSpec extends Specification {
             user = new UserAccount(login: 'User Login', password: '12345', person: person, status: status).save()
             comment = new Comment(description: 'Comment Test', book: book, userAccount: user, avaliation: 2).save()
         }
-    }
-
-    void makeJson(def value) {
-        json = """{"class":"qrbws.Comment","id":1,"avaliation":2,"book":{"class":"qrbws.Book","id":1},"dateCreated":null,"description":"${value}","recommendation":false,"userAccount":{"class":"qrbws.UserAccount","id":1}}"""
-    }
-
-    void makeJsonList(def value) {
-        makeJson(value)
-        json = "[" + json + "]"
-    }
-
-    void makeJsonCreate(def value) {
-        jsonCreate = """{"class":"qrbws.Comment","id":null,"avaliation":null,"book":null,"dateCreated":null,"description":"${value}","recommendation":false,"userAccount":null}"""
     }
 
     void "test allowed methods"() {
@@ -53,8 +42,8 @@ class CommentControllerSpec extends Specification {
 
         then:
         response.status == 200
-        makeJsonList(comment.description)
-        response.contentAsString == json
+        Comment commentResponse = JSON.parse(response.contentAsString)
+        commentResponse.description == comment.description
     }
 
     void "test update is called after persist"() {
@@ -65,8 +54,8 @@ class CommentControllerSpec extends Specification {
         controller.show(comment)
 
         then:
-        makeJson(comment.description)
-        response.contentAsString == json
+        Comment commentResponse = JSON.parse(response.contentAsString)
+        commentResponse.description == comment.description
     }
 
     void "test show() return a comment when is called"() {
@@ -76,8 +65,8 @@ class CommentControllerSpec extends Specification {
 
         then:
         response.status == 200
-        makeJson(comment.description)
-        response.contentAsString == json
+        Comment commentResponse = JSON.parse(response.contentAsString)
+        commentResponse.description == comment.description
     }
 
     void "test create() return a comment"() {
@@ -88,8 +77,8 @@ class CommentControllerSpec extends Specification {
 
         then:
         response.status == 200
-        makeJsonCreate(params.description)
-        response.contentAsString == jsonCreate
+        Comment commentResponse = JSON.parse(response.contentAsString)
+        commentResponse.description == params.description
     }
 
     void "test save() persist a comment"() {
@@ -100,8 +89,8 @@ class CommentControllerSpec extends Specification {
 
         then:
         response.status == 201
-        makeJson(comment.description)
-        response.contentAsString == json
+        Comment commentResponse = JSON.parse(response.contentAsString)
+        commentResponse.description == comment.description
     }
 
     void "test edit() is called after persist"() {
@@ -112,8 +101,8 @@ class CommentControllerSpec extends Specification {
 
         then:
         response.status == 200
-        makeJson(comment.description)
-        response.contentAsString == json
+        Comment commentResponse = JSON.parse(response.contentAsString)
+        commentResponse.description == comment.description
     }
 
     void "test delete() is called after persist"() {

@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Person
@@ -12,7 +13,8 @@ import spock.lang.Specification
 @Mock([UserAccount, Person, Status])
 class UserAccountControllerSpec extends Specification {
 
-    def userAccount, person, status
+    UserAccount userAccount
+    def person, status
 
     def setup() {
         person = new Person(name: 'Person Test', email: 'person@test.com').save()
@@ -20,18 +22,6 @@ class UserAccountControllerSpec extends Specification {
         UserAccount.withNewSession() { session ->
             userAccount = new UserAccount(login: 'login', password: '12345', person: person, status: status).save()
         }
-    }
-
-    String makeJson(def value) {
-        """{"class":"qrbws.UserAccount","id":1,"login":"${value}","password":"12345","person":{"class":"qrbws.Person","id":1},"status":{"class":"qrbws.Status","id":1}}"""
-    }
-
-    String makeJsonList(def value) {
-        "[" + makeJson(value) + "]"
-    }
-
-    String makeJsonCreate(def value) {
-        """{"class":"qrbws.UserAccount","id":null,"login":"${value}","password":null,"person":null,"status":null}"""
     }
 
     void "test allowed methods"() {
@@ -52,7 +42,9 @@ class UserAccountControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonList(userAccount.login)
+        UserAccount userAccountResponse = JSON.parse(response.contentAsString)
+        userAccountResponse.login == userAccount.login
+        userAccountResponse.password == userAccount.password
     }
 
     void "test update is called after persist"() {
@@ -63,7 +55,9 @@ class UserAccountControllerSpec extends Specification {
         controller.show(userAccount)
 
         then:
-        response.contentAsString == makeJson(userAccount.login)
+        UserAccount userAccountResponse = JSON.parse(response.contentAsString)
+        userAccountResponse.login == userAccount.login
+        userAccountResponse.password == userAccount.password
     }
 
     void "test show() return a userAccount when is called"() {
@@ -73,7 +67,9 @@ class UserAccountControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(userAccount.login)
+        UserAccount userAccountResponse = JSON.parse(response.contentAsString)
+        userAccountResponse.login == userAccount.login
+        userAccountResponse.password == userAccount.password
     }
 
     void "test create() return a userAccount"() {
@@ -84,7 +80,9 @@ class UserAccountControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonCreate(params.login)
+        UserAccount userAccountResponse = JSON.parse(response.contentAsString)
+        userAccountResponse.login == params.login
+        userAccountResponse.password == params.password
     }
 
     void "test save() persist a userAccount"() {
@@ -95,7 +93,9 @@ class UserAccountControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == makeJson(userAccount.login)
+        UserAccount userAccountResponse = JSON.parse(response.contentAsString)
+        userAccountResponse.login == userAccount.login
+        userAccountResponse.password == userAccount.password
     }
 
     void "test edit() is called after persist"() {
@@ -106,7 +106,9 @@ class UserAccountControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(userAccount.login)
+        UserAccount userAccountResponse = JSON.parse(response.contentAsString)
+        userAccountResponse.login == userAccount.login
+        userAccountResponse.password == userAccount.password
     }
 
     void "test delete() is called after persist"() {

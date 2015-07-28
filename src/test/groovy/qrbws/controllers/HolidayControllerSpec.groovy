@@ -19,18 +19,6 @@ class HolidayControllerSpec extends Specification {
         }
     }
 
-    String makeJson(def value) {
-        """{"class":"qrbws.Holiday","id":1,"description":"${value}","finalDate":"2015-10-07T03:00:00Z","startDate":"2015-10-07T03:00:00Z"}"""
-    }
-
-    String makeJsonList(def value) {
-        "[" + makeJson(value) + "]"
-    }
-
-    String makeJsonCreate(def value) {
-        """{"class":"qrbws.Holiday","id":null,"description":"${value}","finalDate":null,"startDate":null}"""
-    }
-
     void "test allowed methods"() {
         when:
         def allowedMethods = controller.allowedMethods
@@ -51,7 +39,6 @@ class HolidayControllerSpec extends Specification {
         response.status == 200
         Holiday holidayResponse = JSON.parse(response.contentAsString)
         assert holidayResponse.description.equals('Dia das mães')
-        assert holidayResponse.startDate == new Date('10/07/2015')
     }
 
     void "test update is called after persist"() {

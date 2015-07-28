@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Person
@@ -16,18 +17,6 @@ class PersonControllerSpec extends Specification {
         Person.withNewSession() { session ->
             person = new Person(name: 'Person Test', email: 'person@test.com').save()
         }
-    }
-
-    String makeJson(def value) {
-        """{"class":"qrbws.Person","id":1,"email":"person@test.com","name":"${value}","phone":null}"""
-    }
-
-    String makeJsonList(def value) {
-        "[" + makeJson(value) + "]"
-    }
-
-    String makeJsonCreate(def value) {
-        """{"class":"qrbws.Person","id":null,"email":null,"name":"${value}","phone":null}"""
     }
 
     void "test allowed methods"() {
@@ -48,7 +37,9 @@ class PersonControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonList(person.name)
+        Person personResponse = JSON.parse(response.contentAsString)
+        personResponse.name == person.name
+        personResponse.email == person.email
     }
 
     void "test update is called after persist"() {
@@ -59,7 +50,9 @@ class PersonControllerSpec extends Specification {
         controller.show(person)
 
         then:
-        response.contentAsString == makeJson(person.name)
+        Person personResponse = JSON.parse(response.contentAsString)
+        personResponse.name == person.name
+        personResponse.email == person.email
     }
 
     void "test show() return a person when is called"() {
@@ -69,7 +62,9 @@ class PersonControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(person.name)
+        Person personResponse = JSON.parse(response.contentAsString)
+        personResponse.name == person.name
+        personResponse.email == person.email
     }
 
     void "test create() return a person"() {
@@ -80,7 +75,9 @@ class PersonControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonCreate(params.name)
+        Person personResponse = JSON.parse(response.contentAsString)
+        personResponse.name == params.name
+        personResponse.email == null
     }
 
     void "test save() persist a person"() {
@@ -91,7 +88,9 @@ class PersonControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == makeJson(person.name)
+        Person personResponse = JSON.parse(response.contentAsString)
+        personResponse.name == person.name
+        personResponse.email == person.email
     }
 
     void "test edit() is called after persist"() {
@@ -102,7 +101,9 @@ class PersonControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(person.name)
+        Person personResponse = JSON.parse(response.contentAsString)
+        personResponse.name == person.name
+        personResponse.email == person.email
     }
 
     void "test delete() is called after persist"() {

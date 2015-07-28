@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Student
@@ -10,24 +11,12 @@ import spock.lang.Specification
 @Mock(Student)
 class StudentControllerSpec extends Specification {
 
-    def student
+    Student student
 
     def setup() {
         Student.withNewSession() { session ->
             student = new Student(enrollment: '12345', name: 'Student Test', email: 'student@test.com').save()
         }
-    }
-
-    String makeJson(def value) {
-        """{"class":"qrbws.Student","id":1,"email":"student@test.com","enrollment":"${value}","name":"Student Test","phone":null}"""
-    }
-
-    String makeJsonList(def value) {
-        "[" + makeJson(value) + "]"
-    }
-
-    String makeJsonCreate(def value) {
-        """{"class":"qrbws.Student","id":null,"email":null,"enrollment":"${value}","name":null,"phone":null}"""
     }
 
     void "test allowed methods"() {
@@ -48,7 +37,10 @@ class StudentControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonList(student.enrollment)
+        Student studentResponse = JSON.parse(response.contentAsString)
+        studentResponse.enrollment == student.enrollment
+        studentResponse.name == student.name
+        studentResponse.email == student.email
     }
 
     void "test update is called after persist"() {
@@ -59,7 +51,10 @@ class StudentControllerSpec extends Specification {
         controller.show(student)
 
         then:
-        response.contentAsString == makeJson(student.enrollment)
+        Student studentResponse = JSON.parse(response.contentAsString)
+        studentResponse.enrollment == student.enrollment
+        studentResponse.name == student.name
+        studentResponse.email == student.email
     }
 
     void "test show() return a student when is called"() {
@@ -69,7 +64,10 @@ class StudentControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(student.enrollment)
+        Student studentResponse = JSON.parse(response.contentAsString)
+        studentResponse.enrollment == student.enrollment
+        studentResponse.name == student.name
+        studentResponse.email == student.email
     }
 
     void "test create() return a student"() {
@@ -80,7 +78,10 @@ class StudentControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonCreate(params.enrollment)
+        Student studentResponse = JSON.parse(response.contentAsString)
+        studentResponse.enrollment == params.enrollment
+        studentResponse.name == params.name
+        studentResponse.email == params.email
     }
 
     void "test save() persist a student"() {
@@ -91,7 +92,10 @@ class StudentControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == makeJson(student.enrollment)
+        Student studentResponse = JSON.parse(response.contentAsString)
+        studentResponse.enrollment == student.enrollment
+        studentResponse.name == student.name
+        studentResponse.email == student.email
     }
 
     void "test edit() is called after persist"() {
@@ -102,7 +106,10 @@ class StudentControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(student.enrollment)
+        Student studentResponse = JSON.parse(response.contentAsString)
+        studentResponse.enrollment == student.enrollment
+        studentResponse.name == student.name
+        studentResponse.email == student.email
     }
 
     void "test delete() is called after persist"() {

@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Status
@@ -16,18 +17,6 @@ class StatusControllerSpec extends Specification {
         Status.withNewSession() { session ->
             status = new Status(description: 'Active').save()
         }
-    }
-
-    String makeJson(def value) {
-        """{"class":"qrbws.Status","id":1,"description":"${value}"}"""
-    }
-
-    String makeJsonList(def value) {
-        "[" + makeJson(value) + "]"
-    }
-
-    String makeJsonCreate(def value) {
-        """{"class":"qrbws.Status","id":null,"description":"${value}"}"""
     }
 
     void "test allowed methods"() {
@@ -48,7 +37,8 @@ class StatusControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonList(status.description)
+        Status statusResponse = JSON.parse(response.contentAsString)
+        assert statusResponse.description == status.description
     }
 
     void "test update is called after persist"() {
@@ -59,7 +49,8 @@ class StatusControllerSpec extends Specification {
         controller.show(status)
 
         then:
-        response.contentAsString == makeJson(status.description)
+        Status statusResponse = JSON.parse(response.contentAsString)
+        assert statusResponse.description == status.description
     }
 
     void "test show() return a status when is called"() {
@@ -69,7 +60,8 @@ class StatusControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(status.description)
+        Status statusResponse = JSON.parse(response.contentAsString)
+        assert statusResponse.description == status.description
     }
 
     void "test create() return a status"() {
@@ -80,7 +72,8 @@ class StatusControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonCreate(params.description)
+        Status statusResponse = JSON.parse(response.contentAsString)
+        assert statusResponse.description == params.description
     }
 
     void "test save() persist a status"() {
@@ -91,7 +84,8 @@ class StatusControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == makeJson(status.description)
+        Status statusResponse = JSON.parse(response.contentAsString)
+        assert statusResponse.description == status.description
     }
 
     void "test edit() is called after persist"() {
@@ -102,7 +96,8 @@ class StatusControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(status.description)
+        Status statusResponse = JSON.parse(response.contentAsString)
+        assert statusResponse.description == status.description
     }
 
     void "test delete() is called after persist"() {

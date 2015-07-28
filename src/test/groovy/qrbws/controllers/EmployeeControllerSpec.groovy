@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Employee
@@ -10,24 +11,12 @@ import spock.lang.Specification
 @Mock(Employee)
 class EmployeeControllerSpec extends Specification {
 
-    def employee
+    Employee employee
 
     def setup() {
         Employee.withNewSession() { session ->
             employee = new Employee(code: '12345', name: 'Employee Test', email: 'employee@test.com').save()
         }
-    }
-
-    String makeJson(def value) {
-        """{"class":"qrbws.Employee","id":1,"code":"${value}","email":"employee@test.com","name":"Employee Test","phone":null}"""
-    }
-
-    String makeJsonList(def value) {
-        "[" + makeJson(value) + "]"
-    }
-
-    String makeJsonCreate(def value) {
-        """{"class":"qrbws.Employee","id":null,"code":"${value}","email":null,"name":null,"phone":null}"""
     }
 
     void "test allowed methods"() {
@@ -48,7 +37,10 @@ class EmployeeControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonList(employee.code)
+        Employee employeeResponse = JSON.parse(response.contentAsString)
+        employeeResponse.code == employee.code
+        employeeResponse.name == employee.name
+        employeeResponse.email == employee.email
     }
 
     void "test update is called after persist"() {
@@ -59,7 +51,10 @@ class EmployeeControllerSpec extends Specification {
         controller.show(employee)
 
         then:
-        response.contentAsString == makeJson(employee.code)
+        Employee employeeResponse = JSON.parse(response.contentAsString)
+        employeeResponse.code == employee.code
+        employeeResponse.name == employee.name
+        employeeResponse.email == employee.email
     }
 
     void "test show() return a employee when is called"() {
@@ -69,18 +64,24 @@ class EmployeeControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(employee.code)
+        Employee employeeResponse = JSON.parse(response.contentAsString)
+        employeeResponse.code == employee.code
+        employeeResponse.name == employee.name
+        employeeResponse.email == employee.email
     }
 
     void "test create() return a employee"() {
         when:
         response.format = 'json'
-        params.code = 65432
+        params.code = "65432"
         controller.create()
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonCreate(params.code)
+        Employee employeeResponse = JSON.parse(response.contentAsString)
+        employeeResponse.code == params.code
+        employeeResponse.name == params.name
+        employeeResponse.email == params.email
     }
 
     void "test save() persist a employee"() {
@@ -91,7 +92,10 @@ class EmployeeControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == makeJson(employee.code)
+        Employee employeeResponse = JSON.parse(response.contentAsString)
+        employeeResponse.code == employee.code
+        employeeResponse.name == employee.name
+        employeeResponse.email == employee.email
     }
 
     void "test edit() is called after persist"() {
@@ -102,7 +106,10 @@ class EmployeeControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(employee.code)
+        Employee employeeResponse = JSON.parse(response.contentAsString)
+        employeeResponse.code == employee.code
+        employeeResponse.name == employee.name
+        employeeResponse.email == employee.email
     }
 
     void "test delete() is called after persist"() {

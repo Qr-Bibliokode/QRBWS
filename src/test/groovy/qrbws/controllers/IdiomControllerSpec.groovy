@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Idiom
@@ -10,24 +11,12 @@ import spock.lang.Specification
 @Mock(Idiom)
 class IdiomControllerSpec extends Specification {
 
-    def idiom
+    Idiom idiom
 
     def setup() {
         Idiom.withNewSession() { session ->
             idiom = new Idiom(description: 'Spanish').save()
         }
-    }
-
-    String makeJson(def value) {
-        """{"class":"qrbws.Idiom","id":1,"description":"${value}"}"""
-    }
-
-    String makeJsonList(def value) {
-        "[" + makeJson(value) + "]"
-    }
-
-    String makeJsonCreate(def value) {
-        """{"class":"qrbws.Idiom","id":null,"description":"${value}"}"""
     }
 
     void "test allowed methods"() {
@@ -48,7 +37,8 @@ class IdiomControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonList(idiom.description)
+        Idiom idiomResponse = JSON.parse(response.contentAsString)
+        idiomResponse.description == idiom.description
     }
 
     void "test update is called after persist"() {
@@ -59,7 +49,8 @@ class IdiomControllerSpec extends Specification {
         controller.show(idiom)
 
         then:
-        response.contentAsString == makeJson(idiom.description)
+        Idiom idiomResponse = JSON.parse(response.contentAsString)
+        idiomResponse.description == idiom.description
     }
 
     void "test show() return a idiom when is called"() {
@@ -69,7 +60,8 @@ class IdiomControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(idiom.description)
+        Idiom idiomResponse = JSON.parse(response.contentAsString)
+        idiomResponse.description == idiom.description
     }
 
     void "test create() return a idiom"() {
@@ -80,7 +72,8 @@ class IdiomControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJsonCreate(params.description)
+        Idiom idiomResponse = JSON.parse(response.contentAsString)
+        idiomResponse.description == params.description
     }
 
     void "test save() persist a idiom"() {
@@ -91,7 +84,8 @@ class IdiomControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == makeJson(idiom.description)
+        Idiom idiomResponse = JSON.parse(response.contentAsString)
+        idiomResponse.description == idiom.description
     }
 
     void "test edit() is called after persist"() {
@@ -102,7 +96,8 @@ class IdiomControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == makeJson(idiom.description)
+        Idiom idiomResponse = JSON.parse(response.contentAsString)
+        idiomResponse.description == idiom.description
     }
 
     void "test delete() is called after persist"() {

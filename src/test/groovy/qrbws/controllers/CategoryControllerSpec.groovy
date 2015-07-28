@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Category
@@ -10,7 +11,7 @@ import spock.lang.Specification
 @Mock(Category)
 class CategoryControllerSpec extends Specification {
 
-    def category
+    Category category
 
     def setup() {
         Category.withNewSession() { session ->
@@ -32,11 +33,12 @@ class CategoryControllerSpec extends Specification {
 
         when:
         response.format = 'json'
-        controller.index()
+        controller.index(1)
 
         then:
         response.status == 200
-        response.contentAsString == '[{"class":"qrbws.Category","id":1,"description":"Category Test"}]'
+        Category categoryResponse = JSON.parse(response.contentAsString)
+        categoryResponse.description == category.description
     }
 
     void "test update is called after persist"() {
@@ -47,7 +49,8 @@ class CategoryControllerSpec extends Specification {
         controller.show(category)
 
         then:
-        response.contentAsString == '{"class":"qrbws.Category","id":1,"description":"Category Edited"}'
+        Category categoryResponse = JSON.parse(response.contentAsString)
+        categoryResponse.description == category.description
     }
 
     void "test show() return a category when is called"() {
@@ -57,7 +60,8 @@ class CategoryControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '{"class":"qrbws.Category","id":1,"description":"Category Test"}'
+        Category categoryResponse = JSON.parse(response.contentAsString)
+        categoryResponse.description == category.description
     }
 
     void "test create() return a category"() {
@@ -68,7 +72,8 @@ class CategoryControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '{"class":"qrbws.Category","id":null,"description":"Category Created"}'
+        Category categoryResponse = JSON.parse(response.contentAsString)
+        categoryResponse.description == params.description
     }
 
     void "test save() persist a category"() {
@@ -79,7 +84,8 @@ class CategoryControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == '{"class":"qrbws.Category","id":1,"description":"Category Test"}'
+        Category categoryResponse = JSON.parse(response.contentAsString)
+        categoryResponse.description == category.description
     }
 
     void "test edit() is called after persist"() {
@@ -90,7 +96,8 @@ class CategoryControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '{"class":"qrbws.Category","id":1,"description":"Other Category"}'
+        Category categoryResponse = JSON.parse(response.contentAsString)
+        assert categoryResponse.description == category.description
     }
 
     void "test delete() is called after persist"() {

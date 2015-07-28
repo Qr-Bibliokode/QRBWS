@@ -1,5 +1,6 @@
 package groovy.qrbws.controllers
 
+import grails.converters.JSON
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Book
@@ -10,7 +11,7 @@ import spock.lang.Specification
 @Mock(Book)
 class BookControllerSpec extends Specification {
 
-    def book
+    Book book
 
     def setup() {
         Book.withNewSession() { session ->
@@ -36,8 +37,9 @@ class BookControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '[{"class":"qrbws.Book","id":1,"authors":null,"category":null,"comments":null,' +
-                '"idiom":null,"isbn":"123","pages":null,"status":null,"synopsis":null,"title":"Book Test"}]'
+        Book bookResponse = JSON.parse(response.contentAsString)
+        bookResponse.title == book.title
+        bookResponse.isbn == book.isbn
     }
 
     void "test update is called after persist"() {
@@ -48,8 +50,10 @@ class BookControllerSpec extends Specification {
         controller.show(book)
 
         then:
-        response.contentAsString == '{"class":"qrbws.Book","id":1,"authors":null,"category":null,"comments":null,' +
-                '"idiom":null,"isbn":"123","pages":null,"status":null,"synopsis":null,"title":"Book Edited"}'
+        response.status == 200
+        Book bookResponse = JSON.parse(response.contentAsString)
+        bookResponse.title == book.title
+        bookResponse.isbn == book.isbn
     }
 
     void "test show() return a book when is called"() {
@@ -59,8 +63,9 @@ class BookControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '{"class":"qrbws.Book","id":1,"authors":null,"category":null,"comments":null,' +
-                '"idiom":null,"isbn":"123","pages":null,"status":null,"synopsis":null,"title":"Book Test"}'
+        Book bookResponse = JSON.parse(response.contentAsString)
+        bookResponse.title == book.title
+        bookResponse.isbn == book.isbn
     }
 
     void "test create() return a book"() {
@@ -72,8 +77,9 @@ class BookControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '{"class":"qrbws.Book","id":null,"authors":null,"category":null,"comments":null,' +
-                '"idiom":null,"isbn":"321","pages":null,"status":null,"synopsis":null,"title":"Book Created"}'
+        Book bookResponse = JSON.parse(response.contentAsString)
+        bookResponse.title == params.title
+        bookResponse.isbn == params.isbn
     }
 
     void "test save() persist a book"() {
@@ -84,7 +90,9 @@ class BookControllerSpec extends Specification {
 
         then:
         response.status == 201
-        response.contentAsString == '{"class":"qrbws.Book","id":1,"authors":null,"category":null,"comments":null,"idiom":null,"isbn":"123","pages":null,"status":null,"synopsis":null,"title":"Book Test"}'
+        Book bookResponse = JSON.parse(response.contentAsString)
+        bookResponse.title == book.title
+        bookResponse.isbn == book.isbn
     }
 
     void "test edit() is called after persist"() {
@@ -96,8 +104,9 @@ class BookControllerSpec extends Specification {
 
         then:
         response.status == 200
-        response.contentAsString == '{"class":"qrbws.Book","id":1,"authors":null,"category":null,"comments":null,' +
-                '"idiom":null,"isbn":"123456","pages":null,"status":null,"synopsis":null,"title":"Other Book"}'
+        Book bookResponse = JSON.parse(response.contentAsString)
+        bookResponse.title == book.title
+        bookResponse.isbn == book.isbn
     }
 
     void "test delete() is called after persist"() {
