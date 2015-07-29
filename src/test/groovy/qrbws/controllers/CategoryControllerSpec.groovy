@@ -14,9 +14,7 @@ class CategoryControllerSpec extends Specification {
     Category category
 
     def setup() {
-        Category.withNewSession() { session ->
-            category = new Category(description: 'Category Test').save()
-        }
+        category = new Category(description: 'Category Test').save()
     }
 
     void "test allowed methods"() {
@@ -28,8 +26,6 @@ class CategoryControllerSpec extends Specification {
     }
 
     void "test index() include a category"() {
-        given:
-        category.save()
 
         when:
         response.format = 'json'
@@ -42,6 +38,7 @@ class CategoryControllerSpec extends Specification {
     }
 
     void "test update is called after persist"() {
+
         when:
         category.description = "Category Edited"
         category.save()
@@ -54,6 +51,7 @@ class CategoryControllerSpec extends Specification {
     }
 
     void "test show() return a category when is called"() {
+
         when:
         response.format = 'json'
         controller.show(category)
@@ -65,6 +63,7 @@ class CategoryControllerSpec extends Specification {
     }
 
     void "test create() return a category"() {
+
         when:
         response.format = 'json'
         params.description = "Category Created"
@@ -77,6 +76,7 @@ class CategoryControllerSpec extends Specification {
     }
 
     void "test save() persist a category"() {
+
         when:
         request.method = 'POST'
         response.format = 'json'
@@ -89,6 +89,7 @@ class CategoryControllerSpec extends Specification {
     }
 
     void "test edit() is called after persist"() {
+
         when:
         category.description = "Other Category"
         response.format = 'json'
@@ -101,6 +102,7 @@ class CategoryControllerSpec extends Specification {
     }
 
     void "test delete() is called after persist"() {
+
         when:
         request.method = 'DELETE'
         response.format = 'json'
@@ -119,36 +121,33 @@ class CategoryControllerSpec extends Specification {
 
 
     void "test return 'not found' when try delete an inexistent category"() {
+
         when:
         request.method = 'DELETE'
         response.format = 'json'
-        controller.delete()
+        controller.delete(null)
 
         then:
         response.status == 404
     }
 
     void "test return 'not found' when try save an inexistent category"() {
-        given:
-        def category
 
         when:
         request.method = 'POST'
         response.format = 'json'
-        controller.save(category)
+        controller.save(null)
 
         then:
         response.status == 404
     }
 
     void "test return 'not found' when try update an inexistent category"() {
-        given:
-        def category
 
         when:
         request.method = 'PUT'
         response.format = 'json'
-        controller.update(category)
+        controller.update(null)
 
         then:
         response.status == 404

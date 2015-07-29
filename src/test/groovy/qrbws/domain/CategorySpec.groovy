@@ -1,4 +1,4 @@
-package qrbws.domain
+package groovy.qrbws.domain
 
 import grails.test.mixin.TestFor
 import org.apache.commons.lang.StringUtils
@@ -8,34 +8,40 @@ import spock.lang.Specification
 @TestFor(Category)
 class CategorySpec extends Specification {
 
-	void "Test description can't be null"() {
+    Category category
 
-		when: 'description be null'
-		Category category = new Category(description: null)
+    def setup() {
+        category = new Category()
+    }
 
-		then: 'validation should fail'
-		!category.validate()
+    void "Test description can't be null"() {
 
-		when: 'description be filled'
-		category = new Category(description: 'Science')
+        when: 'description be null'
+        category.description = null
 
-		then: 'validation should pass'
-		category.validate()
-	}
+        then: 'validation should fail'
+        !category.validate()
 
-	void "Test description can not exceed 254 characters"() {
+        when: 'description be filled'
+        category.description = 'Science'
 
-		when: 'description be 255 characers'
-		Category category = new Category(description: StringUtils.leftPad("", 255, '*'))
+        then: 'validation should pass'
+        category.validate()
+    }
 
-		then: 'validation should fail'
-		!category.validate()
+    void "Test description can not exceed 254 characters"() {
 
-		when: 'description be 254 characers'
-		category = new Category(description: StringUtils.leftPad("", 254, '*'))
+        when: 'description be 255 characers'
+        category.description = StringUtils.leftPad("", 255, '*')
 
-		then: 'validation should pass'
-		category.validate()
-	}
+        then: 'validation should fail'
+        !category.validate()
+
+        when: 'description be 254 characers'
+        category.description = StringUtils.leftPad("", 254, '*')
+
+        then: 'validation should pass'
+        category.validate()
+    }
 
 }

@@ -14,9 +14,7 @@ class AuthorControllerSpec extends Specification {
     Author author
 
     def setup() {
-        Author.withNewSession() { session ->
-            author = new Author(name: 'Author Test', notes: 'Tiroriro').save()
-        }
+        author = new Author(name: 'Author Test', notes: 'Tiroriro').save()
     }
 
     void "test allowed methods"() {
@@ -28,8 +26,6 @@ class AuthorControllerSpec extends Specification {
     }
 
     void "test index() include an author"() {
-        given:
-        author.save()
 
         when:
         response.format = 'json'
@@ -44,6 +40,7 @@ class AuthorControllerSpec extends Specification {
     }
 
     void "test update is called after persist"() {
+
         when:
         author.name = "Author Edited"
         author.save()
@@ -58,6 +55,7 @@ class AuthorControllerSpec extends Specification {
     }
 
     void "test show() return an author when is called"() {
+
         when:
         response.format = 'json'
         controller.show(author)
@@ -71,6 +69,7 @@ class AuthorControllerSpec extends Specification {
     }
 
     void "test create() return an author"() {
+
         when:
         response.format = 'json'
         params.name = "Pepito"
@@ -86,6 +85,7 @@ class AuthorControllerSpec extends Specification {
     }
 
     void "test save() persist an author"() {
+
         when:
         request.method = 'POST'
         response.format = 'json'
@@ -100,6 +100,7 @@ class AuthorControllerSpec extends Specification {
     }
 
     void "test edit() is called after persist"() {
+
         when:
         author.name = "Loli Pipokas"
         author.notes = "Nothing else matters"
@@ -115,6 +116,7 @@ class AuthorControllerSpec extends Specification {
     }
 
     void "test delete() is called after persist"() {
+
         when:
         request.method = 'DELETE'
         response.format = 'json'
@@ -133,6 +135,7 @@ class AuthorControllerSpec extends Specification {
 
 
     void "test return 'not found' when try delete an inexistent author"() {
+
         when:
         request.method = 'DELETE'
         response.format = 'json'
@@ -143,26 +146,22 @@ class AuthorControllerSpec extends Specification {
     }
 
     void "test return 'not found' when try save an inexistent author"() {
-        given:
-        def author
 
         when:
         request.method = 'POST'
         response.format = 'json'
-        controller.save(author)
+        controller.save(null)
 
         then:
         response.status == 404
     }
 
     void "test return 'not found' when try update an inexistent author"() {
-        given:
-        def author
 
         when:
         request.method = 'PUT'
         response.format = 'json'
-        controller.update(author)
+        controller.update(null)
 
         then:
         response.status == 404

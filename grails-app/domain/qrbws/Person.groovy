@@ -9,6 +9,6 @@ class Person {
     static constraints = {
         name blank: false, maxSize: 254, matches: '[^0-9\\-]+'
         email blank: false, email: true, maxSize: 254
-        phone nullable: true, maxSize: 254
+        phone nullable: true, maxSize: 15
     }
 }
