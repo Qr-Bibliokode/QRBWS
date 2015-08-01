@@ -1,5 +1,6 @@
 # Idea
 .idea
+QRBWS.iml
 
 # Building
 build
@@ -16,5 +17,3 @@ gradle-app.setting
 !gradle-wrapper.jar
 
 .DS_Store
-
-QRBWS.iml
