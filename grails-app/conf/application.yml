@@ -77,8 +77,8 @@ environments:
             driverClassName: org.postgresql.Driver
             username: postgres
             password: postgres
-            dbCreate: update
-            url: jdbc:postgresql://localhost:5432/qrb
+            dbCreate: create-drop
+            url: jdbc:postgresql://localhost:5432/qrb_dev
     test:
         dataSource:
             dbCreate: update
