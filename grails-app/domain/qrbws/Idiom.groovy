@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/idiom')
+@Resource(uri = '/api/idiom', formats=['json'])
 class Idiom {
 
     String description

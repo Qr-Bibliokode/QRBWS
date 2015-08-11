@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/comment')
+@Resource(uri = '/api/comment', formats=['json'])
 class Comment {
 
     Integer avaliation

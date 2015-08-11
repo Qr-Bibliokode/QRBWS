@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/userAccount')
+@Resource(uri = '/api/userAccount', formats=['json'])
 class UserAccount {
 
     String login

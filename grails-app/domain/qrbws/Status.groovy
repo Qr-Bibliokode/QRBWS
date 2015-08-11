@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/status')
+@Resource(uri = '/api/status', formats=['json'])
 class Status {
 
     String description

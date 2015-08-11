@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/book')
+@Resource(uri = '/api/book', formats=['json'])
 class Book {
 
     String isbn
