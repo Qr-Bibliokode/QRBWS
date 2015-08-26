@@ -9,7 +9,7 @@ class Author {
     String notes
 
     static constraints = {
-        name blank: false, maxSize: 254, matches: '[^0-9\\-]+'
+        name blank: false, maxSize: 50, matches: '[^0-9\\-]+'
         notes nullable: true
     }
 }
