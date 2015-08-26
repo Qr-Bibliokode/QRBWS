@@ -29,16 +29,16 @@ class CategorySpec extends Specification {
         category.validate()
     }
 
-    void "Test description can not exceed 254 characters"() {
+    void "Test description can not exceed 50 characters"() {
 
-        when: 'description be 255 characers'
-        category.description = StringUtils.leftPad("", 255, '*')
+        when: 'description be 51 characers'
+        category.description = StringUtils.leftPad("", 51, '*')
 
         then: 'validation should fail'
         !category.validate()
 
-        when: 'description be 254 characers'
-        category.description = StringUtils.leftPad("", 254, '*')
+        when: 'description be 50 characers'
+        category.description = StringUtils.leftPad("", 50, '*')
 
         then: 'validation should pass'
         category.validate()

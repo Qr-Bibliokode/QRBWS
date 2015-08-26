@@ -8,6 +8,6 @@ class Category {
     String description
 
     static constraints = {
-        description maxSize: 254
+        description maxSize: 50
     }
 }
