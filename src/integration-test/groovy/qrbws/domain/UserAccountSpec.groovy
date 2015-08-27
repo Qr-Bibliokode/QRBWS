@@ -1,4 +1,4 @@
-package groovy.qrbws.domain
+package qrbws.domain
 
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
@@ -60,16 +60,6 @@ class UserAccountSpec extends Specification {
 
         then: 'validation should pass'
         userAccount.validate()
-    }
-
-    void "Test that login is unique"() {
-
-        when: 'the login repeated try save'
-        new UserAccount(login: 'teste', password: 'teste', status: status, person: person).save(flush: true)
-        userAccount.login = 'teste'
-
-        then: 'validation should fail'
-        !userAccount.validate()
     }
 
     void "Test that password can't be null or blank"() {

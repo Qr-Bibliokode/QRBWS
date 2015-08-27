@@ -46,13 +46,22 @@ public class AuthorSpec extends Specification {
     void "Test name can not exceed 50 characters"() {
 
         when: 'name be 51 characers'
-        author.name = StringUtils.leftPad("*", 51, '*')
+        author.name = StringUtils.leftPad("A", 51, 'A')
 
         then: 'validation should fail'
         !author.validate()
 
-        when: 'name be 50 characers'
-        author.name = StringUtils.leftPad("*", 50, '*')
+        when: 'name be 40 characers'
+        author.name = StringUtils.leftPad("B", 40, 'B')
+
+        then: 'validation should pass'
+        author.validate()
+    }
+
+    void "Test name can not allow numbers"() {
+
+        when: 'name be a number'
+        author.name = 'Messi10'
 
         then: 'validation should fail'
         !author.validate()
