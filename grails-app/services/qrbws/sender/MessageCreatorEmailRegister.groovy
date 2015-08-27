@@ -1,8 +1,8 @@
-package messenger
+package qrbws.sender
 
 import qrbws.UserAccount
 
-class MCERegister implements MessageCreator {
+class MessageCreatorEmailRegister implements IMessageCreator {
     MessageType getType() {
         return MessageType.CADASTRO_USUARIO;
     }

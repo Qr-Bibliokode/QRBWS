@@ -1,8 +1,8 @@
-package messenger
+package qrbws.sender
 
 import qrbws.UserAccount
 
-interface MessageCreator {
+interface IMessageCreator {
     MessageType getType();
 
     String create(UserAccount userAccount);
