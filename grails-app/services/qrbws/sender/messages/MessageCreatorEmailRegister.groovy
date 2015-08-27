@@ -1,4 +1,4 @@
-package qrbws.sender
+package qrbws.sender.messages
 
 import qrbws.UserAccount
 

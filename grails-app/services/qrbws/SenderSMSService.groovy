@@ -1,8 +1,8 @@
 package qrbws
 
 import grails.transaction.Transactional
-import qrbws.sender.MessageCreatorSMSRegister
-import qrbws.sender.SenderSMS
+import qrbws.sender.messages.MessageCreatorSMSRegister
+import qrbws.sender.senders.SenderSMS
 
 @Transactional
 class SenderSMSService {

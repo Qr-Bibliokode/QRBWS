@@ -1,4 +1,4 @@
-package qrbws.sender
+package qrbws.sender.messages
 
 enum MessageType {
     CADASTRO_USUARIO(0, "Cadastro de usuário"),

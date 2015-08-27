@@ -1,8 +1,9 @@
-package qrbws.sender
+package qrbws.sender.senders
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import qrbws.UserAccount
+import qrbws.sender.messages.IMessageCreator
 
 class SenderSMS implements Sender {
 
