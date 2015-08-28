@@ -11,9 +11,11 @@ class UserAccount {
     Status status
 
     def senderSMSController
+    def senderEmailController
 
     def afterInsert() {
-        senderSMSController.sendSMSRegister(this)
+        person.phone != null ? senderSMSController.sendSMSRegister(this) : ''
+        senderEmailController.sendEmailRegister(this)
     }
 
     static constraints = {

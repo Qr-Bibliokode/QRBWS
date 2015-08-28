@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory
 import qrbws.UserAccount
 import qrbws.sender.messages.IMessageCreator
 
-
 class SenderEmail implements Sender {
+
     IMessageCreator messageCreator;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(this)
