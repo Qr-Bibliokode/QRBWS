@@ -7,6 +7,8 @@ import qrbws.sender.messages.IMessageCreator
 
 class SenderEmail implements Sender {
 
+    def mailService
+
     IMessageCreator messageCreator;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(this)
@@ -14,12 +16,15 @@ class SenderEmail implements Sender {
     @Override
     public void send(UserAccount userAccount) {
         String userName = userAccount.person.name
-        String userPhone = userAccount.person.phone
+        String userEmail = userAccount.person.email
         String messageType = messageCreator.type.description
-
-        LOGGER.info """INICIO - E-MAIL ${messageType} para ${userName} - ${userPhone}"""
-        createMessage(userAccount)
-
+        LOGGER.info """INICIO - E-MAIL ${messageType} para ${userName} - ${userEmail}"""
+        mailService.sendMail {
+            to userEmail
+            subject messageType
+            text createMessage(userAccount)
+        }
+        LOGGER.info """FINAL - SMS ${messageType} enviado com sucesso para ${userName} - ${userEmail}"""
     }
 
     private String createMessage(UserAccount userAccount) {

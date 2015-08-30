@@ -62,6 +62,8 @@ dependencies {
     compile "org.grails.plugins:cache"
     compile "org.hibernate:hibernate-ehcache"
 
+    compile  'org.grails.plugins:mail:2.0.0.RC2'
+
     runtime "org.grails.plugins:asset-pipeline"
     runtime "org.grails.plugins:scaffolding"
 
