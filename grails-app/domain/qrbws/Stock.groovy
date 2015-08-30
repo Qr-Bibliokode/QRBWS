@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/api/lend', formats=['json'])
+@Resource(uri = '/api/stock', formats=['json'])
 
 class Stock {
 
