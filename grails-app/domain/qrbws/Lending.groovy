@@ -2,8 +2,8 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/api/lend', formats=['json'])
-class Lend {
+@Resource(uri = '/api/lending', formats=['json'])
+class Lending {
 
     UserAccount userAccount
     Book book
@@ -15,5 +15,11 @@ class Lend {
     static constraints = {
         userAccount nullable: false
         book nullable: false
+    }
+
+    def afterInsert() {
+        Stock stock = Stock.findByBook(book)
+        stock.availableBalance = stock.availableBalance--
+        stock.save()
     }
 }
