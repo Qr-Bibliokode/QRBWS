@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/api/comment', formats=['json'])
+@Resource(uri = '/api/comment', formats = ['json'])
 class Comment {
 
     Integer avaliation
@@ -15,7 +15,7 @@ class Comment {
 
     static constraints = {
         avaliation nullable: true, max: 5, validator: { if (it < 0) return ['comment.avaliation.negative'] }
-        description maxSize: 500
+        description nullable: true, maxSize: 500
         userAccount nullable: false
         book nullable: false
     }

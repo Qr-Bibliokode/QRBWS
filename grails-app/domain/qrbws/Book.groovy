@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/api/book', formats=['json'])
+@Resource(uri = '/api/book', formats = ['json'])
 class Book {
 
     String isbn
@@ -19,7 +19,7 @@ class Book {
     static hasMany = [authors: Author, comments: Comment]
 
     static constraints = {
-        isbn blank: false, nullable: false, maxSize: 17, unique: true
+        isbn blank: false, nullable: false, maxSize: 17, unique: true, matches: '\\d+'
         title blank: false, maxSize: 254, unique: true
         synopsis nullable: true, blank: true, size: 5..5000
         pages nullable: true, max: 9999, validator: {
