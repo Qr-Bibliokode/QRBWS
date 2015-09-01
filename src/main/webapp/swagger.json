@@ -724,6 +724,180 @@
         }
       }
     },
+    "/employee/": {
+      "get": {
+        "tags": [
+          "employee"
+        ],
+        "operationId": "list",
+        "description": "Returns all categories",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "max",
+            "in": "query",
+            "description": "The maximum number to list",
+            "type": "integer",
+            "default": 10,
+            "minimum": 1,
+            "maximum": 100
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The offset from the first result to list from",
+            "type": "integer",
+            "default": 0,
+            "minimum": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of categories.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Comment"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "employee"
+        ],
+        "summary": "Create",
+        "description": "Create an employee",
+        "operationId": "create",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "employee",
+            "description": "Comment object",
+            "required": true,
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Comment"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid params supplied"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      }
+    },
+    "/employee/{employeeId}": {
+      "get": {
+        "tags": [
+          "employee"
+        ],
+        "summary": "Get an employee",
+        "description": "For valid response an employee with employeeId param should be exist",
+        "operationId": "getById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "employeeId",
+            "description": "Comment id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "employee"
+        ],
+        "summary": "Delete an employee",
+        "description": "For valid response an employee with employeeId param should be exist",
+        "operationId": "delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "employeeId",
+            "description": "Comment id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "employee"
+        ],
+        "summary": "Update",
+        "description": "Update an employee",
+        "operationId": "update",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "employee",
+            "description": "Comment object",
+            "required": true,
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Comment"
+              }
+            }
+          },
+          {
+            "in": "path",
+            "name": "employeeId",
+            "description": "Author id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid params supplied"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      }
+    },
     "/idiom/": {
       "get": {
         "tags": [
@@ -1117,7 +1291,7 @@
         },
         "pages": {
           "type": "integer",
-          "format": "int64"
+          "format": "int32"
         },
         "idiom": {
           "$ref": "Idiom"
@@ -1162,22 +1336,7 @@
       "type": "object",
       "required": [
         "id",
-        "avaliation"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "description": {
-          "type": "string"
-        }
-      }
-    },
-    "Comment": {
-      "type": "object",
-      "required": [
-        "id",
+        "avaliation",
         "userAccount",
         "book"
       ],
@@ -1186,10 +1345,52 @@
           "type": "integer",
           "format": "int64"
         },
-        "userAccount": {
+        "avaliation": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "description": {
           "type": "string"
         },
+        "dataCreated": {
+          "type": "date",
+          "format": "date"
+        },
+        "recommendation": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "userAccount": {
+          "$ref": "UserAccount"
+        },
         "book": {
+          "$ref": "Book"
+        }
+      }
+    },
+    "Employee": {
+      "type": "object",
+      "required": [
+        "id",
+        "code",
+        "name",
+        "email"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
           "type": "string"
         }
       }
