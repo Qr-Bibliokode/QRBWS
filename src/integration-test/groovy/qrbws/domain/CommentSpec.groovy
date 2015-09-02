@@ -53,13 +53,13 @@ class CommentSpec extends Specification {
         comment.validate()
     }
 
-    void "Test description can't be null"() {
+    void "Test description can be null"() {
 
         when: 'value is null'
         comment.description = null
 
-        then: 'validation should fail'
-        !comment.validate()
+        then: 'validation should pass'
+        comment.validate()
     }
 
     void "Test description max value is 500"() {

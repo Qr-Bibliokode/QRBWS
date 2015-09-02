@@ -42,14 +42,14 @@ class BookSpec extends Specification {
 
         when: 'the isbn have 18 characters'
         book.title = 'Book Test'
-        book.isbn = StringUtils.leftPad("", 18, '*')
+        book.isbn = StringUtils.leftPad("", 18, '1')
 
         then: 'validation should fail'
         !book.validate()
 
         when: 'the isbn have 17 characters'
         book.title = 'Book Test'
-        book.isbn = StringUtils.leftPad("", 17, '*')
+        book.isbn = StringUtils.leftPad("", 17, '1')
 
         then: 'validation should pass'
         book.validate()
