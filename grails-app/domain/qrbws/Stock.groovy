@@ -10,7 +10,7 @@ class Stock {
     Integer availableBalance
 
     static constraints = {
-        book nullable: false
+        book nullable: false, unique: true
         availableBalance min: 0
     }
 }
