@@ -13,7 +13,6 @@ class Book {
     // Clob cover
 
     Idiom idiom
-    Status status
     Category category
 
     static hasMany = [authors: Author, comments: Comment]
@@ -26,8 +25,8 @@ class Book {
             if (it < 0 && it != null) return ['book.pages.negative']
         }
         idiom nullable: true
-        status nullable: true
         category nullable: true
+        comments nullable: true
         // cover nullable: true
     }
 }

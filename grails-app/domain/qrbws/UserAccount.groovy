@@ -2,16 +2,20 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/api/userAccount', formats=['json'])
+@Resource(uri = '/api/userAccount', formats = ['json'])
 class UserAccount {
 
     String login
     String password
     Person person
-    Status status
+    Boolean enabled
 
     def senderSMSController
     def senderEmailController
+
+    UserAccount() {
+        this.enabled = true
+    }
 
     def afterInsert() {
         person.phone != null ? senderSMSController.sendSMSRegister(this) : ''
