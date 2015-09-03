@@ -1,13 +1,16 @@
-package groovy.qrbws.domain
+package qrbws.domain
 
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import org.apache.commons.lang.StringUtils
-import qrbws.*
+import qrbws.Book
+import qrbws.Comment
+import qrbws.Person
+import qrbws.UserAccount
 import spock.lang.Specification
 
 @TestFor(Comment)
-@Mock([Book, UserAccount, Person, Status])
+@Mock([Book, UserAccount, Person])
 class CommentSpec extends Specification {
 
     Comment comment
@@ -17,8 +20,7 @@ class CommentSpec extends Specification {
         Comment.withNewSession() { session ->
             book = new Book(title: 'Book Test', isbn: '123').save()
             person = new Person(name: 'Person Name', email: 'person@email.com').save()
-            status = new Status(description: 'Ativo').save()
-            user = new UserAccount(login: 'User Login', password: '12345', person: person, status: status).save()
+            user = new UserAccount(login: 'User Login', password: '12345', person: person).save()
             comment = new Comment(description: 'Comment Test', book: book, userAccount: user, avaliation: 2)
         }
     }
@@ -96,21 +98,6 @@ class CommentSpec extends Specification {
 
         when: 'save an comment whit userAccount'
         comment.userAccount = user
-
-        then: 'validation should pass'
-        comment.validate()
-    }
-
-    void "Test comment need a book for save"() {
-
-        when: 'save an comment without book'
-        comment.book = null
-
-        then: 'validation should fail'
-        !comment.validate()
-
-        when: 'save an comment whit book'
-        comment.book = book
 
         then: 'validation should pass'
         comment.validate()

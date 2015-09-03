@@ -3,19 +3,17 @@ package qrbws.domain
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import qrbws.Person
-import qrbws.Status
 import qrbws.UserAccount
 import spock.lang.Specification
 
 @TestFor(UserAccount)
-@Mock([Person, Status])
+@Mock([Person])
 class UserAccountSpec extends Specification {
 
     UserAccount userAccount
     def person, status
 
     def setup() {
-        status = new Status(description: 'Activated').save()
         person = new Person(name: "felansu", email: "gaferran@gmail.com").save()
         userAccount = new UserAccount(login: 'teste', password: 'teste', status: status, person: person)
     }
@@ -108,15 +106,6 @@ class UserAccountSpec extends Specification {
 
         when: 'the person is null'
         userAccount.person = null
-
-        then: 'validation should fail'
-        !userAccount.validate()
-    }
-
-    void "Test userAccount need a status for save"() {
-
-        when: 'the status is null'
-        userAccount.status = null
 
         then: 'validation should fail'
         !userAccount.validate()

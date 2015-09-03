@@ -1,4 +1,4 @@
-package groovy.qrbws.domain
+package qrbws.domain
 
 import grails.test.mixin.TestFor
 import org.apache.commons.lang.StringUtils

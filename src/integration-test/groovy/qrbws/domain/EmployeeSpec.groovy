@@ -1,4 +1,4 @@
-package groovy.qrbws.domain
+package qrbws.domain
 
 import grails.test.mixin.TestFor
 import qrbws.Employee
