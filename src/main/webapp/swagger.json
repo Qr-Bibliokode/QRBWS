@@ -1716,31 +1716,22 @@
       }
     },
     "Employee": {
-      "type": "object",
-      "required": [
-        "id",
-        "code",
-        "name",
-        "email"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
+      "allOf": [
+        {
+          "$ref": "#/definitions/Person"
         },
-        "code": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
+        {
+          "type": "object",
+          "required": [
+            "code"
+          ],
+          "properties": {
+            "code": {
+              "type": "string"
+            }
+          }
         }
-      }
+      ]
     },
     "Holiday": {
       "type": "object",
@@ -1784,6 +1775,28 @@
         }
       }
     },
+    "Person": {
+      "type": "object",
+      "required": [
+        "name",
+        "email"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
     "Stock": {
       "type": "object",
       "required": [
@@ -1806,29 +1819,48 @@
       }
     },
     "Student": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Person"
+        },
+        {
+          "type": "object",
+          "required": [
+            "enrollment"
+          ],
+          "properties": {
+            "enrollment": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "UserAccount": {
       "type": "object",
       "required": [
         "id",
-        "enrollment",
-        "name",
-        "email"
+        "login",
+        "password",
+        "person"
       ],
       "properties": {
         "id": {
           "type": "integer",
           "format": "int64"
         },
-        "enrollment": {
+        "login": {
           "type": "string"
         },
-        "name": {
+        "password": {
           "type": "string"
         },
-        "email": {
-          "type": "string"
+        "person": {
+          "$ref": "Person"
         },
-        "phone": {
-          "type": "string"
+        "enabled": {
+          "type": "boolean",
+          "format": "boolean"
         }
       }
     }
