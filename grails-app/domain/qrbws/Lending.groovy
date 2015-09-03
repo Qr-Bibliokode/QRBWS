@@ -2,15 +2,16 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/api/lending', formats=['json'])
+@Resource(uri = '/api/lending', formats = ['json'])
 class Lending {
 
-    UserAccount userAccount
-    Book book
     Date dateOut
     Date dateIn
     boolean returned
     boolean avised
+
+    UserAccount userAccount
+    Book book
 
     static constraints = {
         userAccount nullable: false
