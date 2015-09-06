@@ -10,16 +10,15 @@ class UserAccount {
     Person person
     Boolean enabled
 
-    def senderSMSController
-    def senderEmailController
+    def senderEmailService
 
     UserAccount() {
         this.enabled = true
     }
 
     def afterInsert() {
-        person.phone != null ? senderSMSController.sendSMSRegister(this) : ''
-        senderEmailController.sendEmailRegister(this)
+       // person.phone != null ? senderEmailService.sendSMSRegister(this) : ''
+        senderEmailService.sendEmailRegister(this)
     }
 
     static constraints = {
