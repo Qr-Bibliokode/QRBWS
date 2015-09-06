@@ -7,6 +7,6 @@ class SenderEmailController {
     SenderEmailService senderEmailService
 
     void sendEmailRegister(UserAccount userAccount) {
-        senderEmailService.sendRegister(userAccount, new MessageCreatorEmailRegister())
+        senderEmailService.sendEmail(userAccount, new MessageCreatorEmailRegister())
     }
 }

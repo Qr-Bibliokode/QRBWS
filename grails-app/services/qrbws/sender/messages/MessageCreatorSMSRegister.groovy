@@ -9,7 +9,7 @@ class MessageCreatorSMSRegister implements IMessageCreator {
     }
 
     String create(UserAccount userAccount) {
-        String mensagem = """Parabéns ${userAccount.person.name}, o cadastro foi realizado com sucesso ! Usuário: ${userAccount.login} Senha: ${userAccount.password} Obrigado por utilizar o nosso sistema, Qr-Bibliokode Team"""
+        String mensagem = "Parabéns ${userAccount.person.name}, o cadastro foi realizado com sucesso ! Verifique seu e-mail, Qr-Bibliokode Team"
         mensagem.replace(" ", "%20")
     }
 }

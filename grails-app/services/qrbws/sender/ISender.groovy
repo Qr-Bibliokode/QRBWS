@@ -1,7 +1,7 @@
-package qrbws.sender.senders
+package qrbws.sender
 
 import qrbws.UserAccount
 
-interface Sender {
+interface ISender {
     void send(UserAccount user)
 }

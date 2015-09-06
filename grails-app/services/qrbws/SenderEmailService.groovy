@@ -1,21 +1,19 @@
 package qrbws
 
 import grails.transaction.Transactional
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import qrbws.sender.messages.IMessageCreator
-import qrbws.sender.senders.Sender
+import qrbws.sender.ISender
 
 @Transactional
-class SenderEmailService implements Sender {
+class SenderEmailService implements ISender {
 
     def mailService
 
     IMessageCreator messageCreator;
 
-    void sendRegister(UserAccount userAccount, IMessageCreator messageCreator) {
+    void sendEmail(UserAccount userAccount, IMessageCreator messageCreator) {
         this.messageCreator = messageCreator;
-       send(userAccount);
+        send(userAccount);
     }
 
     @Override
