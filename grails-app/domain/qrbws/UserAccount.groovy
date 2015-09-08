@@ -1,10 +1,5 @@
 package qrbws
 
-import grails.rest.Resource
-import qrbws.sender.messages.MessageCreatorEmailRegister
-import qrbws.sender.messages.MessageCreatorSMSRegister
-
-@Resource(uri = '/api/userAccount', formats = ['json'])
 class UserAccount {
 
     String login
@@ -12,16 +7,8 @@ class UserAccount {
     Person person
     Boolean enabled
 
-    def senderEmailService
-    def senderSMSService
-
     UserAccount() {
         this.enabled = true
-    }
-
-    def afterInsert() {
-        person.phone != null ? senderSMSService.sendSMS(this, new MessageCreatorSMSRegister()) : ''
-        senderEmailService.sendEmail(this, new MessageCreatorEmailRegister())
     }
 
     static constraints = {
