@@ -18,7 +18,11 @@ class UserAccountController extends RestfulController {
         super(UserAccount)
     }
 
-    def index() {}
+    @Override
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond listAllResources(params), model: [("${resourceName}Count".toString()): countResources()]
+    }
 
     @Override
     def save() {

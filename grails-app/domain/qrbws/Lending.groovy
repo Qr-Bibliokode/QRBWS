@@ -13,9 +13,13 @@ class Lending {
     UserAccount userAccount
     Book book
 
+    Lending() {
+        this.dateIn = new Date()
+    }
     static constraints = {
         userAccount nullable: false
         book nullable: false
+        dateOut nullable: true
     }
 
     def afterInsert() {
