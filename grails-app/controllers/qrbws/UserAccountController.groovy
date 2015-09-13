@@ -1,62 +1,119 @@
 package qrbws
 
-import grails.rest.RestfulController
-import grails.web.http.HttpHeaders
 import qrbws.sender.messages.MessageCreatorEmailRegister
 import qrbws.sender.messages.MessageCreatorSMSRegister
 
-import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.*
+import grails.transaction.Transactional
 
-class UserAccountController extends RestfulController {
-
-    static responseFormats = ['json']
+@Transactional(readOnly = true)
+class UserAccountController {
 
     def userAccountService
 
+    static responseFormats = ['json']
 
-    UserAccountController() {
-        super(UserAccount)
-    }
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    @Override
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond listAllResources(params), model: [("${resourceName}Count".toString()): countResources()]
+        respond UserAccount.list(params), model:[userAccountCount: UserAccount.count()]
     }
 
-    @Override
-    def save() {
-        if (handleReadOnly()) {
-            return
-        }
-        def instance = createResource()
+    def show(UserAccount userAccount) {
+        respond userAccount
+    }
 
-        instance.validate()
-        if (instance.hasErrors()) {
+    def create() {
+        respond new UserAccount(params)
+    }
+
+    @Transactional
+    def save(UserAccount userAccount) {
+        if (userAccount == null) {
             transactionStatus.setRollbackOnly()
-            respond instance.errors, view: 'create' // STATUS CODE 422
+            notFound()
             return
         }
 
-        instance.save flush: true
+        if (userAccount.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond userAccount.errors, view:'create'
+            return
+        }
 
-        if (instance) {
-            instance.person.phone != null ? userAccountService.sendSMS(instance, new MessageCreatorSMSRegister()) : ''
-            userAccountService.sendEmail(instance, new MessageCreatorEmailRegister())
+        userAccount.save flush:true
+
+        if (userAccount) {
+            userAccount.person.phone != null ? userAccountService.sendSMS(userAccount, new MessageCreatorSMSRegister()) : ''
+            userAccountService.sendEmail(userAccount, new MessageCreatorEmailRegister())
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: "${resourceName}.label".toString(), default: resourceClassName), instance.id])
-                redirect instance
+                flash.message = message(code: 'default.created.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), userAccount.id])
+                redirect userAccount
             }
-            '*' {
-                response.addHeader(HttpHeaders.LOCATION,
-                        grailsLinkGenerator.link(resource: this.controllerName, action: 'show', id: instance.id, absolute: true,
-                                namespace: hasProperty('namespace') ? this.namespace : null))
-                respond instance, [status: CREATED]
-            }
+            '*' { respond userAccount, [status: CREATED] }
+        }
+    }
+
+    def edit(UserAccount userAccount) {
+        respond userAccount
+    }
+
+    @Transactional
+    def update(UserAccount userAccount) {
+        if (userAccount == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
         }
 
+        if (userAccount.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond userAccount.errors, view:'edit'
+            return
+        }
+
+        userAccount.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), userAccount.id])
+                redirect userAccount
+            }
+            '*'{ respond userAccount, [status: OK] }
+        }
+    }
+
+    @Transactional
+    def delete(UserAccount userAccount) {
+
+        if (userAccount == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        userAccount.delete flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), userAccount.id])
+                redirect action:"index", method:"GET"
+            }
+            '*'{ render status: NO_CONTENT }
+        }
+    }
+
+    protected void notFound() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*'{ render status: NOT_FOUND }
+        }
     }
 }
