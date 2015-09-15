@@ -10,6 +10,7 @@ class UrlMappings {
         "/"(view: "/index")
         "500"(view: '/error')
 
-        "/api/userAccount"(resources:"userAccount")
+        "/api/userAccount"(resources: "userAccount")
+        "/api/lending"(resources: "lending")
     }
 }
