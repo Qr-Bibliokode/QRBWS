@@ -9,11 +9,9 @@ class Book {
     String title
     String synopsis
     Integer pages
-    // TODO Waiting for implement
-    // Clob cover
-
     Idiom idiom
     Category category
+    // TODO: Implement cover for book
 
     static hasMany = [authors: Author, comments: Comment]
 
@@ -27,6 +25,5 @@ class Book {
         idiom nullable: true
         category nullable: true
         comments nullable: true
-        // cover nullable: true
     }
 }

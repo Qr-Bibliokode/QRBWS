@@ -1291,9 +1291,9 @@
         "tags": [
           "lending"
         ],
-        "summary": "Create",
-        "description": "Create an lending",
-        "operationId": "create",
+        "summary": "Lend",
+        "description": "Lend a book",
+        "operationId": "lend",
         "produces": [
           "application/json"
         ],

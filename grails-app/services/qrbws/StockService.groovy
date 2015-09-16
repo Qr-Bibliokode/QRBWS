@@ -10,4 +10,10 @@ class StockService {
         stock.availableBalance = stock.availableBalance - 1
         stock.save()
     }
+
+    Stock increases(Lending lending) {
+        Stock stock = Stock.findByBook(lending.book)
+        stock.availableBalance = stock.availableBalance + 1
+        stock.save()
+    }
 }

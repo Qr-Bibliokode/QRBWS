@@ -4,19 +4,18 @@ class Lending {
 
     Date dateOut
     Date dateIn
+    Date dateLimit
     boolean returned
     boolean avised
 
     UserAccount userAccount
     Book book
 
-    Lending() {
-        this.dateIn = new Date()
-    }
-
     static constraints = {
         userAccount nullable: false
         book nullable: false
         dateOut nullable: true
+        //TODO: Change this, this date should be calculated and nullable false
+        dateLimit nullable: true
     }
 }

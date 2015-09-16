@@ -11,7 +11,12 @@ class LendingController {
 
     static responseFormats = ['json']
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [
+            lend: "POST",
+            devolution: "PUT",
+            update: "PUT",
+            delete: "DELETE"
+    ]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -27,7 +32,7 @@ class LendingController {
     }
 
     @Transactional
-    def save(Lending lending) {
+    def lend(Lending lending) {
         if (lending == null) {
             transactionStatus.setRollbackOnly()
             notFound()
@@ -43,7 +48,7 @@ class LendingController {
         lending.save flush: true
 
         if(lending){
-            Stock stock = lendingService.stockDecreases(lending)
+            Stock stock = lendingService.lend(lending)
             println 'Stock depois de diminuir: ' + stock.availableBalance
         }
 
@@ -58,6 +63,35 @@ class LendingController {
 
     def edit(Lending lending) {
         respond lending
+    }
+
+
+    @Transactional
+    def devolution(Lending lending) {
+        if (lending == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+
+        lendingService.devolution(lending)
+
+        if (lending.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond lending.errors, view: 'edit'
+            return
+        }
+
+        lending.save flush: true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'lending.label', default: 'Lending'), lending.id])
+                redirect lending
+            }
+            '*' { respond lending, [status: OK] }
+        }
     }
 
     @Transactional
