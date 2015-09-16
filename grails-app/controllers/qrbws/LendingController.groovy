@@ -12,10 +12,10 @@ class LendingController {
     static responseFormats = ['json']
 
     static allowedMethods = [
-            lend: "POST",
+            lend      : "POST",
             devolution: "PUT",
-            update: "PUT",
-            delete: "DELETE"
+            update    : "PUT",
+            delete    : "DELETE"
     ]
 
     def index(Integer max) {
@@ -45,11 +45,12 @@ class LendingController {
             return
         }
 
+        lending.dateOut = new Date()
+
         lending.save flush: true
 
-        if(lending){
-            Stock stock = lendingService.lend(lending)
-            println 'Stock depois de diminuir: ' + stock.availableBalance
+        if (lending) {
+            lendingService.lend(lending)
         }
 
         request.withFormat {

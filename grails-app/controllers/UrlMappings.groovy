@@ -11,6 +11,7 @@ class UrlMappings {
         "500"(view: '/error')
 
         "/api/userAccount"(resources: "userAccount")
+        "/api/lending/lend"(controller: 'lending', action: 'lend')
         "/api/lending"(resources: "lending")
     }
 }
