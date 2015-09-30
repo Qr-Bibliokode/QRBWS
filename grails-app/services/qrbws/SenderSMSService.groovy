@@ -13,14 +13,14 @@ class SenderSMSService implements ISender {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(this)
 
-    void sendSMS(UserAccount userAccount, IMessageCreator messageCreator) {
+    void sendSMS(ContaUsuario userAccount, IMessageCreator messageCreator) {
         this.messageCreator = messageCreator;
         send(userAccount);
     }
 
-    void send(UserAccount userAccount) {
-        String userName = userAccount.person.name
-        String userPhone = userAccount.person.phone
+    void send(ContaUsuario userAccount) {
+        String userName = userAccount.pessoa.nome
+        String userPhone = userAccount.pessoa.celular
         String messageType = messageCreator.type.description
 
         try {
@@ -33,17 +33,17 @@ class SenderSMSService implements ISender {
         }
     }
 
-    private String mountUrl(UserAccount userAccount) {
+    private String mountUrl(ContaUsuario userAccount) {
         [
                 url    : 'http://192.168.0.13:9090/sendsms?',
-                phone  : "phone=${userAccount.person.phone}",
+                phone  : "celular=${userAccount.pessoa.celular}",
                 message: "&text=${createMessage(userAccount)}"
         ].inject([]) { result, entry ->
             result << "${entry.value}"
         }.join('')
     }
 
-    private String createMessage(UserAccount userAccount) {
+    private String createMessage(ContaUsuario userAccount) {
         return messageCreator.create(userAccount)
     }
 }

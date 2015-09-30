@@ -1,28 +1,28 @@
 package qrbws.domain
 
 import grails.test.mixin.TestFor
-import qrbws.Employee
+import qrbws.Empregado
 import spock.lang.Specification
 
-@TestFor(Employee)
-class EmployeeSpec extends Specification {
+@TestFor(Empregado)
+class EmpregadoSpec extends Specification {
 
-    Employee employee
+    Empregado employee
 
     def setup() {
-        employee = new Employee(name: "Aparecida", email: "apare@cida.com")
+        employee = new Empregado(nome: "Aparecida", email: "apare@cida.com")
     }
 
     void "Test code can't be null"() {
 
         when: 'value is null'
-        employee.code = null
+        employee.codigo = null
 
         then: 'validation should fail'
         !employee.validate()
 
         when: 'value is 12345'
-        employee.code = "12345"
+        employee.codigo = "12345"
 
         then: 'validation should pass'
         employee.validate()
@@ -30,15 +30,15 @@ class EmployeeSpec extends Specification {
 
     void "Test code must be unique"() {
 
-        when: 'save a employe with 123 code'
-        new Employee(name: "Test", email: "test@test.com", code: 123).save(flush: true)
-        employee.code = "123"
+        when: 'save a employe with 123 codigo'
+        new Empregado(nome: "Test", email: "test@test.com", codigo: 123).save(flush: true)
+        employee.codigo = "123"
 
         then: 'validation should fail'
         !employee.validate()
 
         when: 'value is 1234'
-        employee.code = "1234"
+        employee.codigo = "1234"
 
         then: 'validation should pass'
         employee.validate()
@@ -46,8 +46,8 @@ class EmployeeSpec extends Specification {
 
     void "Test code can't be blank"() {
 
-        when: 'code is blank'
-        employee.code = " "
+        when: 'codigo is blank'
+        employee.codigo = " "
 
         then: 'validation should fail'
         !employee.validate()
@@ -55,8 +55,8 @@ class EmployeeSpec extends Specification {
 
     void "Test code can not exceed 5 characters"() {
 
-        when: 'code have 6 characters'
-        employee.code = "123456"
+        when: 'codigo have 6 characters'
+        employee.codigo = "123456"
 
         then: 'validation should fail'
         !employee.validate()

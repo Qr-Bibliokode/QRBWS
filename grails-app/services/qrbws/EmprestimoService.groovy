@@ -3,19 +3,19 @@ package qrbws
 import grails.transaction.Transactional
 
 @Transactional
-class LendingService {
+class EmprestimoService {
 
     def stockService
 
-    Stock lend(Lending lending) {
+    Stock emprestar(Emprestimo lending) {
         // TODO: Verify if have stock
         // TODO: Verify if the user exceeds the max of lending books
         // TODO: Verify if the user have a book exceed the limit date
         stockService.decreases(lending)
     }
 
-    Lending devolution(Lending lending) {
-        lending.dateIn = new Date()
+    Emprestimo devolution(Emprestimo lending) {
+        lending.dateDevolucao = new Date()
         lending.returned = true
         stockService.increases(lending)
     }

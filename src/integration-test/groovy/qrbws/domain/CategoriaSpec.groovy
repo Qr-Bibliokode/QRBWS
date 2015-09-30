@@ -2,28 +2,28 @@ package qrbws.domain
 
 import grails.test.mixin.TestFor
 import org.apache.commons.lang.StringUtils
-import qrbws.Category
+import qrbws.Categoria
 import spock.lang.Specification
 
-@TestFor(Category)
-class CategorySpec extends Specification {
+@TestFor(Categoria)
+class CategoriaSpec extends Specification {
 
-    Category category
+    Categoria category
 
     def setup() {
-        category = new Category()
+        category = new Categoria()
     }
 
     void "Test description can't be null"() {
 
-        when: 'description be null'
-        category.description = null
+        when: 'descricao be null'
+        category.descricao = null
 
         then: 'validation should fail'
         !category.validate()
 
-        when: 'description be filled'
-        category.description = 'Science'
+        when: 'descricao be filled'
+        category.descricao = 'Science'
 
         then: 'validation should pass'
         category.validate()
@@ -31,14 +31,14 @@ class CategorySpec extends Specification {
 
     void "Test description can not exceed 50 characters"() {
 
-        when: 'description be 51 characers'
-        category.description = StringUtils.leftPad("", 51, '*')
+        when: 'descricao be 51 characers'
+        category.descricao = StringUtils.leftPad("", 51, '*')
 
         then: 'validation should fail'
         !category.validate()
 
-        when: 'description be 50 characers'
-        category.description = StringUtils.leftPad("", 50, '*')
+        when: 'descricao be 50 characers'
+        category.descricao = StringUtils.leftPad("", 50, '*')
 
         then: 'validation should pass'
         category.validate()

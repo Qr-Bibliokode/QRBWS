@@ -2,28 +2,28 @@ package qrbws.domain
 
 import grails.test.mixin.TestFor
 import org.apache.commons.lang.StringUtils
-import qrbws.Person
+import qrbws.Pessoa
 import spock.lang.Specification
 
-@TestFor(Person)
-class PersonSpec extends Specification {
+@TestFor(Pessoa)
+class PessoaSpec extends Specification {
 
-    Person person
+    Pessoa person
 
     def setup() {
-        person = new Person(name: "felansu", email: "gaferran@gmail.com")
+        person = new Pessoa(nome: "felansu", email: "gaferran@gmail.com")
     }
 
     void "Test that name must begin with an upper case letter"() {
 
-        when: 'the name begins with a lower letter'
-        person.name = 'ferran'
+        when: 'the nome begins with a lower letter'
+        person.nome = 'ferran'
 
         then: 'validation should pass'
         person.validate()
 
-        when: 'the name begins with an upper case letter'
-        person.name = 'Ferran'
+        when: 'the nome begins with an upper case letter'
+        person.nome = 'Ferran'
 
         then: 'validation should pass'
         person.validate()
@@ -31,8 +31,8 @@ class PersonSpec extends Specification {
 
     void "Test that name don't can have numbers"() {
 
-        when: 'the name have a number'
-        person.name = 'ferran1989'
+        when: 'the nome have a number'
+        person.nome = 'ferran1989'
 
         then: 'validation should fail'
         !person.validate()
@@ -40,14 +40,14 @@ class PersonSpec extends Specification {
 
     void "Test name can not exceed 254 characters"() {
 
-        when: 'name be 255 characers'
-        person.name = StringUtils.leftPad("", 255, '*')
+        when: 'nome be 255 characers'
+        person.nome = StringUtils.leftPad("", 255, '*')
 
         then: 'validation should fail'
         !person.validate()
 
-        when: 'name be 254 characers'
-        person.name = StringUtils.leftPad("", 254, '*')
+        when: 'nome be 254 characers'
+        person.nome = StringUtils.leftPad("", 254, '*')
 
         then: 'validation should pass'
         person.validate()
@@ -55,8 +55,8 @@ class PersonSpec extends Specification {
 
     void "Test name can not be blank"() {
 
-        when: 'name is blank'
-        person.name = ' '
+        when: 'nome is blank'
+        person.nome = ' '
 
         then: 'validation should fail'
         !person.validate()
@@ -98,14 +98,14 @@ class PersonSpec extends Specification {
 
     void "Test phone can not exceed 15 characters"() {
 
-        when: 'phone be 16 characers'
-        person.phone = StringUtils.leftPad("", 16, '*')
+        when: 'celular be 16 characers'
+        person.celular = StringUtils.leftPad("", 16, '*')
 
         then: 'validation should fail'
         !person.validate()
 
-        when: 'phone be 15 characers'
-        person.phone = StringUtils.leftPad("", 15, '*')
+        when: 'celular be 15 characers'
+        person.celular = StringUtils.leftPad("", 15, '*')
 
         then: 'validation should pass'
         person.validate()

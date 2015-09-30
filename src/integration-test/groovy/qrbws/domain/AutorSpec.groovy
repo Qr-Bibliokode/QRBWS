@@ -2,24 +2,24 @@ package qrbws.domain
 
 import grails.test.mixin.TestFor
 import org.apache.commons.lang.StringUtils
-import qrbws.Author
+import qrbws.Autor
 import spock.lang.Specification
 
-@TestFor(Author)
-public class AuthorSpec extends Specification {
+@TestFor(Autor)
+public class AutorSpec extends Specification {
 
-    Author author
+    Autor author
 
     def setup() {
-        author = new Author()
+        author = new Autor()
     }
 
 
     void "Test notes can be null"() {
 
-        when: 'notes be null'
-        author.name = 'ferran'
-        author.notes = null
+        when: 'informacoesAdicionais be null'
+        author.nome = 'ferran'
+        author.informacoesAdicionais = null
 
         then: 'validation should pass'
         author.validate()
@@ -27,8 +27,8 @@ public class AuthorSpec extends Specification {
 
     void "Test name can't be null"() {
 
-        when: 'name be null'
-        author.name = null
+        when: 'nome be null'
+        author.nome = null
 
         then: 'validation should fail'
         !author.validate()
@@ -36,8 +36,8 @@ public class AuthorSpec extends Specification {
 
     void "Test name can't be blank"() {
 
-        when: 'name be blank'
-        author.name = ''
+        when: 'nome be blank'
+        author.nome = ''
 
         then: 'validation should fail'
         !author.validate()
@@ -45,14 +45,14 @@ public class AuthorSpec extends Specification {
 
     void "Test name can not exceed 50 characters"() {
 
-        when: 'name be 51 characers'
-        author.name = StringUtils.leftPad("A", 51, 'A')
+        when: 'nome be 51 characers'
+        author.nome = StringUtils.leftPad("A", 51, 'A')
 
         then: 'validation should fail'
         !author.validate()
 
-        when: 'name be 40 characers'
-        author.name = StringUtils.leftPad("B", 40, 'B')
+        when: 'nome be 40 characers'
+        author.nome = StringUtils.leftPad("B", 40, 'B')
 
         then: 'validation should pass'
         author.validate()
@@ -60,8 +60,8 @@ public class AuthorSpec extends Specification {
 
     void "Test name can not allow numbers"() {
 
-        when: 'name be a number'
-        author.name = 'Messi10'
+        when: 'nome be a number'
+        author.nome = 'Messi10'
 
         then: 'validation should fail'
         !author.validate()

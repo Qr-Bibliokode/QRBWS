@@ -28,13 +28,13 @@
     "application/json"
   ],
   "paths": {
-    "/author/": {
+    "/autor/": {
       "get": {
         "tags": [
-          "author"
+          "autor"
         ],
         "operationId": "list",
-        "description": "Returns all authors",
+        "description": "Retorna todos os autores",
         "produces": [
           "application/json"
         ],
@@ -42,7 +42,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -51,7 +51,7 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -59,11 +59,10 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of authors.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Author"
+                "$ref": "#/definitions/autor"
               }
             }
           }
@@ -71,10 +70,10 @@
       },
       "post": {
         "tags": [
-          "author"
+          "autor"
         ],
         "summary": "Create",
-        "description": "Create an author",
+        "description": "Cria um autor",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -82,33 +81,33 @@
         "parameters": [
           {
             "in": "body",
-            "name": "author",
-            "description": "Author object",
+            "name": "autor",
+            "description": "objeto autor",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Author"
+                "$ref": "#/definitions/autor"
               }
             }
           }
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/author/{authorId}": {
+    "/autor/{autorId}": {
       "get": {
         "tags": [
-          "author"
+          "autor"
         ],
-        "summary": "Get an author",
-        "description": "For valid response an author with authorId param should be exist",
+        "summary": "Retorna um autor pelo ID",
+        "description": "Para uma resposta válida, deve existir um autor com o ID que vem como parâmetro",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -116,8 +115,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "authorId",
-            "description": "Author id",
+            "name": "autorId",
+            "description": "Id do autor",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -125,19 +124,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "delete": {
         "tags": [
-          "author"
+          "autor"
         ],
-        "summary": "Delete an author",
-        "description": "For valid response an author with authorId param should be exist",
+        "summary": "Deleta um autor",
+        "description": "Para uma resposta válida, deve existir um autor com o ID que vem como parâmetro",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -145,8 +144,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "authorId",
-            "description": "Author id",
+            "name": "autorId",
+            "description": "Id do autor",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -154,19 +153,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "put": {
         "tags": [
-          "author"
+          "autor"
         ],
         "summary": "Update",
-        "description": "Update an author",
+        "description": "Atualiza um autor",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -174,19 +173,19 @@
         "parameters": [
           {
             "in": "body",
-            "name": "author",
-            "description": "Author object",
+            "name": "autor",
+            "description": "objeto autor",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Author"
+                "$ref": "#/definitions/autor"
               }
             }
           },
           {
             "in": "path",
-            "name": "authorId",
-            "description": "Author id",
+            "name": "autorId",
+            "description": "autor id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -194,21 +193,21 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/book/": {
+    "/livro/": {
       "get": {
         "tags": [
-          "book"
+          "livro"
         ],
         "operationId": "list",
-        "description": "Returns all books",
+        "description": "Retorna todos os livros",
         "produces": [
           "application/json"
         ],
@@ -216,7 +215,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -225,7 +224,8 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -233,11 +233,11 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of books.",
+            "description": "Uma lista de livros.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Book"
+                "$ref": "#/definitions/livro"
               }
             }
           }
@@ -245,10 +245,10 @@
       },
       "post": {
         "tags": [
-          "book"
+          "livro"
         ],
         "summary": "Create",
-        "description": "Create an book",
+        "description": "Cria uma livro",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -256,33 +256,33 @@
         "parameters": [
           {
             "in": "body",
-            "name": "book",
-            "description": "Book object",
+            "name": "livro",
+            "description": "livro object",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Book"
+                "$ref": "#/definitions/livro"
               }
             }
           }
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/book/{bookId}": {
+    "/livro/{livroId}": {
       "get": {
         "tags": [
-          "book"
+          "livro"
         ],
-        "summary": "Get an book",
-        "description": "For valid response an book with bookId param should be exist",
+        "summary": "Retorna uma livro",
+        "description": "Para uma resposta válida um livro com livroId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -290,8 +290,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "bookId",
-            "description": "Book id",
+            "name": "livroId",
+            "description": "livro id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -299,19 +299,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "delete": {
         "tags": [
-          "book"
+          "livro"
         ],
-        "summary": "Delete an book",
-        "description": "For valid response an book with bookId param should be exist",
+        "summary": "Deleta um livro",
+        "description": "Para uma resposta válida um livro com livroId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -319,8 +319,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "bookId",
-            "description": "Book id",
+            "name": "livroId",
+            "description": "livro id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -328,19 +328,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "put": {
         "tags": [
-          "book"
+          "livro"
         ],
         "summary": "Update",
-        "description": "Update an book",
+        "description": "Atualiza um livro",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -348,19 +348,19 @@
         "parameters": [
           {
             "in": "body",
-            "name": "book",
-            "description": "Book object",
+            "name": "livro",
+            "description": "livro object",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Book"
+                "$ref": "#/definitions/livro"
               }
             }
           },
           {
             "in": "path",
-            "name": "bookId",
-            "description": "Book id",
+            "name": "livroId",
+            "description": "livro id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -368,21 +368,21 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/category/": {
+    "/categoria/": {
       "get": {
         "tags": [
-          "category"
+          "categoria"
         ],
         "operationId": "list",
-        "description": "Returns all categories",
+        "description": "Retorna todas as categorias",
         "produces": [
           "application/json"
         ],
@@ -390,7 +390,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -399,7 +399,8 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -407,11 +408,11 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of categories.",
+            "description": "Uma lista de categorias.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Category"
+                "$ref": "#/definitions/categoria"
               }
             }
           }
@@ -419,10 +420,10 @@
       },
       "post": {
         "tags": [
-          "category"
+          "categoria"
         ],
         "summary": "Create",
-        "description": "Create an category",
+        "description": "Cria uma categoria",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -430,33 +431,33 @@
         "parameters": [
           {
             "in": "body",
-            "name": "category",
-            "description": "Category object",
+            "name": "categoria",
+            "description": "categoria object",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Category"
+                "$ref": "#/definitions/categoria"
               }
             }
           }
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/category/{categoryId}": {
+    "/categoria/{categoriaId}": {
       "get": {
         "tags": [
-          "category"
+          "categoria"
         ],
-        "summary": "Get an category",
-        "description": "For valid response an category with categoryId param should be exist",
+        "summary": "Retorna uma categoria",
+        "description": "Para uma resposta válida um categoria com categoriaId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -464,8 +465,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "categoryId",
-            "description": "Category id",
+            "name": "categoriaId",
+            "description": "categoria id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -473,19 +474,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "delete": {
         "tags": [
-          "category"
+          "categoria"
         ],
-        "summary": "Delete an category",
-        "description": "For valid response an category with categoryId param should be exist",
+        "summary": "Deleta um categoria",
+        "description": "Para uma resposta válida um categoria com categoriaId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -493,8 +494,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "categoryId",
-            "description": "Category id",
+            "name": "categoriaId",
+            "description": "categoria id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -502,19 +503,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "put": {
         "tags": [
-          "category"
+          "categoria"
         ],
         "summary": "Update",
-        "description": "Update an category",
+        "description": "Atualiza uma categoria",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -522,19 +523,19 @@
         "parameters": [
           {
             "in": "body",
-            "name": "category",
-            "description": "Category object",
+            "name": "categoria",
+            "description": "categoria object",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Category"
+                "$ref": "#/definitions/categoria"
               }
             }
           },
           {
             "in": "path",
-            "name": "categoryId",
-            "description": "Author id",
+            "name": "categoriaId",
+            "description": "autor id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -542,21 +543,21 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/comment/": {
+    "/comentario/": {
       "get": {
         "tags": [
-          "comment"
+          "comentario"
         ],
         "operationId": "list",
-        "description": "Returns all categories",
+        "description": "Retorna todas as categorias",
         "produces": [
           "application/json"
         ],
@@ -564,7 +565,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -573,7 +574,8 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -581,7 +583,7 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of categories.",
+            "description": "Uma lista de categorias.",
             "schema": {
               "type": "array",
               "items": {
@@ -593,10 +595,10 @@
       },
       "post": {
         "tags": [
-          "comment"
+          "comentario"
         ],
         "summary": "Create",
-        "description": "Create an comment",
+        "description": "Cria uma comentario",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -604,7 +606,7 @@
         "parameters": [
           {
             "in": "body",
-            "name": "comment",
+            "name": "comentario",
             "description": "Comment object",
             "required": true,
             "schema": {
@@ -616,21 +618,21 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/comment/{commentId}": {
+    "/comentario/{comentarioId}": {
       "get": {
         "tags": [
-          "comment"
+          "comentario"
         ],
-        "summary": "Get an comment",
-        "description": "For valid response an comment with commentId param should be exist",
+        "summary": "Retorna uma comentario",
+        "description": "Para uma resposta válida um comentario com comentarioId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -638,7 +640,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "commentId",
+            "name": "comentarioId",
             "description": "Comment id",
             "required": true,
             "type": "integer",
@@ -647,19 +649,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "delete": {
         "tags": [
-          "comment"
+          "comentario"
         ],
-        "summary": "Delete an comment",
-        "description": "For valid response an comment with commentId param should be exist",
+        "summary": "Deleta um comentario",
+        "description": "Para uma resposta válida um comentario com comentarioId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -667,7 +669,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "commentId",
+            "name": "comentarioId",
             "description": "Comment id",
             "required": true,
             "type": "integer",
@@ -676,19 +678,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "put": {
         "tags": [
-          "comment"
+          "comentario"
         ],
         "summary": "Update",
-        "description": "Update an comment",
+        "description": "Atualiza um comentario",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -696,7 +698,7 @@
         "parameters": [
           {
             "in": "body",
-            "name": "comment",
+            "name": "comentario",
             "description": "Comment object",
             "required": true,
             "schema": {
@@ -707,8 +709,8 @@
           },
           {
             "in": "path",
-            "name": "commentId",
-            "description": "Author id",
+            "name": "comentarioId",
+            "description": "autor id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -716,21 +718,21 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/employee/": {
+    "/empregado/": {
       "get": {
         "tags": [
-          "employee"
+          "empregado"
         ],
         "operationId": "list",
-        "description": "Returns all categories",
+        "description": "Retorna todos os empregados",
         "produces": [
           "application/json"
         ],
@@ -738,7 +740,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -747,7 +749,8 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -755,7 +758,7 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of categories.",
+            "description": "Uma lista de empregados.",
             "schema": {
               "type": "array",
               "items": {
@@ -767,10 +770,10 @@
       },
       "post": {
         "tags": [
-          "employee"
+          "empregado"
         ],
         "summary": "Create",
-        "description": "Create an employee",
+        "description": "Cria um empregado",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -778,33 +781,33 @@
         "parameters": [
           {
             "in": "body",
-            "name": "employee",
-            "description": "Comment object",
+            "name": "empregado",
+            "description": "Objeto empregado",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Comment"
+                "$ref": "#/definitions/Empregado"
               }
             }
           }
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/employee/{employeeId}": {
+    "/empregado/{empregadoId}": {
       "get": {
         "tags": [
-          "employee"
+          "empregado"
         ],
-        "summary": "Get an employee",
-        "description": "For valid response an employee with employeeId param should be exist",
+        "summary": "Retorna uma empregado",
+        "description": "Para uma resposta válida um empregado com empregadoId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -812,7 +815,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "employeeId",
+            "name": "empregadoId",
             "description": "Comment id",
             "required": true,
             "type": "integer",
@@ -821,19 +824,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "delete": {
         "tags": [
-          "employee"
+          "empregado"
         ],
-        "summary": "Delete an employee",
-        "description": "For valid response an employee with employeeId param should be exist",
+        "summary": "Deleta um empregado",
+        "description": "Para uma resposta válida um empregado com empregadoId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -841,7 +844,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "employeeId",
+            "name": "empregadoId",
             "description": "Comment id",
             "required": true,
             "type": "integer",
@@ -850,19 +853,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "put": {
         "tags": [
-          "employee"
+          "empregado"
         ],
         "summary": "Update",
-        "description": "Update an employee",
+        "description": "Atualiza um empregado",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -870,8 +873,8 @@
         "parameters": [
           {
             "in": "body",
-            "name": "employee",
-            "description": "Comment object",
+            "name": "empregado",
+            "description": "Objeto empreagdo",
             "required": true,
             "schema": {
               "items": {
@@ -881,8 +884,8 @@
           },
           {
             "in": "path",
-            "name": "employeeId",
-            "description": "Author id",
+            "name": "empregadoId",
+            "description": "Id do empregado",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -890,21 +893,21 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/holiday/": {
+    "/feriado/": {
       "get": {
         "tags": [
-          "holiday"
+          "feriado"
         ],
         "operationId": "list",
-        "description": "Returns all categories",
+        "description": "Retorna todos os feriados",
         "produces": [
           "application/json"
         ],
@@ -912,7 +915,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -921,7 +924,8 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -929,11 +933,11 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of categories.",
+            "description": "Uma lista de feriados",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Comment"
+                "$ref": "#/definitions/Feriado"
               }
             }
           }
@@ -941,10 +945,10 @@
       },
       "post": {
         "tags": [
-          "holiday"
+          "feriado"
         ],
         "summary": "Create",
-        "description": "Create an holiday",
+        "description": "Cria um feriado",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -952,33 +956,33 @@
         "parameters": [
           {
             "in": "body",
-            "name": "holiday",
-            "description": "Comment object",
+            "name": "feriado",
+            "description": "Objeto feriado",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Comment"
+                "$ref": "#/definitions/Feriado"
               }
             }
           }
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/holiday/{holidayId}": {
+    "/feriado/{feriadoId}": {
       "get": {
         "tags": [
-          "holiday"
+          "feriado"
         ],
-        "summary": "Get an holiday",
-        "description": "For valid response an holiday with holidayId param should be exist",
+        "summary": "Retorna um feriado",
+        "description": "Para uma resposta válida um feriado com feriadoId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -986,8 +990,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "holidayId",
-            "description": "Comment id",
+            "name": "feriadoId",
+            "description": "Id do feriado",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -995,19 +999,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "delete": {
         "tags": [
-          "holiday"
+          "feriado"
         ],
-        "summary": "Delete an holiday",
-        "description": "For valid response an holiday with holidayId param should be exist",
+        "summary": "Deleta um feriado",
+        "description": "Para uma resposta válida um feriado com feriadoId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -1015,8 +1019,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "holidayId",
-            "description": "Comment id",
+            "name": "feriadoId",
+            "description": "Id do feriado",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1024,19 +1028,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "put": {
         "tags": [
-          "holiday"
+          "feriado"
         ],
         "summary": "Update",
-        "description": "Update an holiday",
+        "description": "Atualiza um feriado",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -1044,19 +1048,19 @@
         "parameters": [
           {
             "in": "body",
-            "name": "holiday",
-            "description": "Comment object",
+            "name": "feriado",
+            "description": "Objeto feriado",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Comment"
+                "$ref": "#/definitions/Feriado"
               }
             }
           },
           {
             "in": "path",
-            "name": "holidayId",
-            "description": "Author id",
+            "name": "feriadoId",
+            "description": "Id do feriado",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1064,21 +1068,21 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/idiom/": {
+    "/idioma/": {
       "get": {
         "tags": [
-          "idiom"
+          "idioma"
         ],
         "operationId": "list",
-        "description": "Returns all categories",
+        "description": "Retorna todos os idiomas",
         "produces": [
           "application/json"
         ],
@@ -1086,7 +1090,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -1095,7 +1099,8 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -1103,11 +1108,11 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of categories.",
+            "description": "Uma lista de idiomas.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Idiom"
+                "$ref": "#/definitions/idioma"
               }
             }
           }
@@ -1115,10 +1120,10 @@
       },
       "post": {
         "tags": [
-          "idiom"
+          "idioma"
         ],
         "summary": "Create",
-        "description": "Create an idiom",
+        "description": "Cria um idioma",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -1126,33 +1131,33 @@
         "parameters": [
           {
             "in": "body",
-            "name": "idiom",
-            "description": "Idiom object",
+            "name": "idioma",
+            "description": "Objeto idioma",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Idiom"
+                "$ref": "#/definitions/idioma"
               }
             }
           }
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/idiom/{idiomId}": {
+    "/idioma/{idiomaId}": {
       "get": {
         "tags": [
-          "idiom"
+          "idioma"
         ],
-        "summary": "Get an idiom",
-        "description": "For valid response an idiom with idiomId param should be exist",
+        "summary": "Retorna um idioma",
+        "description": "Para uma resposta válida um idioma com idiomaId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -1160,8 +1165,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "idiomId",
-            "description": "Idiom id",
+            "name": "idiomaId",
+            "description": "Id do idioma",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1169,19 +1174,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "delete": {
         "tags": [
-          "idiom"
+          "idioma"
         ],
-        "summary": "Delete an idiom",
-        "description": "For valid response an idiom with idiomId param should be exist",
+        "summary": "Deleta um idioma",
+        "description": "Para uma resposta válida um idioma com idiomaId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -1189,8 +1194,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "idiomId",
-            "description": "Author id",
+            "name": "idiomaId",
+            "description": "Id do idioma",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1198,19 +1203,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "put": {
         "tags": [
-          "idiom"
+          "idioma"
         ],
         "summary": "Update",
-        "description": "Update an idiom",
+        "description": "Atualiza um idioma",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -1218,19 +1223,19 @@
         "parameters": [
           {
             "in": "body",
-            "name": "idiom",
-            "description": "Idiom object",
+            "name": "idioma",
+            "description": "Objeto idioma",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Idiom"
+                "$ref": "#/definitions/idioma"
               }
             }
           },
           {
             "in": "path",
-            "name": "idiomId",
-            "description": "Idiom id",
+            "name": "idiomaId",
+            "description": "Id do idioma",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1238,21 +1243,21 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/lending/": {
+    "/emprestimo/": {
       "get": {
         "tags": [
-          "lending"
+          "emprestimo"
         ],
         "operationId": "list",
-        "description": "Returns all lendings",
+        "description": "Retorna todos os emprestimos",
         "produces": [
           "application/json"
         ],
@@ -1260,7 +1265,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -1269,7 +1274,8 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -1277,58 +1283,58 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of lendings.",
+            "description": "Uma lista de emprestimos.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/lending"
+                "$ref": "#/definitions/emprestimo"
               }
             }
           }
         }
       }
     },
-    "/lending/lend": {
+    "/emprestimo/emprestar": {
       "post": {
         "tags": [
-          "lending"
+          "emprestimo"
         ],
-        "summary": "Lend",
-        "description": "Lend a book",
-        "operationId": "lend",
+        "summary": "Emprestar",
+        "description": "Empresta um livro",
+        "operationId": "emprestar",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
             "in": "body",
-            "name": "lending",
-            "description": "lending object",
+            "name": "emprestimo",
+            "description": "Objeto emprestimo",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/lending"
+                "$ref": "#/definitions/emprestimo"
               }
             }
           }
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/lending/{lendingId}": {
+    "/emprestimo/{emprestimoId}": {
       "get": {
         "tags": [
-          "lending"
+          "emprestimo"
         ],
-        "summary": "Get an lending",
-        "description": "For valid response an lending with lendingId param should be exist",
+        "summary": "Retorna um emprestimo",
+        "description": "Para uma resposta válida um emprestimo com emprestimoId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -1336,8 +1342,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "lendingId",
-            "description": "lending id",
+            "name": "emprestimoId",
+            "description": "Id do emprestimo",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1345,19 +1351,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "delete": {
         "tags": [
-          "lending"
+          "emprestimo"
         ],
-        "summary": "Delete an lending",
-        "description": "For valid response an lending with lendingId param should be exist",
+        "summary": "Deleta um emprestimo",
+        "description": "Para uma resposta válida um emprestimo com emprestimoId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -1365,8 +1371,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "lendingId",
-            "description": "lending id",
+            "name": "emprestimoId",
+            "description": "Id do emprestimo",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1374,19 +1380,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "put": {
         "tags": [
-          "lending"
+          "emprestimo"
         ],
         "summary": "Update",
-        "description": "Update an lending",
+        "description": "Atualiza um emprestimo",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -1394,19 +1400,19 @@
         "parameters": [
           {
             "in": "body",
-            "name": "lending",
-            "description": "lending object",
+            "name": "emprestimo",
+            "description": "Objeto emprestimo",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/lending"
+                "$ref": "#/definitions/emprestimo"
               }
             }
           },
           {
             "in": "path",
-            "name": "lendingId",
-            "description": "lending id",
+            "name": "emprestimoId",
+            "description": "Id do emprestimo",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1414,10 +1420,10 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
@@ -1428,7 +1434,7 @@
           "stock"
         ],
         "operationId": "list",
-        "description": "Returns all stock",
+        "description": "Retorna todas as stock",
         "produces": [
           "application/json"
         ],
@@ -1436,7 +1442,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -1445,7 +1451,8 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -1453,7 +1460,7 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of stock.",
+            "description": "Uma lista de stock.",
             "schema": {
               "type": "array",
               "items": {
@@ -1468,7 +1475,7 @@
           "stock"
         ],
         "summary": "Create",
-        "description": "Create an stock",
+        "description": "Cria uma stock",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -1488,10 +1495,10 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
@@ -1501,8 +1508,8 @@
         "tags": [
           "stock"
         ],
-        "summary": "Get an stock",
-        "description": "For valid response an stock with stockId param should be exist",
+        "summary": "Retorna uma stock",
+        "description": "Para uma resposta válida um stock com stockId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -1519,10 +1526,10 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
@@ -1530,8 +1537,8 @@
         "tags": [
           "stock"
         ],
-        "summary": "Delete an stock",
-        "description": "For valid response an stock with stockId param should be exist",
+        "summary": "Deleta um stock",
+        "description": "Para uma resposta válida um stock com stockId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -1548,10 +1555,10 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
@@ -1560,7 +1567,7 @@
           "stock"
         ],
         "summary": "Update",
-        "description": "Update an stock",
+        "description": "Atualiza um stock",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -1588,21 +1595,21 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/student/": {
+    "/estudante/": {
       "get": {
         "tags": [
-          "student"
+          "estudante"
         ],
         "operationId": "list",
-        "description": "Returns all students",
+        "description": "Retorna todos os estudantes",
         "produces": [
           "application/json"
         ],
@@ -1610,7 +1617,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -1619,7 +1626,8 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -1627,11 +1635,11 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of students.",
+            "description": "Uma lista de estudantes.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Student"
+                "$ref": "#/definitions/estudante"
               }
             }
           }
@@ -1639,10 +1647,10 @@
       },
       "post": {
         "tags": [
-          "student"
+          "estudante"
         ],
         "summary": "Create",
-        "description": "Create an student",
+        "description": "Cria uma estudante",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -1650,33 +1658,33 @@
         "parameters": [
           {
             "in": "body",
-            "name": "student",
-            "description": "Student object",
+            "name": "estudante",
+            "description": "Objeto estudante",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Student"
+                "$ref": "#/definitions/estudante"
               }
             }
           }
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/student/{studentId}": {
+    "/estudante/{estudanteId}": {
       "get": {
         "tags": [
-          "student"
+          "estudante"
         ],
-        "summary": "Get an student",
-        "description": "For valid response an student with studentId param should be exist",
+        "summary": "Retorna uma estudante",
+        "description": "Para uma resposta válida um estudante com estudanteId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -1684,8 +1692,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "studentId",
-            "description": "Student id",
+            "name": "estudanteId",
+            "description": "Id do estudante",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1693,19 +1701,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "delete": {
         "tags": [
-          "student"
+          "estudante"
         ],
-        "summary": "Delete an student",
-        "description": "For valid response an student with studentId param should be exist",
+        "summary": "Deleta um estudante",
+        "description": "Para uma resposta válida um estudante com estudanteId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -1713,8 +1721,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "studentId",
-            "description": "Student id",
+            "name": "estudanteId",
+            "description": "Id do estudante",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1722,19 +1730,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "put": {
         "tags": [
-          "student"
+          "estudante"
         ],
         "summary": "Update",
-        "description": "Update an student",
+        "description": "Atualiza um estudante",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -1742,19 +1750,19 @@
         "parameters": [
           {
             "in": "body",
-            "name": "student",
-            "description": "Student object",
+            "name": "estudante",
+            "description": "Objeto estudante",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Student"
+                "$ref": "#/definitions/estudante"
               }
             }
           },
           {
             "in": "path",
-            "name": "studentId",
-            "description": "Student id",
+            "name": "estudanteId",
+            "description": "Id do estudante",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1762,21 +1770,21 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/userAccount/": {
+    "/contaUsuario/": {
       "get": {
         "tags": [
-          "userAccount"
+          "contaUsuario"
         ],
         "operationId": "list",
-        "description": "Returns all userAccounts",
+        "description": "Retorna todas as contas de usuario",
         "produces": [
           "application/json"
         ],
@@ -1784,7 +1792,7 @@
           {
             "name": "max",
             "in": "query",
-            "description": "The maximum number to list",
+            "description": "Número máximo de elementos na lista",
             "type": "integer",
             "default": 10,
             "minimum": 1,
@@ -1793,7 +1801,8 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "The offset from the first result to list from",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -1801,11 +1810,11 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of userAccounts.",
+            "description": "Uma lista de contas de usuario",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/userAccount"
+                "$ref": "#/definitions/contaUsuario"
               }
             }
           }
@@ -1813,10 +1822,10 @@
       },
       "post": {
         "tags": [
-          "userAccount"
+          "contaUsuario"
         ],
         "summary": "Create",
-        "description": "Create an userAccount",
+        "description": "Cria uma contaUsuario",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -1824,33 +1833,33 @@
         "parameters": [
           {
             "in": "body",
-            "name": "userAccount",
-            "description": "userAccount object",
+            "name": "contaUsuario",
+            "description": "Objeto contaUsuario",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/userAccount"
+                "$ref": "#/definitions/contaUsuario"
               }
             }
           }
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     },
-    "/userAccount/{userAccountId}": {
+    "/contaUsuario/{contaUsuarioId}": {
       "get": {
         "tags": [
-          "userAccount"
+          "contaUsuario"
         ],
-        "summary": "Get an userAccount",
-        "description": "For valid response an userAccount with userAccountId param should be exist",
+        "summary": "Retorna uma contaUsuario",
+        "description": "Para uma resposta válida um contaUsuario com contaUsuarioId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -1858,8 +1867,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "userAccountId",
-            "description": "userAccount id",
+            "name": "contaUsuarioId",
+            "description": "contaUsuario id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1867,19 +1876,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "delete": {
         "tags": [
-          "userAccount"
+          "contaUsuario"
         ],
-        "summary": "Delete an userAccount",
-        "description": "For valid response an userAccount with userAccountId param should be exist",
+        "summary": "Deleta uma contaUsuario",
+        "description": "Para uma resposta válida um contaUsuario com contaUsuarioId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -1887,8 +1896,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "userAccountId",
-            "description": "userAccount id",
+            "name": "contaUsuarioId",
+            "description": "Id da contaUsuario",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1896,19 +1905,19 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       },
       "put": {
         "tags": [
-          "userAccount"
+          "contaUsuario"
         ],
         "summary": "Update",
-        "description": "Update an userAccount",
+        "description": "Atualiza um contaUsuario",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -1916,19 +1925,19 @@
         "parameters": [
           {
             "in": "body",
-            "name": "userAccount",
-            "description": "userAccount object",
+            "name": "contaUsuario",
+            "description": "Objeto contaUsuario",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/userAccount"
+                "$ref": "#/definitions/contaUsuario"
               }
             }
           },
           {
             "in": "path",
-            "name": "userAccountId",
-            "description": "userAccount id",
+            "name": "contaUsuarioId",
+            "description": "Id da contaUsuario",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1936,48 +1945,48 @@
         ],
         "responses": {
           "400": {
-            "description": "Invalid params supplied"
+            "description": "Erro 400: Parâmetros inválidos"
           },
           "404": {
-            "description": "Order not found"
+            "description": "Erro 404: Página não encontrada"
           }
         }
       }
     }
   },
   "definitions": {
-    "Author": {
+    "Autor": {
       "type": "object",
       "required": [
         "id",
-        "name",
-        "notes"
+        "nome",
+        "informacoesAdicionais"
       ],
       "properties": {
         "id": {
           "type": "integer",
           "format": "int64"
         },
-        "name": {
+        "nome": {
           "type": "string"
         },
-        "notes": {
+        "informacoesAdicionais": {
           "type": "string"
         },
-        "books": {
+        "livros": {
           "type": "array",
           "items": {
-            "$ref": "Book"
+            "$ref": "Livro"
           }
         }
       }
     },
-    "Book": {
+    "Livro": {
       "type": "object",
       "required": [
         "id",
         "isbn",
-        "title"
+        "titulo"
       ],
       "properties": {
         "id": {
@@ -1987,184 +1996,188 @@
         "isbn": {
           "type": "string"
         },
-        "title": {
+        "titulo": {
           "type": "string"
         },
-        "synopsis": {
+        "sinopse": {
           "type": "string"
         },
-        "pages": {
+        "paginas": {
           "type": "integer",
           "format": "int32"
         },
-        "idiom": {
-          "$ref": "Idiom"
+        "idioma": {
+          "$ref": "Idioma"
         },
-        "category": {
-          "$ref": "Category"
+        "categoria": {
+          "$ref": "Categoria"
         },
-        "authors": {
+        "autores": {
           "type": "array",
           "items": {
-            "$ref": "Author"
+            "$ref": "Autor"
           }
         },
-        "comments": {
+        "comentarios": {
           "type": "array",
           "items": {
-            "$ref": "Comment"
+            "$ref": "Comentario"
           }
         }
       }
     },
-    "Category": {
+    "Categoria": {
       "type": "object",
       "required": [
         "id",
-        "description"
+        "descricao"
       ],
       "properties": {
         "id": {
           "type": "integer",
           "format": "int64"
         },
-        "description": {
+        "descricao": {
           "type": "string"
         }
       }
     },
-    "Comment": {
+    "Commentario": {
       "type": "object",
       "required": [
         "id",
-        "avaliation",
-        "userAccount"
+        "avaliacao",
+        "contaUsuario"
       ],
       "properties": {
         "id": {
           "type": "integer",
           "format": "int64"
         },
-        "avaliation": {
+        "avaliacao": {
           "type": "integer",
           "format": "int32"
         },
-        "description": {
+        "descricao": {
           "type": "string"
         },
         "dataCreated": {
           "type": "date",
           "format": "date"
         },
-        "recommendation": {
+        "recomendacao": {
           "type": "boolean",
           "format": "boolean"
         },
-        "userAccount": {
-          "$ref": "UserAccount"
+        "contaUsuario": {
+          "$ref": "ContaUsuario"
         }
       }
     },
-    "Employee": {
+    "Empregado": {
       "allOf": [
         {
-          "$ref": "#/definitions/Person"
+          "$ref": "#/definitions/Pessoa"
         },
         {
           "type": "object",
           "required": [
-            "code"
+            "codigo"
           ],
           "properties": {
-            "code": {
+            "codigo": {
               "type": "string"
             }
           }
         }
       ]
     },
-    "Holiday": {
+    "Feriado": {
       "type": "object",
       "required": [
         "id",
-        "description",
-        "startDate",
-        "finalDate"
+        "descricao",
+        "dataInicio",
+        "dataFim"
       ],
       "properties": {
         "id": {
           "type": "integer",
           "format": "int64"
         },
-        "description": {
+        "descricao": {
           "type": "string"
         },
-        "startDate": {
+        "dataInicio": {
           "type": "date",
           "format": "date"
         },
-        "finalDate": {
+        "dataFim": {
           "type": "date",
           "format": "date"
         }
       }
     },
-    "Idiom": {
+    "Idioma": {
       "type": "object",
       "required": [
         "id",
-        "description"
+        "descricao"
       ],
       "properties": {
         "id": {
           "type": "integer",
           "format": "int64"
         },
-        "description": {
+        "descricao": {
           "type": "string"
         }
       }
     },
-    "Lending": {
+    "Emprestimo": {
       "type": "object",
       "required": [
         "id",
-        "userAccount",
-        "book"
+        "contaUsuario",
+        "livro"
       ],
       "properties": {
         "id": {
           "type": "integer",
           "format": "int64"
         },
-        "dateOut": {
+        "dateEmprestimo": {
           "type": "date",
           "format": "date"
         },
-        "dateIn": {
+        "dateDevolucao": {
           "type": "date",
           "format": "date"
         },
-        "returned": {
+        "dateLimiteDevolucao": {
+          "type": "date",
+          "format": "date"
+        },
+        "devolvido": {
           "type": "boolean",
           "format": "boolean"
         },
-        "avised": {
+        "alertado": {
           "type": "boolean",
           "format": "boolean"
         },
-        "userAccount": {
-          "$ref": "UserAccount"
+        "contaUsuario": {
+          "$ref": "ContaUsuario"
         },
-        "book": {
-          "$ref": "Book"
+        "livro": {
+          "$ref": "Livro"
         }
       }
     },
-    "Person": {
+    "Pessoa": {
       "type": "object",
       "required": [
-        "name",
+        "nome",
         "email"
       ],
       "properties": {
@@ -2172,13 +2185,13 @@
           "type": "integer",
           "format": "int64"
         },
-        "name": {
+        "nome": {
           "type": "string"
         },
         "email": {
           "type": "string"
         },
-        "phone": {
+        "celular": {
           "type": "string"
         }
       }
@@ -2187,48 +2200,52 @@
       "type": "object",
       "required": [
         "id",
-        "book",
-        "availableBalance"
+        "livro",
+        "disponivel"
       ],
       "properties": {
         "id": {
           "type": "integer",
           "format": "int64"
         },
-        "book": {
-          "$ref": "Book"
+        "livro": {
+          "$ref": "Livro"
         },
-        "availableBalance": {
+        "disponivel": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
           "type": "integer",
           "format": "int32"
         }
       }
     },
-    "Student": {
+    "Estudante": {
       "allOf": [
         {
-          "$ref": "#/definitions/Person"
+          "$ref": "#/definitions/Pessoa"
         },
         {
           "type": "object",
           "required": [
-            "enrollment"
+            "matricula"
           ],
           "properties": {
-            "enrollment": {
+            "matricula": {
               "type": "string"
             }
           }
         }
       ]
     },
-    "UserAccount": {
+    "ContaUsuario": {
       "type": "object",
       "required": [
         "id",
         "login",
-        "password",
-        "person"
+        "senha",
+        "pessoa"
       ],
       "properties": {
         "id": {
@@ -2238,13 +2255,13 @@
         "login": {
           "type": "string"
         },
-        "password": {
+        "senha": {
           "type": "string"
         },
-        "person": {
-          "$ref": "Person"
+        "pessoa": {
+          "$ref": "Pessoa"
         },
-        "enabled": {
+        "ativo": {
           "type": "boolean",
           "format": "boolean"
         }

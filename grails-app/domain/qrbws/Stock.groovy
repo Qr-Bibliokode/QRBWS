@@ -6,13 +6,13 @@ import grails.rest.Resource
 
 class Stock {
 
-    Book book
-    Integer availableBalance
-    Integer totalBalance
+    Livro livro
+    Integer disponivel
+    Integer total
 
     static constraints = {
-        book nullable: false, unique: true
-        availableBalance min: 0
-        totalBalance min: 0
+        livro nullable: false, unique: true
+        disponivel min: 0
+        total min: 0
     }
 }

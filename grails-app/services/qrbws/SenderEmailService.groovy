@@ -11,15 +11,15 @@ class SenderEmailService implements ISender {
 
     IMessageCreator messageCreator;
 
-    void sendEmail(UserAccount userAccount, IMessageCreator messageCreator) {
+    void sendEmail(ContaUsuario userAccount, IMessageCreator messageCreator) {
         this.messageCreator = messageCreator;
         send(userAccount);
     }
 
     @Override
-    public void send(UserAccount userAccount) {
-        String userName = userAccount.person.name
-        String userEmail = userAccount.person.email
+    public void send(ContaUsuario userAccount) {
+        String userName = userAccount.pessoa.nome
+        String userEmail = userAccount.pessoa.email
         String messageType = messageCreator.type.description
         log.info """INICIO - E-MAIL ${messageType} para ${userName} - ${userEmail}"""
         mailService.sendMail {
@@ -30,7 +30,7 @@ class SenderEmailService implements ISender {
         log.info """FINAL - SMS ${messageType} enviado com sucesso para ${userName} - ${userEmail}"""
     }
 
-    private String createMessage(UserAccount userAccount) {
+    private String createMessage(ContaUsuario userAccount) {
         return messageCreator.create(userAccount);
     }
 

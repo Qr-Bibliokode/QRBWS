@@ -2,36 +2,36 @@ package qrbws.domain
 
 import grails.test.mixin.TestFor
 import org.apache.commons.lang.StringUtils
-import qrbws.Book
+import qrbws.Livro
 import spock.lang.Specification
 
-@TestFor(Book)
-class BookSpec extends Specification {
+@TestFor(Livro)
+class LivroSpec extends Specification {
 
-    Book book
+    Livro book
 
     def setup() {
-        book = new Book()
+        book = new Livro()
     }
 
     void "Test that isbn can't be null or blank"() {
 
         when: 'the isbn is null'
-        book.title = 'Book Test'
+        book.titulo = 'Livro Test'
         book.isbn = null
 
         then: 'validation should fail'
         !book.validate()
 
         when: 'the isbn is blank'
-        book.title = 'Book Test'
+        book.titulo = 'Livro Test'
         book.isbn = ' '
 
         then: 'validation should fail'
         !book.validate()
 
         when: 'the isbn is filled'
-        book.title = 'Book Test'
+        book.titulo = 'Livro Test'
         book.isbn = '1'
 
         then: 'validation should pass'
@@ -41,14 +41,14 @@ class BookSpec extends Specification {
     void "Test that isbn can't have more than 17 characters"() {
 
         when: 'the isbn have 18 characters'
-        book.title = 'Book Test'
+        book.titulo = 'Livro Test'
         book.isbn = StringUtils.leftPad("", 18, '1')
 
         then: 'validation should fail'
         !book.validate()
 
         when: 'the isbn have 17 characters'
-        book.title = 'Book Test'
+        book.titulo = 'Livro Test'
         book.isbn = StringUtils.leftPad("", 17, '1')
 
         then: 'validation should pass'
@@ -58,8 +58,8 @@ class BookSpec extends Specification {
     void "Test that isbn is unique"() {
 
         when: 'the isbn repeated try save'
-        new Book(title: 'Book Test', isbn: '123').save(flush: true)
-        book.title = 'Book Copy'
+        new Livro(titulo: 'Livro Test', isbn: '123').save(flush: true)
+        book.titulo = 'Livro Copy'
         book.isbn = '123'
 
         then: 'validation should fail'
@@ -68,22 +68,22 @@ class BookSpec extends Specification {
 
     void "Test that title can't be null or blank"() {
 
-        when: 'the title is null'
-        book.title = null
+        when: 'the titulo is null'
+        book.titulo = null
         book.isbn = '123'
 
         then: 'validation should fail'
         !book.validate()
 
-        when: 'the title is blank'
-        book.title = ' '
+        when: 'the titulo is blank'
+        book.titulo = ' '
         book.isbn = '123'
 
         then: 'validation should fail'
         !book.validate()
 
         when: 'the isbn is filled'
-        book.title = 'Book Test'
+        book.titulo = 'Livro Test'
         book.isbn = '123'
 
         then: 'validation should pass'
@@ -92,15 +92,15 @@ class BookSpec extends Specification {
 
     void "Test that title can't have more than 254 characters"() {
 
-        when: 'the title have 255 characters'
-        book.title = StringUtils.leftPad("", 255, '*')
+        when: 'the titulo have 255 characters'
+        book.titulo = StringUtils.leftPad("", 255, '*')
         book.isbn = '123'
 
         then: 'validation should fail'
         !book.validate()
 
-        when: 'the title have 254 characters'
-        book.title = StringUtils.leftPad("", 254, '*')
+        when: 'the titulo have 254 characters'
+        book.titulo = StringUtils.leftPad("", 254, '*')
         book.isbn = '123'
 
         then: 'validation should pass'
@@ -110,8 +110,8 @@ class BookSpec extends Specification {
     void "Test that title is unique"() {
 
         when: 'the isbn repeated try save'
-        new Book(title: 'Book Test', isbn: '123').save(flush: true)
-        book.title = 'Book Test'
+        new Livro(titulo: 'Livro Test', isbn: '123').save(flush: true)
+        book.titulo = 'Livro Test'
         book.isbn = '123456'
 
         then: 'validation should fail'
@@ -120,18 +120,18 @@ class BookSpec extends Specification {
 
     void "Test that synopsis can be null"() {
 
-        when: 'the synopsis is null'
-        book.title = 'book'
+        when: 'the sinopse is null'
+        book.titulo = 'book'
         book.isbn = '123'
-        book.synopsis = null
+        book.sinopse = null
 
         then: 'validation should pass'
         book.validate()
 
-        when: 'the synopsis is blank'
-        book.title = ''
+        when: 'the sinopse is blank'
+        book.titulo = ''
         book.isbn = '123'
-        book.synopsis = ''
+        book.sinopse = ''
 
         then: 'validation should fail'
         !book.validate()
@@ -140,26 +140,26 @@ class BookSpec extends Specification {
 
     void "Test that synopsis can be between 5 and 5000 characters"() {
 
-        when: 'the synopsis have 4 characters'
-        book.title = 'Book'
+        when: 'the sinopse have 4 characters'
+        book.titulo = 'Livro'
         book.isbn = '123'
-        book.synopsis = '1234'
+        book.sinopse = '1234'
 
         then: 'validation should fail'
         !book.validate()
 
-        when: 'the synopsis have 5001 characters'
-        book.title = 'title'
+        when: 'the sinopse have 5001 characters'
+        book.titulo = 'titulo'
         book.isbn = '123'
-        book.synopsis = StringUtils.leftPad("", 5001, '*')
+        book.sinopse = StringUtils.leftPad("", 5001, '*')
 
         then: 'validation should fail'
         !book.validate()
 
-        when: 'the synopsis have 5001 characters'
-        book.title = 'title'
+        when: 'the sinopse have 5001 characters'
+        book.titulo = 'titulo'
         book.isbn = '123'
-        book.synopsis = '12345'
+        book.sinopse = '12345'
 
         then: 'validation should pass'
         book.validate()
@@ -167,10 +167,10 @@ class BookSpec extends Specification {
 
     void "Test that pages can be null"() {
 
-        when: 'the pages is null'
-        book.title = 'book'
+        when: 'the paginas is null'
+        book.titulo = 'book'
         book.isbn = '123'
-        book.pages = null
+        book.paginas = null
 
         then: 'validation should pass'
         book.validate()
@@ -179,26 +179,26 @@ class BookSpec extends Specification {
 
     void "Test that pages can have a maximum value of 5"() {
 
-        when: 'the pages have value 4'
-        book.title = 'Book'
+        when: 'the paginas have value 4'
+        book.titulo = 'Livro'
         book.isbn = '123'
-        book.pages = 1234
+        book.paginas = 1234
 
         then: 'validation should pass'
         book.validate()
 
-        when: 'the pages have value 10000'
-        book.title = 'title'
+        when: 'the paginas have value 10000'
+        book.titulo = 'titulo'
         book.isbn = '123'
-        book.pages = 10000
+        book.paginas = 10000
 
         then: 'validation should fail'
         !book.validate()
 
-        when: 'the synopsis have value 250'
-        book.title = 'title'
+        when: 'the sinopse have value 250'
+        book.titulo = 'titulo'
         book.isbn = '123'
-        book.pages = 250
+        book.paginas = 250
 
         then: 'validation should pass'
         book.validate()
@@ -206,10 +206,10 @@ class BookSpec extends Specification {
 
     void "Test that pages can't have negative value"() {
 
-        when: 'the pages have a negative value'
-        book.title = 'Book'
+        when: 'the paginas have a negative value'
+        book.titulo = 'Livro'
         book.isbn = '123'
-        book.pages = -1
+        book.paginas = -1
 
         then: 'validation should fail'
         !book.validate()

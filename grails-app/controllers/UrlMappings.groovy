@@ -10,8 +10,8 @@ class UrlMappings {
         "/"(view: "/index")
         "500"(view: '/error')
 
-        "/api/userAccount"(resources: "userAccount")
-        "/api/lending/lend"(controller: 'lending', action: 'lend')
-        "/api/lending"(resources: "lending")
+        "/api/contaUsuario"(resources: "contaUsuario")
+        "/api/emprestimo/emprestar"(controller: 'emprestimo', action: 'emprestar')
+        "/api/emprestimo"(resources: "emprestimo")
     }
 }

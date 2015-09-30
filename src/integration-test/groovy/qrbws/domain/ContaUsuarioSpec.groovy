@@ -2,20 +2,20 @@ package qrbws.domain
 
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
-import qrbws.Person
-import qrbws.UserAccount
+import qrbws.Pessoa
+import qrbws.ContaUsuario
 import spock.lang.Specification
 
-@TestFor(UserAccount)
-@Mock([Person])
-class UserAccountSpec extends Specification {
+@TestFor(ContaUsuario)
+@Mock([Pessoa])
+class ContaUsuarioSpec extends Specification {
 
-    UserAccount userAccount
+    ContaUsuario userAccount
     def person, status
 
     def setup() {
-        person = new Person(name: "felansu", email: "gaferran@gmail.com").save()
-        userAccount = new UserAccount(login: 'teste', password: 'teste', status: status, person: person)
+        person = new Pessoa(nome: "felansu", email: "gaferran@gmail.com").save()
+        userAccount = new ContaUsuario(login: 'teste', senha: 'teste', status: status, pessoa: person)
     }
 
     void "Test that login can't be null or blank"() {
@@ -62,20 +62,20 @@ class UserAccountSpec extends Specification {
 
     void "Test that password can't be null or blank"() {
 
-        when: 'the password is null'
-        userAccount.password = null
+        when: 'the senha is null'
+        userAccount.senha = null
 
         then: 'validation should fail'
         !userAccount.validate()
 
-        when: 'the password is blank'
-        userAccount.password = ' '
+        when: 'the senha is blank'
+        userAccount.senha = ' '
 
         then: 'validation should fail'
         !userAccount.validate()
 
-        when: 'the password is filled'
-        userAccount.password = 'senha'
+        when: 'the senha is filled'
+        userAccount.senha = 'senha'
 
         then: 'validation should pass'
         userAccount.validate()
@@ -83,20 +83,20 @@ class UserAccountSpec extends Specification {
 
     void "Test password must be between 5 and 20 characters"() {
 
-        when: 'the password have 4 characters'
-        userAccount.password = 'Test'
+        when: 'the senha have 4 characters'
+        userAccount.senha = 'Test'
 
         then: 'validation should fail'
         !userAccount.validate()
 
-        when: 'the password have 21 characters'
-        userAccount.password = '123456789112345678912'
+        when: 'the senha have 21 characters'
+        userAccount.senha = '123456789112345678912'
 
         then: 'validation should fail'
         !userAccount.validate()
 
-        when: 'the password have 8 characters'
-        userAccount.password = '12345678'
+        when: 'the senha have 8 characters'
+        userAccount.senha = '12345678'
 
         then: 'validation should pass'
         userAccount.validate()
@@ -104,8 +104,8 @@ class UserAccountSpec extends Specification {
 
     void "Test userAccount need a person for save"() {
 
-        when: 'the person is null'
-        userAccount.person = null
+        when: 'the pessoa is null'
+        userAccount.pessoa = null
 
         then: 'validation should fail'
         !userAccount.validate()

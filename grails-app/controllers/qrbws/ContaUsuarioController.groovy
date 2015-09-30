@@ -7,7 +7,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
-class UserAccountController {
+class ContaUsuarioController {
 
     def userAccountService
 
@@ -17,19 +17,19 @@ class UserAccountController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond UserAccount.list(params), model:[userAccountCount: UserAccount.count()]
+        respond ContaUsuario.list(params), model:[userAccountCount: ContaUsuario.count()]
     }
 
-    def show(UserAccount userAccount) {
+    def show(ContaUsuario userAccount) {
         respond userAccount
     }
 
     def create() {
-        respond new UserAccount(params)
+        respond new ContaUsuario(params)
     }
 
     @Transactional
-    def save(UserAccount userAccount) {
+    def save(ContaUsuario userAccount) {
         if (userAccount == null) {
             transactionStatus.setRollbackOnly()
             notFound()
@@ -45,25 +45,25 @@ class UserAccountController {
         userAccount.save flush:true
 
         if (userAccount) {
-            userAccount.person.phone != null ? userAccountService.sendSMS(userAccount, new MessageCreatorSMSRegister()) : ''
+            userAccount.pessoa.celular != null ? userAccountService.sendSMS(userAccount, new MessageCreatorSMSRegister()) : ''
             userAccountService.sendEmail(userAccount, new MessageCreatorEmailRegister())
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), userAccount.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'userAccount.label', default: 'ContaUsuario'), userAccount.id])
                 redirect userAccount
             }
             '*' { respond userAccount, [status: CREATED] }
         }
     }
 
-    def edit(UserAccount userAccount) {
+    def edit(ContaUsuario userAccount) {
         respond userAccount
     }
 
     @Transactional
-    def update(UserAccount userAccount) {
+    def update(ContaUsuario userAccount) {
         if (userAccount == null) {
             transactionStatus.setRollbackOnly()
             notFound()
@@ -80,7 +80,7 @@ class UserAccountController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), userAccount.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'userAccount.label', default: 'ContaUsuario'), userAccount.id])
                 redirect userAccount
             }
             '*'{ respond userAccount, [status: OK] }
@@ -88,7 +88,7 @@ class UserAccountController {
     }
 
     @Transactional
-    def delete(UserAccount userAccount) {
+    def delete(ContaUsuario userAccount) {
 
         if (userAccount == null) {
             transactionStatus.setRollbackOnly()
@@ -100,7 +100,7 @@ class UserAccountController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), userAccount.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'userAccount.label', default: 'ContaUsuario'), userAccount.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -110,7 +110,7 @@ class UserAccountController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'userAccount.label', default: 'UserAccount'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'userAccount.label', default: 'ContaUsuario'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

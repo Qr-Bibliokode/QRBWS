@@ -1,9 +1,9 @@
 package qrbws.sender.messages
 
-import qrbws.UserAccount
+import qrbws.ContaUsuario
 
 interface IMessageCreator {
     MessageType getType();
 
-    String create(UserAccount userAccount);
+    String create(ContaUsuario userAccount);
 }

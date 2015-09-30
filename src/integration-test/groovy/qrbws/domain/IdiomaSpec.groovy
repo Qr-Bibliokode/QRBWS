@@ -2,58 +2,58 @@ package qrbws.domain
 
 import grails.test.mixin.TestFor
 import org.apache.commons.lang.StringUtils
-import qrbws.Holiday
+import qrbws.Idioma
 import spock.lang.Specification
 
-@TestFor(Holiday)
-class HolidaySpec extends Specification {
+@TestFor(Idioma)
+class IdiomaSpec extends Specification {
 
-    Holiday holiday
+    Idioma idiom
 
     def setup() {
-        holiday = new Holiday(startDate: new Date(), finalDate: new Date())
+        idiom = new Idioma()
     }
 
     void "Test description can't be null"() {
 
         when: 'value is null'
-        holiday.description = null
+        idiom.descricao = null
 
         then: 'validation should fail'
-        !holiday.validate()
+        !idiom.validate()
     }
 
     void "Test description can't be blank"() {
 
         when: 'value is blank'
-        holiday.description = ' '
+        idiom.descricao = ' '
 
         then: 'validation should fail'
-        !holiday.validate()
+        !idiom.validate()
     }
 
     void "Test description max value is 45"() {
 
         when: 'value is 46'
-        holiday.description = StringUtils.leftPad("*", 46, '*')
+        idiom.descricao = StringUtils.leftPad("*", 46, '*')
 
         then: 'validation should fail'
-        !holiday.validate()
+        !idiom.validate()
 
         when: 'value is 45'
-        holiday.description = StringUtils.leftPad("*", 45, '*')
+        idiom.descricao = StringUtils.leftPad("*", 45, '*')
 
         then: 'validation should pass'
-        holiday.validate()
+        idiom.validate()
     }
 
     void "Test description is unique"() {
 
         when: 'save two equals descriptions'
-        new Holiday(description: 'Code Day', startDate: new Date(), finalDate: new Date()).save(flush: true)
-        holiday.description = 'Code Day'
+        new Idioma(descricao: 'Spanish').save(flush: true)
+        idiom.descricao = 'Spanish'
 
         then: 'validation should fail'
-        !holiday.validate()
+        !idiom.validate()
     }
 }
