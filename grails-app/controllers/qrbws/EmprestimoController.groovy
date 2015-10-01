@@ -7,7 +7,7 @@ import static org.springframework.http.HttpStatus.*
 @Transactional(readOnly = true)
 class EmprestimoController {
 
-    def emprestimoService
+    EmprestimoService emprestimoService
 
     static responseFormats = ['json']
 
@@ -94,13 +94,7 @@ class EmprestimoController {
             return
         }
 
-        emprestimo.dateEmprestimo = new Date()
-
-        emprestimo.save flush: true
-
-        if (emprestimo) {
-            emprestimoService.emprestar(emprestimo)
-        }
+        emprestimoService.emprestar(emprestimo);
 
         request.withFormat {
             form multipartForm {

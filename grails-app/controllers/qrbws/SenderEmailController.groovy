@@ -9,4 +9,6 @@ class SenderEmailController {
     void sendEmailRegister(ContaUsuario contaUsuario) {
         senderEmailService.sendEmail(contaUsuario, new MessageCreatorEmailRegister())
     }
+
+    // TODO: Implementar sendEmailAvisoDevolucao
 }

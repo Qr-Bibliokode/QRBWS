@@ -7,6 +7,8 @@ class ContaUsuario {
     Pessoa pessoa
     Boolean ativo
 
+    static hasMany = [multas: Multa]
+
     ContaUsuario() {
         this.ativo = true
     }
