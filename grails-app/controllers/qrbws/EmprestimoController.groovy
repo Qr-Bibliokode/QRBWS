@@ -7,7 +7,7 @@ import static org.springframework.http.HttpStatus.*
 @Transactional(readOnly = true)
 class EmprestimoController {
 
-    def lendingService
+    def emprestimoService
 
     static responseFormats = ['json']
 
@@ -20,60 +20,60 @@ class EmprestimoController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Emprestimo.list(params), model: [lendingCount: Emprestimo.count()]
+        respond Emprestimo.list(params), model: [emprestimoCount: Emprestimo.count()]
     }
 
-    def show(Emprestimo lending) {
-        respond lending
+    def show(Emprestimo emprestimo) {
+        respond emprestimo
     }
 
     def create() {
         respond new Emprestimo(params)
     }
 
-    def edit(Emprestimo lending) {
-        respond lending
+    def edit(Emprestimo emprestimo) {
+        respond emprestimo
     }
 
     @Transactional
-    def update(Emprestimo lending) {
-        if (lending == null) {
+    def update(Emprestimo emprestimo) {
+        if (emprestimo == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (lending.hasErrors()) {
+        if (emprestimo.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond lending.errors, view: 'edit'
+            respond emprestimo.errors, view: 'edit'
             return
         }
 
-        lending.save flush: true
+        emprestimo.save flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'lending.label', default: 'Emprestimo'), lending.id])
-                redirect lending
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), emprestimo.id])
+                redirect emprestimo
             }
-            '*' { respond lending, [status: OK] }
+            '*' { respond emprestimo, [status: OK] }
         }
     }
 
     @Transactional
-    def delete(Emprestimo lending) {
+    def delete(Emprestimo emprestimo) {
 
-        if (lending == null) {
+        if (emprestimo == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        lending.delete flush: true
+        emprestimo.delete flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'lending.label', default: 'Emprestimo'), lending.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), emprestimo.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }
@@ -81,68 +81,68 @@ class EmprestimoController {
     }
 
     @Transactional
-    def emprestar(Emprestimo lending) {
-        if (lending == null) {
+    def emprestar(Emprestimo emprestimo) {
+        if (emprestimo == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (lending.hasErrors()) {
+        if (emprestimo.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond lending.errors, view: 'create'
+            respond emprestimo.errors, view: 'create'
             return
         }
 
-        lending.dateEmprestimo = new Date()
+        emprestimo.dateEmprestimo = new Date()
 
-        lending.save flush: true
+        emprestimo.save flush: true
 
-        if (lending) {
-            lendingService.emprestar(lending)
+        if (emprestimo) {
+            emprestimoService.emprestar(emprestimo)
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'lending.label', default: 'Emprestimo'), lending.id])
-                redirect lending
+                flash.message = message(code: 'default.created.message', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), emprestimo.id])
+                redirect emprestimo
             }
-            '*' { respond lending, [status: CREATED] }
+            '*' { respond emprestimo, [status: CREATED] }
         }
     }
 
     @Transactional
-    def devolver(Emprestimo lending) {
-        if (lending == null) {
+    def devolver(Emprestimo emprestimo) {
+        if (emprestimo == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
 
-        lendingService.devolver(lending)
+        emprestimoService.devolver(emprestimo)
 
-        if (lending.hasErrors()) {
+        if (emprestimo.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond lending.errors, view: 'edit'
+            respond emprestimo.errors, view: 'edit'
             return
         }
 
-        lending.save flush: true
+        emprestimo.save flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'lending.label', default: 'Emprestimo'), lending.id])
-                redirect lending
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), emprestimo.id])
+                redirect emprestimo
             }
-            '*' { respond lending, [status: OK] }
+            '*' { respond emprestimo, [status: OK] }
         }
     }
 
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'lending.label', default: 'Emprestimo'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NOT_FOUND }
