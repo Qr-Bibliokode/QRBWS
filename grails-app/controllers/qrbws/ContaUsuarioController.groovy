@@ -9,7 +9,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class ContaUsuarioController {
 
-    def userAccountService
+    def contaUsuarioService
 
     static responseFormats = ['json']
 
@@ -17,11 +17,11 @@ class ContaUsuarioController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond ContaUsuario.list(params), model:[userAccountCount: ContaUsuario.count()]
+        respond ContaUsuario.list(params), model:[contaUsuarioCount: ContaUsuario.count()]
     }
 
-    def show(ContaUsuario userAccount) {
-        respond userAccount
+    def show(ContaUsuario contaUsuario) {
+        respond contaUsuario
     }
 
     def create() {
@@ -29,78 +29,78 @@ class ContaUsuarioController {
     }
 
     @Transactional
-    def save(ContaUsuario userAccount) {
-        if (userAccount == null) {
+    def save(ContaUsuario contaUsuario) {
+        if (contaUsuario == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (userAccount.hasErrors()) {
+        if (contaUsuario.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond userAccount.errors, view:'create'
+            respond contaUsuario.errors, view:'create'
             return
         }
 
-        userAccount.save flush:true
+        contaUsuario.save flush:true
 
-        if (userAccount) {
-            userAccount.pessoa.celular != null ? userAccountService.sendSMS(userAccount, new MessageCreatorSMSRegister()) : ''
-            userAccountService.sendEmail(userAccount, new MessageCreatorEmailRegister())
+        if (contaUsuario) {
+            contaUsuario.pessoa.celular != null ? contaUsuarioService.sendSMS(contaUsuario, new MessageCreatorSMSRegister()) : ''
+            contaUsuarioService.sendEmail(contaUsuario, new MessageCreatorEmailRegister())
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'userAccount.label', default: 'ContaUsuario'), userAccount.id])
-                redirect userAccount
+                flash.message = message(code: 'default.created.message', args: [message(code: 'contaUsuario.label', default: 'ContaUsuario'), contaUsuario.id])
+                redirect contaUsuario
             }
-            '*' { respond userAccount, [status: CREATED] }
+            '*' { respond contaUsuario, [status: CREATED] }
         }
     }
 
-    def edit(ContaUsuario userAccount) {
-        respond userAccount
+    def edit(ContaUsuario contaUsuario) {
+        respond contaUsuario
     }
 
     @Transactional
-    def update(ContaUsuario userAccount) {
-        if (userAccount == null) {
+    def update(ContaUsuario contaUsuario) {
+        if (contaUsuario == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (userAccount.hasErrors()) {
+        if (contaUsuario.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond userAccount.errors, view:'edit'
+            respond contaUsuario.errors, view:'edit'
             return
         }
 
-        userAccount.save flush:true
+        contaUsuario.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'userAccount.label', default: 'ContaUsuario'), userAccount.id])
-                redirect userAccount
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'contaUsuario.label', default: 'ContaUsuario'), contaUsuario.id])
+                redirect contaUsuario
             }
-            '*'{ respond userAccount, [status: OK] }
+            '*'{ respond contaUsuario, [status: OK] }
         }
     }
 
     @Transactional
-    def delete(ContaUsuario userAccount) {
+    def delete(ContaUsuario contaUsuario) {
 
-        if (userAccount == null) {
+        if (contaUsuario == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        userAccount.delete flush:true
+        contaUsuario.delete flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'userAccount.label', default: 'ContaUsuario'), userAccount.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'contaUsuario.label', default: 'ContaUsuario'), contaUsuario.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -110,7 +110,7 @@ class ContaUsuarioController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'userAccount.label', default: 'ContaUsuario'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'contaUsuario.label', default: 'ContaUsuario'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

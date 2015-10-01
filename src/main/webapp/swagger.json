@@ -726,13 +726,13 @@
         }
       }
     },
-    "/empregado/": {
+    "/funcionario/": {
       "get": {
         "tags": [
-          "empregado"
+          "funcionario"
         ],
         "operationId": "list",
-        "description": "Retorna todos os empregados",
+        "description": "Retorna todos os funcionarios",
         "produces": [
           "application/json"
         ],
@@ -758,7 +758,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Uma lista de empregados.",
+            "description": "Uma lista de funcionarios.",
             "schema": {
               "type": "array",
               "items": {
@@ -770,10 +770,10 @@
       },
       "post": {
         "tags": [
-          "empregado"
+          "funcionario"
         ],
         "summary": "Create",
-        "description": "Cria um empregado",
+        "description": "Cria um funcionario",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -781,12 +781,12 @@
         "parameters": [
           {
             "in": "body",
-            "name": "empregado",
-            "description": "Objeto empregado",
+            "name": "funcionario",
+            "description": "Objeto funcionario",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Empregado"
+                "$ref": "#/definitions/funcionario"
               }
             }
           }
@@ -801,13 +801,13 @@
         }
       }
     },
-    "/empregado/{empregadoId}": {
+    "/funcionario/{funcionarioId}": {
       "get": {
         "tags": [
-          "empregado"
+          "funcionario"
         ],
-        "summary": "Retorna uma empregado",
-        "description": "Para uma resposta válida um empregado com empregadoId deve existir",
+        "summary": "Retorna uma funcionario",
+        "description": "Para uma resposta válida um funcionario com funcionarioId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -815,7 +815,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "empregadoId",
+            "name": "funcionarioId",
             "description": "Comment id",
             "required": true,
             "type": "integer",
@@ -833,10 +833,10 @@
       },
       "delete": {
         "tags": [
-          "empregado"
+          "funcionario"
         ],
-        "summary": "Deleta um empregado",
-        "description": "Para uma resposta válida um empregado com empregadoId deve existir",
+        "summary": "Deleta um funcionario",
+        "description": "Para uma resposta válida um funcionario com funcionarioId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -844,7 +844,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "empregadoId",
+            "name": "funcionarioId",
             "description": "Comment id",
             "required": true,
             "type": "integer",
@@ -862,10 +862,10 @@
       },
       "put": {
         "tags": [
-          "empregado"
+          "funcionario"
         ],
         "summary": "Update",
-        "description": "Atualiza um empregado",
+        "description": "Atualiza um funcionario",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -873,8 +873,8 @@
         "parameters": [
           {
             "in": "body",
-            "name": "empregado",
-            "description": "Objeto empreagdo",
+            "name": "funcionario",
+            "description": "Objeto funcionario",
             "required": true,
             "schema": {
               "items": {
@@ -884,8 +884,8 @@
           },
           {
             "in": "path",
-            "name": "empregadoId",
-            "description": "Id do empregado",
+            "name": "funcionarioId",
+            "description": "Id do funcionario",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -2074,7 +2074,7 @@
         }
       }
     },
-    "Empregado": {
+    "funcionario": {
       "allOf": [
         {
           "$ref": "#/definitions/Pessoa"

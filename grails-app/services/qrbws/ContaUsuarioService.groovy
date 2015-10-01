@@ -9,11 +9,11 @@ class ContaUsuarioService {
     def senderEmailService
     def senderSMSService
 
-    def sendSMS(ContaUsuario userAccount, IMessageCreator messageCreator) {
-        senderSMSService.sendSMS(userAccount, messageCreator)
+    def sendSMS(ContaUsuario contaUsuario, IMessageCreator messageCreator) {
+        senderSMSService.sendSMS(contaUsuario, messageCreator)
     }
 
-    def sendEmail(ContaUsuario userAccount, IMessageCreator messageCreator) {
-        senderEmailService.sendEmail(userAccount, messageCreator)
+    def sendEmail(ContaUsuario contaUsuario, IMessageCreator messageCreator) {
+        senderEmailService.sendEmail(contaUsuario, messageCreator)
     }
 }

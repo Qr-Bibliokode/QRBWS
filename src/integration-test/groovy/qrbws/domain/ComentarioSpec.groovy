@@ -21,7 +21,7 @@ class ComentarioSpec extends Specification {
             book = new Livro(titulo: 'Livro Test', isbn: '123').save()
             person = new Pessoa(nome: 'Pessoa Name', email: 'pessoa@email.com').save()
             user = new ContaUsuario(login: 'User Login', senha: '12345', pessoa: person).save()
-            comentario = new Comentario(descricao: 'Comentario Test', book: book, userAccount: user, avaliacao: 2)
+            comentario = new Comentario(descricao: 'Comentario Test', book: book, contaUsuario: user, avaliacao: 2)
         }
     }
 
@@ -88,16 +88,16 @@ class ComentarioSpec extends Specification {
         !Comentario.find(comentario).recomendacao
     }
 
-    void "Test comentario need an UserAccount for save"() {
+    void "Test comentario need an ContaUsuario for save"() {
 
-        when: 'save an comentario without userAccount'
-        comentario.userAccount = null
+        when: 'save an comentario without contaUsuario'
+        comentario.contaUsuario = null
 
         then: 'validation should fail'
         !comentario.validate()
 
-        when: 'save an comentario whit userAccount'
-        comentario.userAccount = user
+        when: 'save an comentario whit contaUsuario'
+        comentario.contaUsuario = user
 
         then: 'validation should pass'
         comentario.validate()

@@ -6,7 +6,7 @@ class SenderEmailController {
 
     SenderEmailService senderEmailService
 
-    void sendEmailRegister(ContaUsuario userAccount) {
-        senderEmailService.sendEmail(userAccount, new MessageCreatorEmailRegister())
+    void sendEmailRegister(ContaUsuario contaUsuario) {
+        senderEmailService.sendEmail(contaUsuario, new MessageCreatorEmailRegister())
     }
 }

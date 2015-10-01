@@ -5,5 +5,5 @@ import qrbws.ContaUsuario
 interface IMessageCreator {
     MessageType getType();
 
-    String create(ContaUsuario userAccount);
+    String create(ContaUsuario contaUsuario);
 }

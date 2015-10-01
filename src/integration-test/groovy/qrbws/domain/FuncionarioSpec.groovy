@@ -1,16 +1,16 @@
 package qrbws.domain
 
 import grails.test.mixin.TestFor
-import qrbws.Empregado
+import qrbws.Funcionario
 import spock.lang.Specification
 
-@TestFor(Empregado)
-class EmpregadoSpec extends Specification {
+@TestFor(Funcionario)
+class FuncionarioSpec extends Specification {
 
-    Empregado employee
+    Funcionario employee
 
     def setup() {
-        employee = new Empregado(nome: "Aparecida", email: "apare@cida.com")
+        employee = new Funcionario(nome: "Aparecida", email: "apare@cida.com")
     }
 
     void "Test code can't be null"() {
@@ -31,7 +31,7 @@ class EmpregadoSpec extends Specification {
     void "Test code must be unique"() {
 
         when: 'save a employe with 123 codigo'
-        new Empregado(nome: "Test", email: "test@test.com", codigo: 123).save(flush: true)
+        new Funcionario(nome: "Test", email: "test@test.com", codigo: 123).save(flush: true)
         employee.codigo = "123"
 
         then: 'validation should fail'

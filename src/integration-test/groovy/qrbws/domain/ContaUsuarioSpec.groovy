@@ -10,104 +10,104 @@ import spock.lang.Specification
 @Mock([Pessoa])
 class ContaUsuarioSpec extends Specification {
 
-    ContaUsuario userAccount
+    ContaUsuario contaUsuario
     def person, status
 
     def setup() {
         person = new Pessoa(nome: "felansu", email: "gaferran@gmail.com").save()
-        userAccount = new ContaUsuario(login: 'teste', senha: 'teste', status: status, pessoa: person)
+        contaUsuario = new ContaUsuario(login: 'teste', senha: 'teste', status: status, pessoa: person)
     }
 
     void "Test that login can't be null or blank"() {
 
         when: 'the isbn is null'
-        userAccount.login = null
+        contaUsuario.login = null
 
         then: 'validation should fail'
-        !userAccount.validate()
+        !contaUsuario.validate()
 
         when: 'the login is blank'
-        userAccount.login = ' '
+        contaUsuario.login = ' '
 
         then: 'validation should fail'
-        !userAccount.validate()
+        !contaUsuario.validate()
 
         when: 'the login is filled'
-        userAccount.login = 'Teste'
+        contaUsuario.login = 'Teste'
 
         then: 'validation should pass'
-        userAccount.validate()
+        contaUsuario.validate()
     }
 
     void "Test login must be between 5 and 20 characters"() {
 
         when: 'the login have 4 characters'
-        userAccount.login = 'Test'
+        contaUsuario.login = 'Test'
 
         then: 'validation should fail'
-        !userAccount.validate()
+        !contaUsuario.validate()
 
         when: 'the login have 21 characters'
-        userAccount.login = '123456789112345678912'
+        contaUsuario.login = '123456789112345678912'
 
         then: 'validation should fail'
-        !userAccount.validate()
+        !contaUsuario.validate()
 
         when: 'the login have 8 characters'
-        userAccount.login = '12345678'
+        contaUsuario.login = '12345678'
 
         then: 'validation should pass'
-        userAccount.validate()
+        contaUsuario.validate()
     }
 
     void "Test that password can't be null or blank"() {
 
         when: 'the senha is null'
-        userAccount.senha = null
+        contaUsuario.senha = null
 
         then: 'validation should fail'
-        !userAccount.validate()
+        !contaUsuario.validate()
 
         when: 'the senha is blank'
-        userAccount.senha = ' '
+        contaUsuario.senha = ' '
 
         then: 'validation should fail'
-        !userAccount.validate()
+        !contaUsuario.validate()
 
         when: 'the senha is filled'
-        userAccount.senha = 'senha'
+        contaUsuario.senha = 'senha'
 
         then: 'validation should pass'
-        userAccount.validate()
+        contaUsuario.validate()
     }
 
     void "Test password must be between 5 and 20 characters"() {
 
         when: 'the senha have 4 characters'
-        userAccount.senha = 'Test'
+        contaUsuario.senha = 'Test'
 
         then: 'validation should fail'
-        !userAccount.validate()
+        !contaUsuario.validate()
 
         when: 'the senha have 21 characters'
-        userAccount.senha = '123456789112345678912'
+        contaUsuario.senha = '123456789112345678912'
 
         then: 'validation should fail'
-        !userAccount.validate()
+        !contaUsuario.validate()
 
         when: 'the senha have 8 characters'
-        userAccount.senha = '12345678'
+        contaUsuario.senha = '12345678'
 
         then: 'validation should pass'
-        userAccount.validate()
+        contaUsuario.validate()
     }
 
-    void "Test userAccount need a person for save"() {
+    void "Test contaUsuario need a person for save"() {
 
         when: 'the pessoa is null'
-        userAccount.pessoa = null
+        contaUsuario.pessoa = null
 
         then: 'validation should fail'
-        !userAccount.validate()
+        !contaUsuario.validate()
     }
 }

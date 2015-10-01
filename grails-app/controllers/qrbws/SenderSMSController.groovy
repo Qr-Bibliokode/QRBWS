@@ -6,7 +6,7 @@ class SenderSMSController {
 
     SenderSMSService senderSMSService
 
-    void sendSMSRegister(ContaUsuario userAccount) {
-        senderSMSService.sendRegister(userAccount, new MessageCreatorSMSRegister())
+    void sendSMSRegister(ContaUsuario contaUsuario) {
+        senderSMSService.sendRegister(contaUsuario, new MessageCreatorSMSRegister())
     }
 }

@@ -8,8 +8,8 @@ class MessageCreatorSMSRegister implements IMessageCreator {
         return MessageType.CADASTRO_USUARIO;
     }
 
-    String create(ContaUsuario userAccount) {
-        String mensagem = "Parabéns ${userAccount.pessoa.nome}, o cadastro foi realizado com sucesso ! Verifique seu e-mail, Qr-Bibliokode Team"
+    String create(ContaUsuario contaUsuario) {
+        String mensagem = "Parabéns ${contaUsuario.pessoa.nome}, o cadastro foi realizado com sucesso ! Verifique seu e-mail, Qr-Bibliokode Team"
         mensagem.replace(" ", "%20")
     }
 }

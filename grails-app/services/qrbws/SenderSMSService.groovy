@@ -13,19 +13,19 @@ class SenderSMSService implements ISender {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(this)
 
-    void sendSMS(ContaUsuario userAccount, IMessageCreator messageCreator) {
+    void sendSMS(ContaUsuario contaUsuario, IMessageCreator messageCreator) {
         this.messageCreator = messageCreator;
-        send(userAccount);
+        send(contaUsuario);
     }
 
-    void send(ContaUsuario userAccount) {
-        String userName = userAccount.pessoa.nome
-        String userPhone = userAccount.pessoa.celular
+    void send(ContaUsuario contaUsuario) {
+        String userName = contaUsuario.pessoa.nome
+        String userPhone = contaUsuario.pessoa.celular
         String messageType = messageCreator.type.description
 
         try {
             LOGGER.info """INICIO - SMS ${messageType} para ${userName} - ${userPhone}"""
-            mountUrl(userAccount).toURL().text;
+            mountUrl(contaUsuario).toURL().text;
             LOGGER.info """FINAL - SMS ${messageType} enviado com sucesso para ${userName} - ${userPhone}"""
         } catch (IOException e) {
             println e
@@ -33,17 +33,17 @@ class SenderSMSService implements ISender {
         }
     }
 
-    private String mountUrl(ContaUsuario userAccount) {
+    private String mountUrl(ContaUsuario contaUsuario) {
         [
                 url    : 'http://192.168.0.13:9090/sendsms?',
-                phone  : "celular=${userAccount.pessoa.celular}",
-                message: "&text=${createMessage(userAccount)}"
+                phone  : "celular=${contaUsuario.pessoa.celular}",
+                message: "&text=${createMessage(contaUsuario)}"
         ].inject([]) { result, entry ->
             result << "${entry.value}"
         }.join('')
     }
 
-    private String createMessage(ContaUsuario userAccount) {
-        return messageCreator.create(userAccount)
+    private String createMessage(ContaUsuario contaUsuario) {
+        return messageCreator.create(contaUsuario)
     }
 }
