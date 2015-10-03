@@ -10,7 +10,7 @@ class Multa {
     static belongsTo = ContaUsuario
 
     static constraints = {
-        valor min: 0
+        valor min: 0.0D
         dataPagamento nullable: true
     }
 }
