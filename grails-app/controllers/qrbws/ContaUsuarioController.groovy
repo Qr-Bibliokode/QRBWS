@@ -9,7 +9,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class ContaUsuarioController {
 
-    def contaUsuarioService
+    ContaUsuarioService contaUsuarioService
 
     static responseFormats = ['json']
 

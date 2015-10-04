@@ -11,7 +11,7 @@ class Livro {
     Integer paginas
     Idioma idioma
     Categoria categoria
-    // TODO: Implement cover for livro
+    // TODO: Implementar capa do livro
 
     static hasMany = [autores: Autor, comentarios: Comentario]
 
@@ -20,10 +20,12 @@ class Livro {
         titulo blank: false, maxSize: 254, unique: true
         sinopse nullable: true, blank: true, size: 5..5000
         paginas nullable: true, max: 9999, validator: {
-            if (it < 0 && it != null) return ['livro.paginas.negative']
+            if (it < 0 && it != null) return ['livro.paginas.negativo']
         }
         idioma nullable: true
         categoria nullable: true
         comentarios nullable: true
     }
+
+    // TODO: Implementar marshall, trazer id/descrição do idioma, categoria e id/nome do autor
 }

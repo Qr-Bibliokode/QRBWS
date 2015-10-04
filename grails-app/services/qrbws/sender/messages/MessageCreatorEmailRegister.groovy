@@ -4,11 +4,11 @@ import qrbws.ContaUsuario
 
 class MessageCreatorEmailRegister implements IMessageCreator {
     MessageType getType() {
-        return MessageType.CADASTRO_USUARIO;
+        MessageType.CADASTRO_USUARIO;
     }
 
     String create(ContaUsuario contaUsuario) {
-        return """<h2>Parabéns ${contaUsuario.pessoa.nome}, o cadastro foi realizado com sucesso !</h2><hr/>
+        """<h2>Parabéns ${contaUsuario.pessoa.nome}, o cadastro foi realizado com sucesso !</h2><hr/>
 <p><strong>Usuário: </strong><span>${contaUsuario.login}</span></p>
 <p><strong>Senha: </strong><span>${contaUsuario.senha}</span></p>
 <hr/>

@@ -1,5 +1,6 @@
 package qrbws
 
+import qrbws.sender.messages.MessageCreatorSMSAvisoDevolucao
 import qrbws.sender.messages.MessageCreatorSMSRegister
 
 class SenderSMSController {
@@ -7,8 +8,10 @@ class SenderSMSController {
     SenderSMSService senderSMSService
 
     void sendSMSRegister(ContaUsuario contaUsuario) {
-        senderSMSService.sendRegister(contaUsuario, new MessageCreatorSMSRegister())
+        senderSMSService.sendSMS(contaUsuario, new MessageCreatorSMSRegister())
     }
 
-    // TODO: Implementar sendSMSAvisoDevolucao
+    void sendSMSAvisoDevolucao(ContaUsuario contaUsuario) {
+        senderSMSService.sendSMS(contaUsuario, new MessageCreatorSMSAvisoDevolucao())
+    }
 }

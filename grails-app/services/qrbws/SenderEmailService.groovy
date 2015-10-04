@@ -1,8 +1,8 @@
 package qrbws
 
 import grails.transaction.Transactional
-import qrbws.sender.messages.IMessageCreator
 import qrbws.sender.ISender
+import qrbws.sender.messages.IMessageCreator
 
 @Transactional
 class SenderEmailService implements ISender {
@@ -31,7 +31,7 @@ class SenderEmailService implements ISender {
     }
 
     private String createMessage(ContaUsuario contaUsuario) {
-        return messageCreator.create(contaUsuario);
+        messageCreator.create(contaUsuario);
     }
 
 }

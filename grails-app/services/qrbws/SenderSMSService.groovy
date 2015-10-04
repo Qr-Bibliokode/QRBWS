@@ -35,8 +35,8 @@ class SenderSMSService implements ISender {
 
     private String mountUrl(ContaUsuario contaUsuario) {
         [
-                url    : 'http://192.168.0.13:9090/sendsms?',
-                phone  : "celular=${contaUsuario.pessoa.celular}",
+                url    : 'http://192.168.0.12:9090/sendsms?',
+                phone  : "phone=${contaUsuario.pessoa.celular}",
                 message: "&text=${createMessage(contaUsuario)}"
         ].inject([]) { result, entry ->
             result << "${entry.value}"
@@ -44,6 +44,6 @@ class SenderSMSService implements ISender {
     }
 
     private String createMessage(ContaUsuario contaUsuario) {
-        return messageCreator.create(contaUsuario)
+        messageCreator.create(contaUsuario).replace(" ", "%20")
     }
 }

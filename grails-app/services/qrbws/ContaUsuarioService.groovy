@@ -6,14 +6,14 @@ import qrbws.sender.messages.IMessageCreator
 @Transactional
 class ContaUsuarioService {
 
-    def senderEmailService
-    def senderSMSService
+    SenderEmailService senderEmailService
+    SenderSMSService senderSMSService
 
-    def sendSMS(ContaUsuario contaUsuario, IMessageCreator messageCreator) {
+    void sendSMS(ContaUsuario contaUsuario, IMessageCreator messageCreator) {
         senderSMSService.sendSMS(contaUsuario, messageCreator)
     }
 
-    def sendEmail(ContaUsuario contaUsuario, IMessageCreator messageCreator) {
+    void sendEmail(ContaUsuario contaUsuario, IMessageCreator messageCreator) {
         senderEmailService.sendEmail(contaUsuario, messageCreator)
     }
 }
