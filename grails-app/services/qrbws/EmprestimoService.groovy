@@ -15,15 +15,15 @@ class EmprestimoService {
         // TODO: Verificar se o usuário excede o limite de livros emprestados (3)
         // TODO: Verificar do estoque disponível deste livro, quantas reservas ativas tem
 
-        emprestimo.dateEmprestimo = new Date()
-        emprestimo.dateDevolucao = calcularDataDevolucao()
+        emprestimo.dataEmprestimo = new Date()
+        emprestimo.dataDevolucao = calcularDataDevolucao()
         emprestimo.save flush: true
         stockService.desconta(emprestimo)
         emprestimo
     }
 
     def devolver(Emprestimo emprestimo) {
-        emprestimo.dateDevolucao = new Date()
+        emprestimo.dataDevolucao = new Date()
         emprestimo.devolvido = true
         stockService.incrementa(emprestimo)
         emprestimo

@@ -2,9 +2,9 @@ package qrbws
 
 class Emprestimo {
 
-    Date dateEmprestimo
-    Date dateDevolucao
-    Date dateLimiteDevolucao
+    Date dataEmprestimo
+    Date dataDevolucao
+    Date dataLimiteDevolucao
     boolean devolvido
     boolean avisado
 
@@ -12,10 +12,8 @@ class Emprestimo {
     Livro livro
 
     static constraints = {
-        dateEmprestimo nullable: true
-        dateDevolucao nullable: true
-        dateLimiteDevolucao nullable: true
-        contaUsuario nullable: false
-        livro nullable: false
+        dataEmprestimo nullable: true
+        dataDevolucao nullable: true
+        dataLimiteDevolucao nullable: true
     }
 }

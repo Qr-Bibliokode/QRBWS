@@ -2180,15 +2180,15 @@
           "type": "integer",
           "format": "int64"
         },
-        "dateEmprestimo": {
+        "dataEmprestimo": {
           "type": "date",
           "format": "date"
         },
-        "dateDevolucao": {
+        "dataDevolucao": {
           "type": "date",
           "format": "date"
         },
-        "dateLimiteDevolucao": {
+        "dataLimiteDevolucao": {
           "type": "date",
           "format": "date"
         },
