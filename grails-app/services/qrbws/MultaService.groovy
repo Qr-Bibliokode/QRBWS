@@ -6,10 +6,6 @@ import grails.transaction.Transactional
 class MultaService {
 
     Boolean verificarTemMultasSemPagar(ContaUsuario contaUsuario) {
-        contaUsuario.multas.each { multa ->
-            if (!multa.paga) {
-                return true
-            }
-        }
+        contaUsuario.multas ? contaUsuario.multas.find { if (!it.paga) true } : false
     }
 }

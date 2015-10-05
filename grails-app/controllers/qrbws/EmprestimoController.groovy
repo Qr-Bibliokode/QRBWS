@@ -94,6 +94,12 @@ class EmprestimoController {
             return
         }
 
+        if(emprestimoService.verificarTemMultasSemPagar(emprestimo.contaUsuario)){
+            transactionStatus.setRollbackOnly()
+            temMultas()
+            return
+        }
+
         emprestimoService.emprestar(emprestimo);
 
         request.withFormat {
@@ -113,6 +119,11 @@ class EmprestimoController {
             return
         }
 
+        if(emprestimoService.verificarTemMultasSemPagar(emprestimo.contaUsuario)){
+            transactionStatus.setRollbackOnly()
+            temMultas()
+            return
+        }
 
         emprestimoService.devolver(emprestimo)
 
@@ -140,6 +151,16 @@ class EmprestimoController {
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NOT_FOUND }
+        }
+    }
+
+    protected void temMultas() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'contausuario.multa.contem', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*' { render status: PAYMENT_REQUIRED }
         }
     }
 }

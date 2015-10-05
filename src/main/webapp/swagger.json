@@ -1328,6 +1328,40 @@
         }
       }
     },
+    "/emprestimo/devolver": {
+      "post": {
+        "tags": [
+          "emprestimo"
+        ],
+        "summary": "Devolver",
+        "description": "Devolver um livro",
+        "operationId": "devolver",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "emprestimo",
+            "description": "Objeto emprestimo",
+            "required": true,
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/emprestimo"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
+    },
     "/emprestimo/{emprestimoId}": {
       "get": {
         "tags": [
@@ -2162,7 +2196,7 @@
           "type": "boolean",
           "format": "boolean"
         },
-        "alertado": {
+        "avisado": {
           "type": "boolean",
           "format": "boolean"
         },

@@ -15,4 +15,6 @@ class Stock {
         disponivel min: 0
         total min: 0
     }
+
+    // TODO: Criar marshall com titulo do livro
 }
