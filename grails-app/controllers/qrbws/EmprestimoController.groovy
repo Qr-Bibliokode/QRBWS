@@ -88,38 +88,11 @@ class EmprestimoController {
             return
         }
 
-        if (emprestimo.hasErrors()) {
+        if (emprestimoService.emprestar(emprestimo).hasErrors()) {
             transactionStatus.setRollbackOnly()
             respond emprestimo.errors, view: 'create'
             return
         }
-
-        if (emprestimoService.temMultasSemPagar(emprestimo.contaUsuario)) {
-            transactionStatus.setRollbackOnly()
-            renderErrorResponse('contausuario.multa.contem', emprestimo)
-        }
-
-        if (!emprestimoService.temStock(emprestimo.livro)) {
-            transactionStatus.setRollbackOnly()
-            renderErrorResponse('stock.livro.indisponivel', emprestimo)
-        }
-
-        if (emprestimoService.temEmprestimoForaDeData(emprestimo.contaUsuario)) {
-            transactionStatus.setRollbackOnly()
-            renderErrorResponse('emprestimo.invalido.passou.data.devolucao', emprestimo)
-        }
-
-        if (emprestimoService.excedeLimiteEmprestimos(emprestimo.contaUsuario)) {
-            transactionStatus.setRollbackOnly()
-            renderErrorResponse('emprestimo.invalido.passou.limite.emprestimos', emprestimo)
-        }
-
-        if (emprestimoService.existemReservasAtivasSuperiorADisponivel(emprestimo.livro)) {
-            transactionStatus.setRollbackOnly()
-            renderErrorResponse('emprestimo.invalido.existem.reservas', emprestimo)
-        }
-
-        emprestimoService.emprestar(emprestimo);
 
         request.withFormat {
             form multipartForm {
@@ -171,11 +144,5 @@ class EmprestimoController {
             }
             '*' { render status: NOT_FOUND }
         }
-    }
-
-    protected void renderErrorResponse(String mensagem, Emprestimo emprestimo) {
-        emprestimo.errors.reject(mensagem, ['emprestimo', 'class Emprestimo'] as Object[], null)
-
-        respond emprestimo.errors, view: 'edit'
     }
 }

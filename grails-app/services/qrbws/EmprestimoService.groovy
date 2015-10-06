@@ -12,9 +12,11 @@ class EmprestimoService {
     ReservaService reservaService
 
     Emprestimo emprestar(Emprestimo emprestimo) {
-        montaDatasEmprestimo(emprestimo)
-        emprestimo.save flush: true
-        descontaStock(emprestimo.livro)
+        if (!validaEmprestimo(emprestimo).hasErrors()) {
+            montaDatasEmprestimo(emprestimo)
+            emprestimo.save flush: true
+            descontaStock(emprestimo.livro)
+        }
         emprestimo
     }
 
@@ -67,6 +69,30 @@ class EmprestimoService {
     void montaDatasEmprestimo(Emprestimo emprestimo) {
         emprestimo.dataEmprestimo = new Date()
         emprestimo.dataLimiteDevolucao = calcularDataDevolucao()
+    }
+
+    Emprestimo validaEmprestimo(Emprestimo emprestimo) {
+        if (temMultasSemPagar(emprestimo.contaUsuario)) {
+            emprestimo.errors.reject('contausuario.multa.contem', ['emprestimo', 'class Emprestimo'] as Object[], null)
+        }
+
+        if (!temStock(emprestimo.livro)) {
+            emprestimo.errors.reject('stock.livro.indisponivel', ['emprestimo', 'class Emprestimo'] as Object[], null)
+        }
+
+        if (temEmprestimoForaDeData(emprestimo.contaUsuario)) {
+            emprestimo.errors.reject('emprestimo.invalido.passou.data.devolucao', ['emprestimo', 'class Emprestimo'] as Object[], null)
+        }
+
+        if (excedeLimiteEmprestimos(emprestimo.contaUsuario)) {
+            emprestimo.errors.reject('emprestimo.invalido.passou.limite.emprestimos', ['emprestimo', 'class Emprestimo'] as Object[], null)
+        }
+
+        if (existemReservasAtivasSuperiorADisponivel(emprestimo.livro)) {
+            emprestimo.errors.reject('emprestimo.invalido.existem.reservas', ['emprestimo', 'class Emprestimo'] as Object[], null)
+        }
+        emprestimo
+
     }
 
     // TODO: Implementar função para realizar renovação da devolução
