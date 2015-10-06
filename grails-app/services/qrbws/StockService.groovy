@@ -5,15 +5,19 @@ import grails.transaction.Transactional
 @Transactional
 class StockService {
 
-    Stock desconta(Emprestimo emprestimo) {
-        Stock stock = Stock.findByLivro(emprestimo.livro)
+    Stock desconta(Livro livro) {
+        Stock stock = Stock.findByLivro(livro)
         stock.disponivel = stock.disponivel - 1
         stock.save()
     }
 
-    Stock incrementa(Emprestimo emprestimo) {
-        Stock stock = Stock.findByLivro(emprestimo.livro)
+    Stock incrementa(Livro livro) {
+        Stock stock = Stock.findByLivro(livro)
         stock.disponivel = stock.disponivel + 1
         stock.save()
+    }
+
+    boolean temStock(Livro livro) {
+        Stock.findByLivro(livro).disponivel
     }
 }

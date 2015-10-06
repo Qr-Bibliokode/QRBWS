@@ -13,9 +13,9 @@ class EmprestimoController {
 
     static allowedMethods = [
             emprestar: "POST",
-            devolver: "PUT",
-            update    : "PUT",
-            delete    : "DELETE"
+            devolver : "PUT",
+            update   : "PUT",
+            delete   : "DELETE"
     ]
 
     def index(Integer max) {
@@ -94,10 +94,29 @@ class EmprestimoController {
             return
         }
 
-        if(emprestimoService.verificarTemMultasSemPagar(emprestimo.contaUsuario)){
+        if (emprestimoService.temMultasSemPagar(emprestimo.contaUsuario)) {
             transactionStatus.setRollbackOnly()
-            temMultas()
-            return
+            renderErrorResponse(PAYMENT_REQUIRED, 'contausuario.multa.contem')
+        }
+
+        if (!emprestimoService.temStock(emprestimo.livro)) {
+            transactionStatus.setRollbackOnly()
+            renderErrorResponse(UNAUTHORIZED, 'stock.livro.indisponivel')
+        }
+
+        if (emprestimoService.temEmprestimoForaDeData(emprestimo.contaUsuario)) {
+            transactionStatus.setRollbackOnly()
+            renderErrorResponse(UNAUTHORIZED, 'emprestimo.invalido.passou.data.devolucao')
+        }
+
+        if (emprestimoService.excedeLimiteEmprestimos(emprestimo.contaUsuario)) {
+            transactionStatus.setRollbackOnly()
+            renderErrorResponse(UNAUTHORIZED, 'emprestimo.invalido.passou.limite.emprestimos')
+        }
+
+        if (emprestimoService.existemReservasAtivasSuperiorADisponivel(emprestimo.livro)) {
+            transactionStatus.setRollbackOnly()
+            renderErrorResponse(UNAUTHORIZED, 'emprestimo.invalido.existem.reservas')
         }
 
         emprestimoService.emprestar(emprestimo);
@@ -119,9 +138,9 @@ class EmprestimoController {
             return
         }
 
-        if(emprestimoService.verificarTemMultasSemPagar(emprestimo.contaUsuario)){
+        if (emprestimoService.temMultasSemPagar(emprestimo.contaUsuario)) {
             transactionStatus.setRollbackOnly()
-            temMultas()
+            renderErrorResponse(PAYMENT_REQUIRED, 'contausuario.multa.contem')
             return
         }
 
@@ -154,13 +173,9 @@ class EmprestimoController {
         }
     }
 
-    protected void temMultas() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'contausuario.multa.contem', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*' { render status: PAYMENT_REQUIRED }
-        }
+    protected void renderErrorResponse(def status, String mensagem) {
+        flash.message = message(code: mensagem)
+        render status: status, message: flash.message
+        return
     }
 }

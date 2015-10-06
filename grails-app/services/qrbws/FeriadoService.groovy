@@ -9,9 +9,8 @@ class FeriadoService {
     boolean eDomingo(Date dataDevolucao) {
         int diaDataDevolucao = Calendar.instance.with {
             time = dataDevolucao
-            get(Calendar.DAY_OF_WEEK )
+            get(Calendar.DAY_OF_WEEK)
         }
-
         Calendar.SUNDAY == diaDataDevolucao
     }
 
@@ -19,10 +18,11 @@ class FeriadoService {
         Feriado.findAllByDataInicioGreaterThanAndDataFimLessThan(dataDevolucao, dataDevolucao)
     }
 
-    def calcularDataDevolucao() {
+    Date calcularDataDevolucao() {
         Date dataDevolucao = use(TimeCategory) { new Date() + 5.days }
         if (existeFeriado(dataDevolucao) || eDomingo(dataDevolucao)) {
-            // TODO: Implementar
+            dataDevolucao = use(TimeCategory) { dataDevolucao + 1.day }
+            calcularDataDevolucao()
         } else {
             return dataDevolucao
         }
