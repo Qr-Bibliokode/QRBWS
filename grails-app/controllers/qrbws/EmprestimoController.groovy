@@ -96,27 +96,27 @@ class EmprestimoController {
 
         if (emprestimoService.temMultasSemPagar(emprestimo.contaUsuario)) {
             transactionStatus.setRollbackOnly()
-            renderErrorResponse(PAYMENT_REQUIRED, 'contausuario.multa.contem')
+            renderErrorResponse('contausuario.multa.contem', emprestimo)
         }
 
         if (!emprestimoService.temStock(emprestimo.livro)) {
             transactionStatus.setRollbackOnly()
-            renderErrorResponse(UNAUTHORIZED, 'stock.livro.indisponivel')
+            renderErrorResponse('stock.livro.indisponivel', emprestimo)
         }
 
         if (emprestimoService.temEmprestimoForaDeData(emprestimo.contaUsuario)) {
             transactionStatus.setRollbackOnly()
-            renderErrorResponse(UNAUTHORIZED, 'emprestimo.invalido.passou.data.devolucao')
+            renderErrorResponse('emprestimo.invalido.passou.data.devolucao', emprestimo)
         }
 
         if (emprestimoService.excedeLimiteEmprestimos(emprestimo.contaUsuario)) {
             transactionStatus.setRollbackOnly()
-            renderErrorResponse(UNAUTHORIZED, 'emprestimo.invalido.passou.limite.emprestimos')
+            renderErrorResponse('emprestimo.invalido.passou.limite.emprestimos', emprestimo)
         }
 
         if (emprestimoService.existemReservasAtivasSuperiorADisponivel(emprestimo.livro)) {
             transactionStatus.setRollbackOnly()
-            renderErrorResponse(UNAUTHORIZED, 'emprestimo.invalido.existem.reservas')
+            renderErrorResponse('emprestimo.invalido.existem.reservas', emprestimo)
         }
 
         emprestimoService.emprestar(emprestimo);
@@ -140,7 +140,7 @@ class EmprestimoController {
 
         if (emprestimoService.temMultasSemPagar(emprestimo.contaUsuario)) {
             transactionStatus.setRollbackOnly()
-            renderErrorResponse(PAYMENT_REQUIRED, 'contausuario.multa.contem')
+            renderErrorResponse('contausuario.multa.contem')
             return
         }
 
@@ -173,9 +173,9 @@ class EmprestimoController {
         }
     }
 
-    protected void renderErrorResponse(def status, String mensagem) {
-        flash.message = message(code: mensagem)
-        render status: status, message: flash.message
-        return
+    protected void renderErrorResponse(String mensagem, Emprestimo emprestimo) {
+        emprestimo.errors.reject(mensagem, ['emprestimo', 'class Emprestimo'] as Object[], null)
+
+        respond emprestimo.errors, view: 'edit'
     }
 }
