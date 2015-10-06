@@ -145,4 +145,6 @@ class EmprestimoController {
             '*' { render status: NOT_FOUND }
         }
     }
+
+    // TODO: Finalizar renovação do emprestimo
 }

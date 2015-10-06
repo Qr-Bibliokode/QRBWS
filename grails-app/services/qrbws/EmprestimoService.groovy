@@ -95,6 +95,11 @@ class EmprestimoService {
 
     }
 
+    Emprestimo renovacao(Emprestimo emprestimo){
+        emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()
+        emprestimo.save flush: true
+    }
+
     // TODO: Implementar função para realizar renovação da devolução
 
 }
