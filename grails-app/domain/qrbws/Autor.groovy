@@ -10,8 +10,6 @@ class Autor {
 
     static belongsTo = Livro
 
-    static hasMany = [livros:Livro]
-
     static constraints = {
         nome blank: false, maxSize: 50, matches: '[^0-9\\-]+'
         informacoesAdicionais nullable: true
