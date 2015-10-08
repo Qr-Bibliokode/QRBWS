@@ -95,11 +95,19 @@ class EmprestimoService {
 
     }
 
-    Emprestimo renovacao(Emprestimo emprestimo){
-        emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()
-        emprestimo.save flush: true
+    Emprestimo renovar(Emprestimo emprestimo) {
+        println emprestimo.id
+        println "Data de emprestimo: "+Emprestimo.get(emprestimo.id).dataEmprestimo
+
+        if (emprestimo.renovacoes > 0) {
+            emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', ['emprestimo', 'class Emprestimo'] as Object[], null)
+        } else {
+            emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()
+            emprestimo.save flush: true
+        }
+        emprestimo
     }
 
-    // TODO: Implementar função para realizar renovação da devolução
+    // TODO: Implementar funçã que avisa usuário
 
 }

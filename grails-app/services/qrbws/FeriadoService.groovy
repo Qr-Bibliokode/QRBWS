@@ -6,8 +6,6 @@ import groovy.time.TimeCategory
 @Transactional
 class FeriadoService {
 
-    Date dataDevolucao
-
     boolean eDomingo(Date dataDevolucao) {
         int diaDataDevolucao = Calendar.instance.with {
             time = dataDevolucao
@@ -20,8 +18,8 @@ class FeriadoService {
         Feriado.findAllByDataInicioGreaterThanAndDataFimLessThan(dataDevolucao, dataDevolucao)
     }
 
-    Date calcularDataDevolucao() {
-        dataDevolucao = use(TimeCategory) { dataDevolucao ? dataDevolucao : new Date() + 5.days }
+    Date calcularDataDevolucao(Date dataDevolucao = null) {
+        dataDevolucao = use(TimeCategory) { new Date() + 5.days }
         if (existeFeriado(dataDevolucao) || eDomingo(dataDevolucao)) {
             dataDevolucao = use(TimeCategory) { dataDevolucao + 1.days }
             calcularDataDevolucao()

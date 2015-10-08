@@ -14,6 +14,7 @@ class EmprestimoController {
     static allowedMethods = [
             emprestar: "POST",
             devolver : "PUT",
+            renovar  : "PUT",
             update   : "PUT",
             delete   : "DELETE"
     ]
@@ -133,6 +134,29 @@ class EmprestimoController {
                 redirect emprestimo
             }
             '*' { respond emprestimo, [status: OK] }
+        }
+    }
+
+    @Transactional
+    def renovar(Emprestimo emprestimo) {
+        if (emprestimo == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+        emprestimo = emprestimoService.renovar(emprestimo)
+        if (emprestimo.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond emprestimo.errors, view: 'create'
+            return
+        }
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), emprestimo.id])
+                redirect emprestimo
+            }
+            '*' { respond emprestimo, [status: CREATED] }
         }
     }
 

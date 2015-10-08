@@ -12,6 +12,7 @@ class UrlMappings {
 
         "/api/contaUsuario"(resources: "contaUsuario")
         "/api/emprestimo/emprestar"(controller: 'emprestimo', action: 'emprestar')
+        "/api/emprestimo/renovar"(controller: 'emprestimo', action: 'renovar')
         "/api/emprestimo"(resources: "emprestimo")
     }
 }

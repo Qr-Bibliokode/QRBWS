@@ -7,6 +7,7 @@ class Emprestimo {
     Date dataLimiteDevolucao
     boolean devolvido
     boolean avisado
+    Integer renovacoes
 
     ContaUsuario contaUsuario
     Livro livro
@@ -15,5 +16,10 @@ class Emprestimo {
         dataEmprestimo nullable: true
         dataDevolucao nullable: true
         dataLimiteDevolucao nullable: true
+        renovacoes nullable: true, min: 0
+    }
+
+    public Emprestimo(){
+        renovacoes = 0
     }
 }

@@ -1362,6 +1362,48 @@
         }
       }
     },
+    "/emprestimo/renovar": {
+      "put": {
+        "tags": [
+          "emprestimo"
+        ],
+        "summary": "Renovar",
+        "description": "Renovar um livro",
+        "operationId": "renovar",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "emprestimo",
+            "description": "Objeto emprestimo",
+            "required": true,
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/emprestimo"
+              }
+            }
+          },
+          {
+            "in": "path",
+            "name": "emprestimoId",
+            "description": "Id do emprestimo",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
+    },
     "/emprestimo/{emprestimoId}": {
       "get": {
         "tags": [
@@ -2199,6 +2241,10 @@
         "avisado": {
           "type": "boolean",
           "format": "boolean"
+        },
+        "renovacoes": {
+          "type": "integer",
+          "format": "int32"
         },
         "contaUsuario": {
           "$ref": "ContaUsuario"
