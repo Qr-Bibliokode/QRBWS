@@ -96,9 +96,6 @@ class EmprestimoService {
     }
 
     Emprestimo renovar(Emprestimo emprestimo) {
-        println emprestimo.id
-        println "Data de emprestimo: "+Emprestimo.get(emprestimo.id).dataEmprestimo
-
         if (emprestimo.renovacoes > 0) {
             emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', ['emprestimo', 'class Emprestimo'] as Object[], null)
         } else {
