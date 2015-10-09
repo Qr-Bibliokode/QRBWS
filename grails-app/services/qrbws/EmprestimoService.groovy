@@ -106,5 +106,6 @@ class EmprestimoService {
     }
 
     // TODO: Implementar funçã que avisa usuário
+    // TODO: Implementar marshaller
 
 }

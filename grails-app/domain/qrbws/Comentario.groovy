@@ -1,5 +1,6 @@
 package qrbws
 
+import grails.converters.JSON
 import grails.rest.Resource
 
 @Resource(uri = '/api/comentario', formats = ['json'])
@@ -21,5 +22,18 @@ class Comentario {
     Comentario() {
         recomendacao = false
         avaliacao = 0
+    }
+
+    static void marshaller() {
+        JSON.registerObjectMarshaller(Comentario) {
+            [
+                    'id'          : it.id,
+                    'avaliacao'   : it.avaliacao,
+                    'descricao'   : it.descricao,
+                    'dateCreated' : it.dateCreated,
+                    'recomendacao': it.recomendacao,
+                    'contaUsuario': it.contaUsuario
+            ]
+        }
     }
 }

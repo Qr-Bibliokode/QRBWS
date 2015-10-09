@@ -1,5 +1,6 @@
 package qrbws
 
+import grails.converters.JSON
 import grails.rest.Resource
 
 @Resource(uri = '/api/livro', formats = ['json'])
@@ -27,5 +28,19 @@ class Livro {
         comentarios nullable: true
     }
 
-    // TODO: Implementar marshall, trazer id/descrição do idioma, categoria e id/nome do autor
+    static void marshaller() {
+        JSON.registerObjectMarshaller(Livro) {
+            [
+                    'id'         : it.id,
+                    'idioma'     : it.idioma,
+                    'isbn'       : it.isbn,
+                    'titulo'     : it.titulo,
+                    'sinopse'    : it.sinopse,
+                    'paginas'    : it.paginas,
+                    'categoria'  : it.categoria,
+                    'autores'    : it.autores,
+                    'comentarios': it.comentarios
+            ]
+        }
+    }
 }
