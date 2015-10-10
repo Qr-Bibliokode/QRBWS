@@ -1,5 +1,7 @@
 package qrbws
 
+import grails.converters.JSON
+
 class Emprestimo {
 
     Date dataEmprestimo
@@ -19,7 +21,23 @@ class Emprestimo {
         renovacoes nullable: true, min: 0
     }
 
-    public Emprestimo(){
+    public Emprestimo() {
         renovacoes = 0
+    }
+
+    static void marshaller() {
+        JSON.registerObjectMarshaller(Emprestimo) {
+            [
+                    'id'                 : it.id,
+                    'dataEmprestimo'     : it.dataEmprestimo,
+                    'dataDevolucao'      : it.dataDevolucao,
+                    'dataLimiteDevolucao': it.dataLimiteDevolucao,
+                    'devolvido'          : it.devolvido,
+                    'avisado'            : it.avisado,
+                    'renovacoes'         : it.renovacoes,
+                    'contaUsuario'       : it.contaUsuario,
+                    'livro'              : it.livro
+            ]
+        }
     }
 }

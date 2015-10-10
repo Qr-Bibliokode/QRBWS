@@ -73,39 +73,39 @@ class EmprestimoService {
 
     Emprestimo validaEmprestimo(Emprestimo emprestimo) {
         if (temMultasSemPagar(emprestimo.contaUsuario)) {
-            emprestimo.errors.reject('contausuario.multa.contem', ['emprestimo', 'class Emprestimo'] as Object[], null)
+            emprestimo.errors.reject('contausuario.multa.contem')
         }
 
         if (!temStock(emprestimo.livro)) {
-            emprestimo.errors.reject('stock.livro.indisponivel', ['emprestimo', 'class Emprestimo'] as Object[], null)
+            emprestimo.errors.reject('stock.livro.indisponivel')
         }
 
         if (temEmprestimoForaDeData(emprestimo.contaUsuario)) {
-            emprestimo.errors.reject('emprestimo.invalido.passou.data.devolucao', ['emprestimo', 'class Emprestimo'] as Object[], null)
+            emprestimo.errors.reject('emprestimo.invalido.passou.data.devolucao')
         }
 
         if (excedeLimiteEmprestimos(emprestimo.contaUsuario)) {
-            emprestimo.errors.reject('emprestimo.invalido.passou.limite.emprestimos', ['emprestimo', 'class Emprestimo'] as Object[], null)
+            emprestimo.errors.reject('emprestimo.invalido.passou.limite.emprestimos')
         }
 
         if (existemReservasAtivasSuperiorADisponivel(emprestimo.livro)) {
-            emprestimo.errors.reject('emprestimo.invalido.existem.reservas', ['emprestimo', 'class Emprestimo'] as Object[], null)
+            emprestimo.errors.reject('emprestimo.invalido.existem.reservas')
         }
         emprestimo
-
     }
 
     Emprestimo renovar(Emprestimo emprestimo) {
+        // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
         if (emprestimo.renovacoes > 0) {
-            emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', ['emprestimo', 'class Emprestimo'] as Object[], null)
+            emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', [1] as Object[], null)
         } else {
             emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()
+            emprestimo.renovacoes++
             emprestimo.save flush: true
         }
         emprestimo
     }
 
     // TODO: Implementar funçã que avisa usuário
-    // TODO: Implementar marshaller
 
 }

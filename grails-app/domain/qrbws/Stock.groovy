@@ -1,8 +1,9 @@
 package qrbws
 
+import grails.converters.JSON
 import grails.rest.Resource
 
-@Resource(uri = '/api/stock', formats=['json'])
+@Resource(uri = '/api/stock', formats = ['json'])
 
 class Stock {
 
@@ -16,5 +17,14 @@ class Stock {
         total min: 0
     }
 
-    // TODO: Criar marshall com titulo do livro
+    static void marshaller() {
+        JSON.registerObjectMarshaller(Stock) {
+            [
+                    'id'   : it.id,
+                    'livro': it.livro,
+                    'disponivel': it.disponivel,
+                    'total': it.total
+            ]
+        }
+    }
 }

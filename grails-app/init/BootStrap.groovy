@@ -17,6 +17,8 @@ class BootStrap {
         Livro.marshaller()
         Comentario.marshaller()
         ContaUsuario.marshaller()
+        Emprestimo.marshaller()
+        Stock.marshaller()
 
     }
     def destroy = {
