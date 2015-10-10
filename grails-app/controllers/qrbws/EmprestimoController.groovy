@@ -104,18 +104,11 @@ class EmprestimoController {
         }
     }
 
-    //TODO: Implementar funcionalidade devolder
     @Transactional
     def devolver(Emprestimo emprestimo) {
         if (emprestimo == null) {
             transactionStatus.setRollbackOnly()
             notFound()
-            return
-        }
-
-        if (emprestimoService.temMultasSemPagar(emprestimo.contaUsuario)) {
-            transactionStatus.setRollbackOnly()
-            renderErrorResponse('contausuario.multa.contem')
             return
         }
 

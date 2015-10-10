@@ -21,7 +21,10 @@ class EmprestimoService {
     }
 
     def devolver(Emprestimo emprestimo) {
-        // TODO: Verificar se tem que gerar multa
+        if(temMultasSemPagar(emprestimo.contaUsuario)){
+            emprestimo.errors.reject('contausuario.multa.contem')
+            return emprestimo
+        }
         emprestimo.dataDevolucao = new Date()
         emprestimo.devolvido = true
         incrementaStock(emprestimo.livro)
@@ -97,6 +100,7 @@ class EmprestimoService {
     Emprestimo renovar(Emprestimo emprestimo) {
         if(temMultasSemPagar(emprestimo.contaUsuario)){
             emprestimo.errors.reject('contausuario.multa.contem')
+            return emprestimo
         }
         if (emprestimo.renovacoes > 0) {
         // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
@@ -110,5 +114,6 @@ class EmprestimoService {
     }
 
     // TODO: Implementar funçã que avisa usuário
+    // TODO: Implementar pago de multa
 
 }

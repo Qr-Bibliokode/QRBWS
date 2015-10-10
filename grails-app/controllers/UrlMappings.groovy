@@ -13,6 +13,7 @@ class UrlMappings {
         "/api/contaUsuario/verificarMultas"(controller: "contaUsuario", action: 'verificarMultas')
         "/api/contaUsuario"(resources: "contaUsuario")
         "/api/emprestimo/emprestar"(controller: 'emprestimo', action: 'emprestar')
+        "/api/emprestimo/devolver"(controller: 'emprestimo', action: 'devolver')
         "/api/emprestimo/renovar"(controller: 'emprestimo', action: 'renovar')
         "/api/emprestimo"(resources: "emprestimo")
     }

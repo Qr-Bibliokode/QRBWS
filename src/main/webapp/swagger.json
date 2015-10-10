@@ -1322,7 +1322,7 @@
       }
     },
     "/emprestimo/devolver": {
-      "post": {
+      "put": {
         "tags": [
           "emprestimo"
         ],
@@ -1343,6 +1343,14 @@
                 "$ref": "#/definitions/emprestimo"
               }
             }
+          },
+          {
+            "in": "path",
+            "name": "emprestimoId",
+            "description": "Id do emprestimo",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "responses": {
