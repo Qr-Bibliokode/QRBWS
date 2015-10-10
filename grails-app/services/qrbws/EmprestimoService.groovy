@@ -8,6 +8,7 @@ class EmprestimoService {
 
     StockService stockService
     MultaService multaService
+    ContaUsuarioService contaUsuarioService
     FeriadoService feriadoService
     ReservaService reservaService
 
@@ -21,7 +22,7 @@ class EmprestimoService {
     }
 
     def devolver(Emprestimo emprestimo) {
-        if(temMultasSemPagar(emprestimo.contaUsuario)){
+        if (contaUsuarioService.verificarMultas(emprestimo.contaUsuario.id)) {
             emprestimo.errors.reject('contausuario.multa.contem')
             return emprestimo
         }
@@ -98,12 +99,12 @@ class EmprestimoService {
     }
 
     Emprestimo renovar(Emprestimo emprestimo) {
-        if(temMultasSemPagar(emprestimo.contaUsuario)){
+        if (temMultasSemPagar(emprestimo.contaUsuario)) {
             emprestimo.errors.reject('contausuario.multa.contem')
             return emprestimo
         }
         if (emprestimo.renovacoes > 0) {
-        // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
+            // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
             emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', [1] as Object[], null)
         } else {
             emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()

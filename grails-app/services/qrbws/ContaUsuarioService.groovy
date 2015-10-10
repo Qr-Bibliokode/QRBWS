@@ -18,9 +18,9 @@ class ContaUsuarioService {
         senderEmailService.sendEmail(contaUsuario, messageCreator)
     }
 
-    def verificarMultas(Long id) {
-        geraMultas(id)
-        ContaUsuario.get(id).multas
+    def verificarMultas(Long idContaUsuario) {
+        geraMultas(idContaUsuario)
+        ContaUsuario.get(idContaUsuario).multas
     }
 
     void geraMultas(Long id) {
