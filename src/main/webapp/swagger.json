@@ -225,7 +225,6 @@
             "name": "offset",
             "in": "query",
             "description": "O deslocamento a partir do primeiro resultado da lista",
-
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -400,7 +399,6 @@
             "name": "offset",
             "in": "query",
             "description": "O deslocamento a partir do primeiro resultado da lista",
-
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -575,7 +573,6 @@
             "name": "offset",
             "in": "query",
             "description": "O deslocamento a partir do primeiro resultado da lista",
-
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -750,7 +747,6 @@
             "name": "offset",
             "in": "query",
             "description": "O deslocamento a partir do primeiro resultado da lista",
-
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -925,7 +921,6 @@
             "name": "offset",
             "in": "query",
             "description": "O deslocamento a partir do primeiro resultado da lista",
-
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -1100,7 +1095,6 @@
             "name": "offset",
             "in": "query",
             "description": "O deslocamento a partir do primeiro resultado da lista",
-
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -1275,7 +1269,6 @@
             "name": "offset",
             "in": "query",
             "description": "O deslocamento a partir do primeiro resultado da lista",
-
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -1528,7 +1521,6 @@
             "name": "offset",
             "in": "query",
             "description": "O deslocamento a partir do primeiro resultado da lista",
-
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -1703,7 +1695,6 @@
             "name": "offset",
             "in": "query",
             "description": "O deslocamento a partir do primeiro resultado da lista",
-
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -1878,7 +1869,6 @@
             "name": "offset",
             "in": "query",
             "description": "O deslocamento a partir do primeiro resultado da lista",
-
             "type": "integer",
             "default": 0,
             "minimum": 0
@@ -2014,6 +2004,37 @@
             "in": "path",
             "name": "contaUsuarioId",
             "description": "Id da contaUsuario",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
+    },
+    "/contaUsuario/verificarMultas?contaUsuarioId={contaUsuarioId}": {
+      "get": {
+        "tags": [
+          "contaUsuario"
+        ],
+        "summary": "Gera multa se necessário",
+        "description": "Gera multa se necessário",
+        "operationId": "verificarMultas",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contaUsuarioId",
+            "description": "contaUsuario id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -2344,6 +2365,43 @@
         "ativo": {
           "type": "boolean",
           "format": "boolean"
+        },
+        "multas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Multa"
+          }
+        }
+      }
+    },
+    "Multa": {
+      "type": "object",
+      "required": [
+        "id",
+        "valor",
+        "emprestimo",
+        "paga",
+        "dataPagamento"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "valor": {
+          "type": "number",
+          "format": "double"
+        },
+        "emprestimo": {
+          "$ref": "emprestimo"
+        },
+        "paga": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "dataPagamento": {
+          "type": "date",
+          "format": "date"
         }
       }
     }

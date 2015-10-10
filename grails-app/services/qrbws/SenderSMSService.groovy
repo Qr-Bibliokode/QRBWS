@@ -28,7 +28,6 @@ class SenderSMSService implements ISender {
             mountUrl(contaUsuario).toURL().text;
             LOGGER.info """FINAL - SMS ${messageType} enviado com sucesso para ${userName} - ${userPhone}"""
         } catch (IOException e) {
-            println e
             LOGGER.error "Aconteceu um erro: ${e}"
         }
     }

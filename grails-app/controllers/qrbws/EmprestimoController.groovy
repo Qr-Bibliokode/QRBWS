@@ -104,6 +104,7 @@ class EmprestimoController {
         }
     }
 
+    //TODO: Implementar funcionalidade devolder
     @Transactional
     def devolver(Emprestimo emprestimo) {
         if (emprestimo == null) {

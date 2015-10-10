@@ -95,8 +95,11 @@ class EmprestimoService {
     }
 
     Emprestimo renovar(Emprestimo emprestimo) {
-        // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
+        if(temMultasSemPagar(emprestimo.contaUsuario)){
+            emprestimo.errors.reject('contausuario.multa.contem')
+        }
         if (emprestimo.renovacoes > 0) {
+        // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
             emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', [1] as Object[], null)
         } else {
             emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()

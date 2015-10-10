@@ -12,5 +12,6 @@ class Multa {
     static constraints = {
         valor min: 0.0D
         dataPagamento nullable: true
+        paga nullable: true
     }
 }
