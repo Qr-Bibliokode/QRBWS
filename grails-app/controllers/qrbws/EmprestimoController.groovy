@@ -138,7 +138,9 @@ class EmprestimoController {
             notFound()
             return
         }
-        emprestimo = emprestimoService.renovar(emprestimo)
+
+        emprestimoService.renovar(emprestimo)
+
         if (emprestimo.hasErrors()) {
             transactionStatus.setRollbackOnly()
             respond emprestimo.errors, view: 'create'

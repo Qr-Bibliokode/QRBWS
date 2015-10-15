@@ -22,13 +22,36 @@ class EmprestimoService {
     }
 
     def devolver(Emprestimo emprestimo) {
+        // TODO: Bug, quando verifica multas na devolução não está salvando a multa
+        // isto é porque tem o rollback e estamos adicionando um erro na verificação
         if (contaUsuarioService.verificarMultas(emprestimo.contaUsuario.id)) {
             emprestimo.errors.reject('contausuario.multa.contem')
+            return emprestimo
+        }
+        if(emprestimo.devolvido){
+            emprestimo.errors.reject('emprestimo.invalido.ja.devolvido')
             return emprestimo
         }
         emprestimo.dataDevolucao = new Date()
         emprestimo.devolvido = true
         incrementaStock(emprestimo.livro)
+        emprestimo
+    }
+
+    Emprestimo renovar(Emprestimo emprestimo) {
+        if (temMultasSemPagar(emprestimo.contaUsuario)) {
+            emprestimo.errors.reject('contausuario.multa.contem')
+            return emprestimo
+        }
+        if (emprestimo.renovacoes > 0) {
+            // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
+            emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', [1] as Object[], null)
+        } else {
+            emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()
+            emprestimo.dataDevolucao = null
+            emprestimo.renovacoes++
+            emprestimo.save flush: true
+        }
         emprestimo
     }
 
@@ -94,22 +117,6 @@ class EmprestimoService {
 
         if (existemReservasAtivasSuperiorADisponivel(emprestimo.livro)) {
             emprestimo.errors.reject('emprestimo.invalido.existem.reservas')
-        }
-        emprestimo
-    }
-
-    Emprestimo renovar(Emprestimo emprestimo) {
-        if (temMultasSemPagar(emprestimo.contaUsuario)) {
-            emprestimo.errors.reject('contausuario.multa.contem')
-            return emprestimo
-        }
-        if (emprestimo.renovacoes > 0) {
-            // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
-            emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', [1] as Object[], null)
-        } else {
-            emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()
-            emprestimo.renovacoes++
-            emprestimo.save flush: true
         }
         emprestimo
     }
