@@ -43,6 +43,7 @@ class EmprestimoService {
             // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
             emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', [1] as Object[], null)
         } else {
+            emprestimo.devolvido = false
             emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()
             emprestimo.dataDevolucao = null
             emprestimo.renovacoes++

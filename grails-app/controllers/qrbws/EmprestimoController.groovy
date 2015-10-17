@@ -8,13 +8,14 @@ import static org.springframework.http.HttpStatus.*
 class EmprestimoController {
 
     EmprestimoService emprestimoService
+    MultaService multaService
 
     static responseFormats = ['json']
 
     static allowedMethods = [
             emprestar: "POST",
             devolver : "GET",
-            renovar  : "PUT",
+            renovar  : "GET",
             update   : "PUT",
             delete   : "DELETE"
     ]
@@ -115,7 +116,17 @@ class EmprestimoController {
 
         emprestimoService.devolver(emprestimo)
 
+        if (emprestimo.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond emprestimo.errors, view: 'edit'
+            return
+        }
+
         emprestimo.save flush: true
+
+        if (multaService.temMultasSemPagar(emprestimo.contaUsuario)) {
+            emprestimo.errors.reject('contausuario.multa.contem')
+        }
 
         request.withFormat {
             form multipartForm {
@@ -129,7 +140,8 @@ class EmprestimoController {
     }
 
     @Transactional
-    def renovar(Emprestimo emprestimo) {
+    def renovar() {
+        Emprestimo emprestimo = Emprestimo.get(params.emprestimoId)
         if (emprestimo == null) {
             transactionStatus.setRollbackOnly()
             notFound()

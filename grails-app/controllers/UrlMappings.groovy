@@ -10,13 +10,32 @@ class UrlMappings {
         "/"(view: "/index")
         "500"(view: '/error')
 
+        "/api/autor"(resources: "autor")
+
+        "/api/categoria"(resources: "categoria")
+
         "/api/contaUsuario/pagarMulta"(controller: "multa", action: 'pagar')
         "/api/contaUsuario/verificarMultas"(controller: "contaUsuario", action: 'verificarMultas')
         "/api/contaUsuario"(resources: "contaUsuario")
+
+        "/api/comentario"(resources: "comentario")
 
         "/api/emprestimo/emprestar"(controller: 'emprestimo', action: 'emprestar')
         "/api/emprestimo/devolver"(controller: 'emprestimo', action: 'devolver')
         "/api/emprestimo/renovar"(controller: 'emprestimo', action: 'renovar')
         "/api/emprestimo"(resources: "emprestimo")
+
+        "/api/feriado"(resources: "feriado")
+
+        "/api/funcionario"(resources: "funcionario")
+
+        "/api/idioma"(resources: "idioma")
+
+        "/api/estudante"(resources: "estudante")
+
+        "/api/livro"(resources: "livro")
+
+        "/api/stock"(resources: "stock")
+
     }
 }

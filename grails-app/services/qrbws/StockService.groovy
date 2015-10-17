@@ -20,6 +20,4 @@ class StockService {
     boolean temStock(Livro livro) {
         Stock.findByLivro(livro).disponivel
     }
-
-    // TODO: Disponível tem que ser igual ou inferior a total
 }

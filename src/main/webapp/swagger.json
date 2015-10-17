@@ -1352,8 +1352,8 @@
         }
       }
     },
-    "/emprestimo/renovar": {
-      "put": {
+    "/emprestimo/renovar?emprestimoId={emprestimoId}": {
+      "get": {
         "tags": [
           "emprestimo"
         ],
@@ -1364,17 +1364,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "emprestimo",
-            "description": "Objeto emprestimo",
-            "required": true,
-            "schema": {
-              "items": {
-                "$ref": "#/definitions/emprestimo"
-              }
-            }
-          },
           {
             "in": "path",
             "name": "emprestimoId",
