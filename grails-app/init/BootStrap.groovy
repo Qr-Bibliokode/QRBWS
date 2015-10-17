@@ -19,6 +19,7 @@ class BootStrap {
         ContaUsuario.marshaller()
         Emprestimo.marshaller()
         Stock.marshaller()
+        Multa.marshaller()
 
     }
     def destroy = {

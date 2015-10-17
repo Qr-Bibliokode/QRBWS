@@ -22,12 +22,8 @@ class EmprestimoService {
     }
 
     def devolver(Emprestimo emprestimo) {
-        // TODO: Bug, quando verifica multas na devolução não está salvando a multa
-        // isto é porque tem o rollback e estamos adicionando um erro na verificação
-        if (contaUsuarioService.verificarMultas(emprestimo.contaUsuario.id)) {
-            emprestimo.errors.reject('contausuario.multa.contem')
-            return emprestimo
-        }
+        contaUsuarioService.verificarMultas(emprestimo.contaUsuario.id)
+
         if(emprestimo.devolvido){
             emprestimo.errors.reject('emprestimo.invalido.ja.devolvido')
             return emprestimo
@@ -122,6 +118,4 @@ class EmprestimoService {
     }
 
     // TODO: Implementar funçã que avisa usuário
-    // TODO: Implementar pago de multa
-
 }

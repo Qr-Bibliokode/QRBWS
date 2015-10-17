@@ -10,6 +10,7 @@ class UrlMappings {
         "/"(view: "/index")
         "500"(view: '/error')
 
+        "/api/contaUsuario/pagarMulta"(controller: "multa", action: 'pagar')
         "/api/contaUsuario/verificarMultas"(controller: "contaUsuario", action: 'verificarMultas')
         "/api/contaUsuario"(resources: "contaUsuario")
 
@@ -17,8 +18,5 @@ class UrlMappings {
         "/api/emprestimo/devolver"(controller: 'emprestimo', action: 'devolver')
         "/api/emprestimo/renovar"(controller: 'emprestimo', action: 'renovar')
         "/api/emprestimo"(resources: "emprestimo")
-
-        "/api/multa/pagar"(controller: 'multa', action: 'pagar')
-        "/api/multa"(resources: "multa")
     }
 }

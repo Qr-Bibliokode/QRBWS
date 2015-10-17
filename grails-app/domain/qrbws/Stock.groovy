@@ -13,7 +13,7 @@ class Stock {
 
     static constraints = {
         livro nullable: false, unique: true
-        disponivel min: 0
+        disponivel min: 0, validator: { if (it > total) return ['stock.disponivel.maior.total'] }
         total min: 0
     }
 

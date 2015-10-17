@@ -13,7 +13,7 @@ class EmprestimoController {
 
     static allowedMethods = [
             emprestar: "POST",
-            devolver : "PUT",
+            devolver : "GET",
             renovar  : "PUT",
             update   : "PUT",
             delete   : "DELETE"
@@ -105,7 +105,8 @@ class EmprestimoController {
     }
 
     @Transactional
-    def devolver(Emprestimo emprestimo) {
+    def devolver() {
+        Emprestimo emprestimo = Emprestimo.get(params.emprestimoId)
         if (emprestimo == null) {
             transactionStatus.setRollbackOnly()
             notFound()
@@ -114,12 +115,6 @@ class EmprestimoController {
 
         emprestimoService.devolver(emprestimo)
 
-        if (emprestimo.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond emprestimo.errors, view: 'edit'
-            return
-        }
-
         emprestimo.save flush: true
 
         request.withFormat {
@@ -127,7 +122,9 @@ class EmprestimoController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), emprestimo.id])
                 redirect emprestimo
             }
-            '*' { respond emprestimo, [status: OK] }
+            '*' {
+                respond emprestimo.hasErrors() ? emprestimo.errors : emprestimo, [status: OK]
+            }
         }
     }
 

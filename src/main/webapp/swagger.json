@@ -1321,8 +1321,8 @@
         }
       }
     },
-    "/emprestimo/devolver": {
-      "put": {
+    "/emprestimo/devolver?emprestimoId={emprestimoId}": {
+      "get": {
         "tags": [
           "emprestimo"
         ],
@@ -1333,17 +1333,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "emprestimo",
-            "description": "Objeto emprestimo",
-            "required": true,
-            "schema": {
-              "items": {
-                "$ref": "#/definitions/emprestimo"
-              }
-            }
-          },
           {
             "in": "path",
             "name": "emprestimoId",
@@ -2043,6 +2032,37 @@
             "in": "path",
             "name": "contaUsuarioId",
             "description": "contaUsuario id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
+    },
+    "/contaUsuario/pagarMulta?multaId={multaId}": {
+      "get": {
+        "tags": [
+          "contaUsuario"
+        ],
+        "summary": "Paga multa",
+        "description": "Paga multa",
+        "operationId": "pagarMulta",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "multaId",
+            "description": "multa id",
             "required": true,
             "type": "integer",
             "format": "int64"

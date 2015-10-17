@@ -2,20 +2,19 @@ package qrbws
 
 import grails.transaction.Transactional
 
-import static org.springframework.http.HttpStatus.CREATED
-
 class MultaController {
 
     MultaService multaService
 
     @Transactional
-    def pagar(Multa multa) {
-        if (multa == null) {
+    def pagar() {
+        if (params.multaId == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
+        Multa multa = Multa.get(params.multaId)
         multa = multaService.pagar(multa)
 
         if (multa.hasErrors()) {
@@ -24,12 +23,6 @@ class MultaController {
             return
         }
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), multa.id])
-                redirect multa
-            }
-            '*' { respond multa, [status: CREATED] }
-        }
+        respond multa, formats: ['json']
     }
 }
