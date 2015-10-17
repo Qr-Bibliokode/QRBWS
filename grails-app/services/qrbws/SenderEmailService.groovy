@@ -25,7 +25,7 @@ class SenderEmailService implements ISender {
         mailService.sendMail {
             to userEmail
             subject messageType
-            text createMessage(contaUsuario)
+            html createMessage(contaUsuario)
         }
         log.info """FINAL - SMS ${messageType} enviado com sucesso para ${userName} - ${userEmail}"""
     }
@@ -33,6 +33,4 @@ class SenderEmailService implements ISender {
     private String createMessage(ContaUsuario contaUsuario) {
         messageCreator.create(contaUsuario);
     }
-
-    //TODO: Enviar e-mail para que o gmail interprete a formação
 }
