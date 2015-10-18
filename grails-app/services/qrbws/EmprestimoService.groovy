@@ -15,6 +15,7 @@ class EmprestimoService {
     Emprestimo emprestar(Emprestimo emprestimo) {
         if (!validaEmprestimo(emprestimo).hasErrors()) {
             montaDatasEmprestimo(emprestimo)
+            emprestimo.solicitacaoLiberada = true
             emprestimo.save flush: true
             descontaStock(emprestimo.livro)
         }

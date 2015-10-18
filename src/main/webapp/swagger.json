@@ -2280,6 +2280,10 @@
           "type": "boolean",
           "format": "boolean"
         },
+        "solicitacaoLiberada": {
+          "type": "boolean",
+          "format": "boolean"
+        },
         "renovacoes": {
           "type": "integer",
           "format": "int32"
