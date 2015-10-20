@@ -18,11 +18,10 @@ class FeriadoService {
         Feriado.findAllByDataInicioGreaterThanAndDataFimLessThan(dataDevolucao, dataDevolucao)
     }
 
-    Date calcularDataDevolucao(Date dataDevolucao = null) {
-        dataDevolucao = use(TimeCategory) { new Date() + 5.days }
+    Date calcularDataDevolucao(int days = 5, Date dataDevolucao = null) {
+        use(TimeCategory) { dataDevolucao = (dataDevolucao ?: new Date()) + days.days }
         if (existeFeriado(dataDevolucao) || eDomingo(dataDevolucao)) {
-            dataDevolucao = use(TimeCategory) { dataDevolucao + 1.days }
-            calcularDataDevolucao()
+            dataDevolucao = calcularDataDevolucao(1, dataDevolucao)
         } else {
             return dataDevolucao
         }
