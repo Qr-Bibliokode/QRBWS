@@ -20,6 +20,7 @@ class Emprestimo {
         dataDevolucao nullable: true
         dataLimiteDevolucao nullable: true
         renovacoes nullable: true, min: 0
+        contaUsuario(unique: 'livro')
     }
 
     public Emprestimo() {
