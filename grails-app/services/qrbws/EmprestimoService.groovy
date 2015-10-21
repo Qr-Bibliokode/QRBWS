@@ -13,7 +13,7 @@ class EmprestimoService {
     ReservaService reservaService
 
     Emprestimo emprestar(Emprestimo emprestimo) {
-        if (!validaEmprestimo(emprestimo).hasErrors()) {
+        if (!validaEmprestimo(emprestimo)?.hasErrors()) {
             montaDatasEmprestimo(emprestimo)
             emprestimo.solicitacaoLiberada = true
             emprestimo.save flush: true
@@ -25,7 +25,7 @@ class EmprestimoService {
     def devolver(Emprestimo emprestimo) {
         contaUsuarioService.verificarMultas(emprestimo.contaUsuario.id)
 
-        if(emprestimo.devolvido){
+        if (emprestimo.devolvido) {
             emprestimo.errors.reject('emprestimo.invalido.ja.devolvido')
             return emprestimo
         }
@@ -65,8 +65,7 @@ class EmprestimoService {
         stockService.temStock(livro)
     }
 
-    Boolean temEmprestimoForaDeData(ContaUsuario contaUsuario) {
-        boolean temEmprestimoForaDeData
+    Boolean temEmprestimoForaDeData(ContaUsuario contaUsuario, temEmprestimoForaDeData = null) {
         Emprestimo.findAllByContaUsuarioAndDevolvido(contaUsuario, false).find {
             if (use(TimeCategory) { new Date() - 1.day }.after(it.dataLimiteDevolucao)) {
                 temEmprestimoForaDeData = true
@@ -99,22 +98,27 @@ class EmprestimoService {
     Emprestimo validaEmprestimo(Emprestimo emprestimo) {
         if (temMultasSemPagar(emprestimo.contaUsuario)) {
             emprestimo.errors.reject('contausuario.multa.contem')
+            return emprestimo
         }
 
         if (!temStock(emprestimo.livro)) {
             emprestimo.errors.reject('stock.livro.indisponivel')
+            return emprestimo
         }
 
         if (temEmprestimoForaDeData(emprestimo.contaUsuario)) {
             emprestimo.errors.reject('emprestimo.invalido.passou.data.devolucao')
+            return emprestimo
         }
 
         if (excedeLimiteEmprestimos(emprestimo.contaUsuario)) {
             emprestimo.errors.reject('emprestimo.invalido.passou.limite.emprestimos')
+            return emprestimo
         }
 
         if (existemReservasAtivasSuperiorADisponivel(emprestimo.livro)) {
             emprestimo.errors.reject('emprestimo.invalido.existem.reservas')
+            return emprestimo
         }
         emprestimo
     }

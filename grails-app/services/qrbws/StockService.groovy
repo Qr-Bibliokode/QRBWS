@@ -18,6 +18,7 @@ class StockService {
     }
 
     boolean temStock(Livro livro) {
-        Stock.findByLivro(livro).disponivel
+        Stock stock = Stock.findByLivro(livro)
+        stock ? stock.disponivel > 0 : false
     }
 }
