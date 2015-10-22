@@ -14,13 +14,17 @@ class FeriadoService {
         Calendar.SUNDAY == diaDataDevolucao
     }
 
-    boolean existeFeriado(Date dataDevolucao) {
-        Feriado.findAllByDataInicioGreaterThanAndDataFimLessThan(dataDevolucao, dataDevolucao)
+    Feriado existeFeriado(Date dataDevolucao) {
+        List<Feriado> feriado = Feriado.findAllByDataInicioLessThanAndDataFimGreaterThan(dataDevolucao, dataDevolucao)
+        feriado ? feriado.first() : null
     }
 
     Date calcularDataDevolucao(int days = 5, Date dataDevolucao = null) {
         use(TimeCategory) { dataDevolucao = (dataDevolucao ?: new Date()) + days.days }
-        if (existeFeriado(dataDevolucao) || eDomingo(dataDevolucao)) {
+        Feriado feriado = existeFeriado(dataDevolucao)
+        if (feriado) {
+            dataDevolucao = calcularDataDevolucao(1, feriado.dataFim)
+        } else if (eDomingo(dataDevolucao)) {
             dataDevolucao = calcularDataDevolucao(1, dataDevolucao)
         } else {
             return dataDevolucao
