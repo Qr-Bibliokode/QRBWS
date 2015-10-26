@@ -38,9 +38,10 @@ class ContaUsuarioService {
     }
 
     Double calcularValorMulta(Date dataLimiteDevolucao) {
+        // TODO: Criar tabela que mantenha as configurações da biblioteca
         int diasMulta = 0
         use(TimeCategory) { diasMulta = (new Date() - dataLimiteDevolucao).days }
-        return diasMulta * 2.50
+        return diasMulta * 2
     }
 
 }

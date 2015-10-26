@@ -49,8 +49,9 @@ class EmprestimoService {
             emprestimo.errors.reject('contausuario.multa.contem')
             return emprestimo
         }
+
         if (emprestimo.renovacoes > 0) {
-            // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
+            // TODO: Incluir este parâmetro na tabela configurações da biblioteca
             emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', [1] as Object[], null)
         } else {
             if (emprestimo.solicitacaoLiberada) {
@@ -193,5 +194,5 @@ class EmprestimoService {
         emprestimo.save flush: true
     }
 
-// TODO: Implementar funçã que avisa usuário
+// TODO: Implementar função que avisa usuário
 }
