@@ -20,10 +20,10 @@ class Stock {
     static void marshaller() {
         JSON.registerObjectMarshaller(Stock) {
             [
-                    'id'   : it.id,
-                    'livro': it.livro,
+                    'id'        : it.id,
+                    'livro'     : it.livro,
                     'disponivel': it.disponivel,
-                    'total': it.total
+                    'total'     : it.total
             ]
         }
     }

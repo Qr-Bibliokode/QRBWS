@@ -3,6 +3,8 @@ package qrbws
 import grails.transaction.Transactional
 import groovy.time.TimeCategory
 
+import static qrbws.Solicitacao.*
+
 @Transactional
 class EmprestimoService {
 
@@ -14,10 +16,12 @@ class EmprestimoService {
 
     Emprestimo emprestar(Emprestimo emprestimo) {
         if (!validaEmprestimo(emprestimo)?.hasErrors()) {
+            verificaSolicitacaoEmprestimo(emprestimo)
             montaDatasEmprestimo(emprestimo)
-            emprestimo.solicitacaoLiberada = true
+            if (emprestimo.solicitacaoLiberada) {
+                descontaStock(emprestimo.livro)
+            }
             emprestimo.save flush: true
-            descontaStock(emprestimo.livro)
         }
         emprestimo
     }
@@ -29,9 +33,14 @@ class EmprestimoService {
             emprestimo.errors.reject('emprestimo.invalido.ja.devolvido')
             return emprestimo
         }
-        emprestimo.dataDevolucao = new Date()
-        emprestimo.devolvido = true
-        incrementaStock(emprestimo.livro)
+
+        if (emprestimo.solicitacaoLiberada) {
+            emprestimo.dataDevolucao = new Date()
+            emprestimo.devolvido = true
+            incrementaStock(emprestimo.livro)
+        } else {
+            solicitaLiberacao(emprestimo, DEVOLUCAO)
+        }
         emprestimo
     }
 
@@ -44,12 +53,45 @@ class EmprestimoService {
             // TODO: Deixar o parâmetro dinâmico utilizando alguma configuração externa
             emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', [1] as Object[], null)
         } else {
-            emprestimo.devolvido = false
-            emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()
-            emprestimo.dataDevolucao = null
-            emprestimo.renovacoes++
-            emprestimo.save flush: true
+            if (emprestimo.solicitacaoLiberada) {
+                emprestimo.devolvido = false
+                emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()
+                emprestimo.dataDevolucao = null
+                emprestimo.renovacoes++
+                emprestimo.save flush: true
+            } else {
+                solicitaLiberacao(emprestimo, RENOVACAO)
+            }
         }
+        emprestimo
+    }
+
+    Emprestimo liberar(Emprestimo emprestimo) {
+        liberaSolicitacao(emprestimo)
+        switch (emprestimo.solicitacao.tipo) {
+            case EMPRESTIMO:
+                emprestar(emprestimo)
+                break
+            case DEVOLUCAO:
+                devolver(emprestimo)
+                break
+            case RENOVACAO:
+                renovar(emprestimo)
+                break
+        }
+        finalizaSolicitacao(emprestimo)
+    }
+
+    Emprestimo liberaSolicitacao(Emprestimo emprestimo) {
+        emprestimo.solicitacaoLiberada = true
+        emprestimo.save flush: true
+    }
+
+    Emprestimo finalizaSolicitacao(Emprestimo emprestimo) {
+        Solicitacao solicitacao = emprestimo.solicitacao
+        emprestimo.solicitacao = null
+        emprestimo.save flush: true
+        Solicitacao.deleteAll(solicitacao)
         emprestimo
     }
 
@@ -78,7 +120,7 @@ class EmprestimoService {
         Emprestimo.findAllByContaUsuarioAndDevolvido(contaUsuario, false).size() >= 3
     }
 
-    Boolean existemReservasAtivasSuperiorADisponivel(Livro livro) {
+    Boolean existemReservasAtivasSuperiorAStockDisponivel(Livro livro) {
         reservaService.existemReservasAtivasSuperiorADisponivel(livro) >= Stock.findByLivro(livro).disponivel
     }
 
@@ -116,12 +158,26 @@ class EmprestimoService {
             return emprestimo
         }
 
-        if (existemReservasAtivasSuperiorADisponivel(emprestimo.livro)) {
+        if (existemReservasAtivasSuperiorAStockDisponivel(emprestimo.livro)) {
             emprestimo.errors.reject('emprestimo.invalido.existem.reservas')
             return emprestimo
         }
         emprestimo
     }
 
-    // TODO: Implementar funçã que avisa usuário
+    Emprestimo verificaSolicitacaoEmprestimo(Emprestimo emprestimo) {
+        if (!emprestimo.solicitacao) {
+            // TODO: Verificar usuário logado, se for administrador a solicitação terá que ser liberada
+            emprestimo.solicitacaoLiberada = false
+            emprestimo = solicitaLiberacao(emprestimo, EMPRESTIMO)
+        }
+        emprestimo
+    }
+
+    Emprestimo solicitaLiberacao(Emprestimo emprestimo, String tipo) {
+        emprestimo.solicitacao = new Solicitacao(tipo: tipo)
+        emprestimo.save flush: true
+    }
+
+// TODO: Implementar funçã que avisa usuário
 }

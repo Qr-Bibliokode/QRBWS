@@ -9,8 +9,8 @@ class BootStrap {
         new Categoria(descricao: 'Science fiction').save();
         new Idioma(descricao: 'Spanish').save();
         new Autor(nome: 'Aparecida', informacoesAdicionais: 'Beautiful pessoa').save();
-        Livro livro = new Livro(isbn: "123456", titulo: "Livro teste").save()
-        new Stock(livro: livro, disponivel: 10, total: 10).save()
+        Stock stock = new Stock(disponivel: 10, total: 10)
+        Livro livro = new Livro(isbn: "123456", titulo: "Livro teste", stock: stock).save()
         Funcionario funcionario = new Funcionario(codigo: "1234", nome: "Ferran", email: "teste@teste.com").save()
         new ContaUsuario(pessoa: funcionario, login: "felansu", senha: "123456").save()
 

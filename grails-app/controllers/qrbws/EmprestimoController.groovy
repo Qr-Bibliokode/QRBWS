@@ -165,6 +165,32 @@ class EmprestimoController {
         }
     }
 
+    @Transactional
+    def liberar() {
+        Emprestimo emprestimo = Emprestimo.get(params.emprestimoId)
+        if (emprestimo == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        emprestimoService.liberar(emprestimo)
+
+        if (emprestimo.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond emprestimo.errors, view: 'create'
+            return
+        }
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'emprestimo.label', default: 'Emprestimo'), emprestimo.id])
+                redirect emprestimo
+            }
+            '*' { respond emprestimo, [status: CREATED] }
+        }
+    }
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {

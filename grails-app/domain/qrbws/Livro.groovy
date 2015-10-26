@@ -14,6 +14,8 @@ class Livro {
     Categoria categoria
     // TODO: Implementar capa do livro
 
+    static hasOne = [stock: Stock]
+
     static hasMany = [autores: Autor, comentarios: Comentario]
 
     static constraints = {
@@ -39,7 +41,8 @@ class Livro {
                     'paginas'    : it.paginas,
                     'categoria'  : it.categoria,
                     'autores'    : it.autores,
-                    'comentarios': it.comentarios
+                    'comentarios': it.comentarios,
+                    'stock'      : it.stock
             ]
         }
     }

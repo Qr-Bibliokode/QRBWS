@@ -1383,6 +1383,37 @@
         }
       }
     },
+    "/emprestimo/liberar?emprestimoId={emprestimoId}": {
+      "get": {
+        "tags": [
+          "emprestimo"
+        ],
+        "summary": "Liberar",
+        "description": "Liberar um livro",
+        "operationId": "liberar",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "emprestimoId",
+            "description": "Id do emprestimo",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
+    },
     "/emprestimo/{emprestimoId}": {
       "get": {
         "tags": [
@@ -2284,6 +2315,9 @@
           "type": "boolean",
           "format": "boolean"
         },
+        "solicitacao": {
+          "$ref": "Solicitacao"
+        },
         "renovacoes": {
           "type": "integer",
           "format": "int32"
@@ -2340,6 +2374,27 @@
         "total": {
           "type": "integer",
           "format": "int32"
+        }
+      }
+    },
+    "Solicitacao": {
+      "type": "object",
+      "required": [
+        "id",
+        "tipo",
+        "liberada"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "tipo": {
+          "type": "string"
+        },
+        "ativa": {
+          "type": "boolean",
+          "format": "boolean"
         }
       }
     },

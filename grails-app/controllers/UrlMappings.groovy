@@ -23,6 +23,7 @@ class UrlMappings {
         "/api/emprestimo/emprestar"(controller: 'emprestimo', action: 'emprestar')
         "/api/emprestimo/devolver"(controller: 'emprestimo', action: 'devolver')
         "/api/emprestimo/renovar"(controller: 'emprestimo', action: 'renovar')
+        "/api/emprestimo/liberar"(controller: 'emprestimo', action: 'liberar')
         "/api/emprestimo"(resources: "emprestimo")
 
         "/api/feriado"(resources: "feriado")

@@ -15,12 +15,14 @@ class Emprestimo {
     ContaUsuario contaUsuario
     Livro livro
 
+    static hasOne = [solicitacao: Solicitacao]
+
     static constraints = {
         dataEmprestimo nullable: true
         dataDevolucao nullable: true
         dataLimiteDevolucao nullable: true
         renovacoes nullable: true, min: 0
-        contaUsuario(unique: 'livro')
+        solicitacao nullable: true
     }
 
     public Emprestimo() {
@@ -37,6 +39,7 @@ class Emprestimo {
                     'devolvido'          : it.devolvido,
                     'avisado'            : it.avisado,
                     'solicitacaoLiberada': it.solicitacaoLiberada,
+                    'solicitacao'        : it.solicitacao,
                     'renovacoes'         : it.renovacoes,
                     'contaUsuario'       : it.contaUsuario,
                     'livro'              : it.livro
