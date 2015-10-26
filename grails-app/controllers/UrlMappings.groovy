@@ -36,6 +36,8 @@ class UrlMappings {
 
         "/api/livro"(resources: "livro")
 
+        "/api/reserva"(resources: "reserva")
+
         "/api/stock"(resources: "stock")
 
     }

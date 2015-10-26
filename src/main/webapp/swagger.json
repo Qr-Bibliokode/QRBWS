@@ -1071,6 +1071,180 @@
         }
       }
     },
+    "/reserva/": {
+      "get": {
+        "tags": [
+          "reserva"
+        ],
+        "operationId": "list",
+        "description": "Retorna todos os reservas",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "max",
+            "in": "query",
+            "description": "Número máximo de elementos na lista",
+            "type": "integer",
+            "default": 10,
+            "minimum": 1,
+            "maximum": 100
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "O deslocamento a partir do primeiro resultado da lista",
+            "type": "integer",
+            "default": 0,
+            "minimum": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Uma lista de reservas",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Reserva"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "reserva"
+        ],
+        "summary": "Create",
+        "description": "Cria um reserva",
+        "operationId": "create",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "reserva",
+            "description": "Objeto reserva",
+            "required": true,
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Reserva"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
+    },
+    "/reserva/{reservaId}": {
+      "get": {
+        "tags": [
+          "reserva"
+        ],
+        "summary": "Retorna um reserva",
+        "description": "Para uma resposta válida um reserva com reservaId deve existir",
+        "operationId": "getById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reservaId",
+            "description": "Id do reserva",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "reserva"
+        ],
+        "summary": "Deleta um reserva",
+        "description": "Para uma resposta válida um reserva com reservaId deve existir",
+        "operationId": "delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reservaId",
+            "description": "Id do reserva",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "reserva"
+        ],
+        "summary": "Update",
+        "description": "Atualiza um reserva",
+        "operationId": "update",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "reserva",
+            "description": "Objeto reserva",
+            "required": true,
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Feriado"
+              }
+            }
+          },
+          {
+            "in": "path",
+            "name": "reservaId",
+            "description": "Id do reserva",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
+    },
     "/idioma/": {
       "get": {
         "tags": [
@@ -2260,6 +2434,40 @@
         "dataFim": {
           "type": "date",
           "format": "date"
+        }
+      }
+    },
+    "Reserva": {
+      "type": "object",
+      "required": [
+        "id",
+        "dataInicio",
+        "dataFim",
+        "contaUsuario",
+        "livro"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "ativo": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "dataInicio": {
+          "type": "date",
+          "format": "date"
+        },
+        "dataFim": {
+          "type": "date",
+          "format": "date"
+        },
+        "contaUsuario": {
+          "$ref": "ContaUsuario"
+        },
+        "livro": {
+          "$ref": "Livro"
         }
       }
     },

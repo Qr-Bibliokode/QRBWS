@@ -2,8 +2,8 @@ package qrbws
 
 class Reserva {
 
-    Date dataInicioReserva
-    Date dataFimReserva
+    Date dataInicio
+    Date dataFim
     Boolean ativa
 
     ContaUsuario contaUsuario
