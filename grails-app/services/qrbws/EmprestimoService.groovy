@@ -124,6 +124,14 @@ class EmprestimoService {
         reservaService.existemReservasAtivasSuperiorADisponivel(livro) >= Stock.findByLivro(livro).disponivel
     }
 
+
+    int existeEmprestimoAtivoComMesmoLivro(Emprestimo emprestimo) {
+        Emprestimo.findAllByContaUsuarioAndLivroAndDevolvido(
+                emprestimo.contaUsuario,
+                emprestimo.livro,
+                emprestimo.devolvido).size()
+    }
+
     void descontaStock(Livro livro) {
         stockService.desconta(livro)
     }
@@ -162,8 +170,14 @@ class EmprestimoService {
             emprestimo.errors.reject('emprestimo.invalido.existem.reservas')
             return emprestimo
         }
+
+        if (existeEmprestimoAtivoComMesmoLivro(emprestimo)) {
+            emprestimo.errors.reject('emprestimo.invalido.ja.existe.ativo')
+            return emprestimo
+        }
         emprestimo
     }
+
 
     Emprestimo verificaSolicitacaoEmprestimo(Emprestimo emprestimo) {
         if (!emprestimo.solicitacao) {
