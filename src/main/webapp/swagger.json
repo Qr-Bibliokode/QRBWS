@@ -2397,7 +2397,8 @@
       "required": [
         "id",
         "avaliacao",
-        "contaUsuario"
+        "contaUsuario",
+        "livro"
       ],
       "properties": {
         "id": {
@@ -2421,6 +2422,9 @@
         },
         "contaUsuario": {
           "$ref": "ContaUsuario"
+        },
+        "livro": {
+          "$ref": "Livro"
         }
       }
     },
