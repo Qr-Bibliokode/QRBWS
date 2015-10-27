@@ -191,6 +191,24 @@ class EmprestimoController {
         }
     }
 
+    def obtenhaHistoricoEmprestimosPorLivro() {
+        Livro livro = Livro.get(params.livroId)
+        if (livro == null) {
+            notFound()
+            return
+        }
+
+        List<Emprestimo> emprestimos = emprestimoService.obtenhaHistoricoEmprestimosPorLivro(livro)
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'emprestimos.label', default: 'Emprestimo'), emprestimos.size])
+                redirect emprestimo
+            }
+            '*' { respond emprestimos, [status: CREATED] }
+        }
+    }
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {

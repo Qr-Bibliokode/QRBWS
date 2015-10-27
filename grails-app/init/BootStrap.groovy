@@ -20,6 +20,7 @@ class BootStrap {
         Emprestimo.marshaller()
         Stock.marshaller()
         Multa.marshaller()
+        Reserva.marshaller()
 
     }
     def destroy = {

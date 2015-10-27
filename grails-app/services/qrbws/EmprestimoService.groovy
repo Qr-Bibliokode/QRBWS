@@ -127,10 +127,11 @@ class EmprestimoService {
 
 
     int existeEmprestimoAtivoComMesmoLivro(Emprestimo emprestimo) {
-        Emprestimo.findAllByContaUsuarioAndLivroAndDevolvido(
+        Emprestimo.findAllByContaUsuarioAndLivroAndDevolvidoAndIdNotEqual(
                 emprestimo.contaUsuario,
                 emprestimo.livro,
-                emprestimo.devolvido).size()
+                false,
+                emprestimo.id).size()
     }
 
     void descontaStock(Livro livro) {
@@ -194,5 +195,8 @@ class EmprestimoService {
         emprestimo.save flush: true
     }
 
+    List<Emprestimo> obtenhaHistoricoEmprestimosPorLivro(Livro livro) {
+        Emprestimo.findAllByLivro(livro)
+    }
 // TODO: Implementar função que avisa usuário
 }
