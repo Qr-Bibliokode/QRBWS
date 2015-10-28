@@ -1,3 +1,6 @@
+import com.testapp.Rol
+import com.testapp.Usuario
+import com.testapp.UsuarioRol
 import qrbws.*
 
 class BootStrap {
@@ -21,6 +24,18 @@ class BootStrap {
         Stock.marshaller()
         Multa.marshaller()
         Reserva.marshaller()
+
+
+        def adminRole = new Rol('ROLE_ADMIN').save()
+        def usuarioRol = new Rol('ROLE_USER').save()
+
+        def testUser = new Usuario('me', 'password').save()
+
+        UsuarioRol.create testUser, adminRole, true
+
+        assert Usuario.count() == 1
+        assert Rol.count() == 2
+        assert UsuarioRol.count() == 1
 
     }
     def destroy = {
