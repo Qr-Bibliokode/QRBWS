@@ -20,8 +20,8 @@ class ComentarioSpec extends Specification {
         Comentario.withNewSession() { session ->
             book = new Livro(titulo: 'Livro Test', isbn: '123').save()
             person = new Pessoa(nome: 'Pessoa Name', email: 'pessoa@email.com').save()
-            user = new ContaUsuario(login: 'User Login', senha: '12345', pessoa: person).save()
-            comentario = new Comentario(descricao: 'Comentario Test', book: book, contaUsuario: user, avaliacao: 2)
+            user = new ContaUsuario(username: 'User Login', password: '12345', pessoa: person).save()
+            comentario = new Comentario(descricao: 'Comentario Test', livro: book, contaUsuario: user, avaliacao: 2)
         }
     }
 

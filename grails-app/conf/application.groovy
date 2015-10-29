@@ -13,9 +13,9 @@ environments {
 }
 
 // Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.testapp.Usuario'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.testapp.UsuarioRol'
-grails.plugin.springsecurity.authority.className = 'com.testapp.Rol'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'qrbws.ContaUsuario'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'qrbws.ContaUsuarioRole'
+grails.plugin.springsecurity.authority.className = 'qrbws.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/'              : ['permitAll'],
         '/error'         : ['permitAll'],
@@ -27,6 +27,6 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/**/css/**'     : ['permitAll'],
         '/**/images/**'  : ['permitAll'],
         '/**/favicon.ico': ['permitAll'],
-        '/api/author'    : ['permitAll']
+        '/swagger/**'    : ['permitAll']
 ]
 

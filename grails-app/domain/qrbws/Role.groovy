@@ -1,13 +1,12 @@
-package com.testapp
+package qrbws
 
-class Rol implements Serializable {
+class Role implements Serializable {
 
 	private static final long serialVersionUID = 1
 
 	String authority
 
-	Rol(String authority) {
-		this()
+	Role(String authority) {
 		this.authority = authority
 	}
 
@@ -18,7 +17,7 @@ class Rol implements Serializable {
 
 	@Override
 	boolean equals(other) {
-		is(other) || (other instanceof Rol && other.authority == authority)
+		is(other) || (other instanceof Role && other.authority == authority)
 	}
 
 	@Override

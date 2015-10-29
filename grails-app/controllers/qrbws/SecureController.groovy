@@ -1,4 +1,4 @@
-package com.testapp
+package qrbws
 
 import grails.plugin.springsecurity.annotation.Secured
 

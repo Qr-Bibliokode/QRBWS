@@ -2663,8 +2663,8 @@
       "type": "object",
       "required": [
         "id",
-        "login",
-        "senha",
+        "username",
+        "password",
         "pessoa"
       ],
       "properties": {
@@ -2672,10 +2672,10 @@
           "type": "integer",
           "format": "int64"
         },
-        "login": {
+        "username": {
           "type": "string"
         },
-        "senha": {
+        "password": {
           "type": "string"
         },
         "pessoa": {

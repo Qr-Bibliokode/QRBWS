@@ -15,46 +15,46 @@ class ContaUsuarioSpec extends Specification {
 
     def setup() {
         person = new Pessoa(nome: "felansu", email: "gaferran@gmail.com").save()
-        contaUsuario = new ContaUsuario(login: 'teste', senha: 'teste', status: status, pessoa: person)
+        contaUsuario = new ContaUsuario(username: 'teste', password: 'teste', status: status, pessoa: person)
     }
 
-    void "Test that login can't be null or blank"() {
+    void "Test that username can't be null or blank"() {
 
         when: 'the isbn is null'
-        contaUsuario.login = null
+        contaUsuario.username = null
 
         then: 'validation should fail'
         !contaUsuario.validate()
 
-        when: 'the login is blank'
-        contaUsuario.login = ' '
+        when: 'the username is blank'
+        contaUsuario.username = ' '
 
         then: 'validation should fail'
         !contaUsuario.validate()
 
-        when: 'the login is filled'
-        contaUsuario.login = 'Teste'
+        when: 'the username is filled'
+        contaUsuario.username = 'Teste'
 
         then: 'validation should pass'
         contaUsuario.validate()
     }
 
-    void "Test login must be between 5 and 20 characters"() {
+    void "Test username must be between 5 and 20 characters"() {
 
-        when: 'the login have 4 characters'
-        contaUsuario.login = 'Test'
-
-        then: 'validation should fail'
-        !contaUsuario.validate()
-
-        when: 'the login have 21 characters'
-        contaUsuario.login = '123456789112345678912'
+        when: 'the username have 4 characters'
+        contaUsuario.username = 'Test'
 
         then: 'validation should fail'
         !contaUsuario.validate()
 
-        when: 'the login have 8 characters'
-        contaUsuario.login = '12345678'
+        when: 'the username have 21 characters'
+        contaUsuario.username = '123456789112345678912'
+
+        then: 'validation should fail'
+        !contaUsuario.validate()
+
+        when: 'the username have 8 characters'
+        contaUsuario.username = '12345678'
 
         then: 'validation should pass'
         contaUsuario.validate()
@@ -62,20 +62,20 @@ class ContaUsuarioSpec extends Specification {
 
     void "Test that password can't be null or blank"() {
 
-        when: 'the senha is null'
-        contaUsuario.senha = null
+        when: 'the password is null'
+        contaUsuario.password = null
 
         then: 'validation should fail'
         !contaUsuario.validate()
 
-        when: 'the senha is blank'
-        contaUsuario.senha = ' '
+        when: 'the password is blank'
+        contaUsuario.password = ' '
 
         then: 'validation should fail'
         !contaUsuario.validate()
 
-        when: 'the senha is filled'
-        contaUsuario.senha = 'senha'
+        when: 'the password is filled'
+        contaUsuario.password = 'password'
 
         then: 'validation should pass'
         contaUsuario.validate()
@@ -83,20 +83,20 @@ class ContaUsuarioSpec extends Specification {
 
     void "Test password must be between 5 and 20 characters"() {
 
-        when: 'the senha have 4 characters'
-        contaUsuario.senha = 'Test'
+        when: 'the password have 4 characters'
+        contaUsuario.password = 'Test'
 
         then: 'validation should fail'
         !contaUsuario.validate()
 
-        when: 'the senha have 21 characters'
-        contaUsuario.senha = '123456789112345678912'
+        when: 'the password have 21 characters'
+        contaUsuario.password = '123456789112345678912'
 
         then: 'validation should fail'
         !contaUsuario.validate()
 
-        when: 'the senha have 8 characters'
-        contaUsuario.senha = '12345678'
+        when: 'the password have 8 characters'
+        contaUsuario.password = '12345678'
 
         then: 'validation should pass'
         contaUsuario.validate()

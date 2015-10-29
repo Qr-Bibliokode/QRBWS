@@ -1,6 +1,5 @@
-import com.testapp.Rol
-import com.testapp.Usuario
-import com.testapp.UsuarioRol
+import qrbws.ContaUsuarioRole
+import qrbws.Role
 import qrbws.*
 
 class BootStrap {
@@ -15,7 +14,7 @@ class BootStrap {
         Stock stock = new Stock(disponivel: 10, total: 10)
         Livro livro = new Livro(isbn: "123456", titulo: "Livro teste", stock: stock).save()
         Funcionario funcionario = new Funcionario(codigo: "1234", nome: "Ferran", email: "teste@teste.com").save()
-        new ContaUsuario(pessoa: funcionario, login: "felansu", senha: "123456").save()
+        ContaUsuario usuario = new ContaUsuario(pessoa: funcionario, username: "felansu", password: "123456").save()
 
         Livro.marshaller()
         Comentario.marshaller()
@@ -26,16 +25,11 @@ class BootStrap {
         Reserva.marshaller()
 
 
-        def adminRole = new Rol('ROLE_ADMIN').save()
-        def usuarioRol = new Rol('ROLE_USER').save()
+        Role adminRole = new Role('ROLE_ADMIN').save()
+        Role usuarioRol = new Role('ROLE_USER').save()
 
-        def testUser = new Usuario('me', 'password').save()
 
-        UsuarioRol.create testUser, adminRole, true
-
-        assert Usuario.count() == 1
-        assert Rol.count() == 2
-        assert UsuarioRol.count() == 1
+        ContaUsuarioRole.create usuario, adminRole, true
 
     }
     def destroy = {
