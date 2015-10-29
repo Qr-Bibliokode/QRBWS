@@ -7,6 +7,7 @@ import qrbws.Comentario
 import qrbws.Livro
 import qrbws.Pessoa
 import qrbws.ContaUsuario
+import qrbws.Stock
 import spock.lang.Specification
 
 @TestFor(Comentario)
@@ -14,11 +15,12 @@ import spock.lang.Specification
 class ComentarioSpec extends Specification {
 
     Comentario comentario
-    def book, user, person, status
+    def book, user, person, status, stock
 
     def setup() {
         Comentario.withNewSession() { session ->
-            book = new Livro(titulo: 'Livro Test', isbn: '123').save()
+            stock = new Stock(disponivel: 10, total: 10)
+            book = new Livro(titulo: 'Livro Test', isbn: '123', stock: stock).save()
             person = new Pessoa(nome: 'Pessoa Name', email: 'pessoa@email.com').save()
             user = new ContaUsuario(username: 'User Login', password: '12345', pessoa: person).save()
             comentario = new Comentario(descricao: 'Comentario Test', livro: book, contaUsuario: user, avaliacao: 2)

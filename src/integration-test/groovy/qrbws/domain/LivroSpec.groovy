@@ -3,15 +3,18 @@ package qrbws.domain
 import grails.test.mixin.TestFor
 import org.apache.commons.lang.StringUtils
 import qrbws.Livro
+import qrbws.Stock
 import spock.lang.Specification
 
 @TestFor(Livro)
 class LivroSpec extends Specification {
 
     Livro book
+    Stock stock
 
     def setup() {
-        book = new Livro()
+        stock = new Stock(disponivel: 10, total: 10)
+        book = new Livro(stock: stock)
     }
 
     void "Test that isbn can't be null or blank"() {
@@ -58,7 +61,7 @@ class LivroSpec extends Specification {
     void "Test that isbn is unique"() {
 
         when: 'the isbn repeated try save'
-        new Livro(titulo: 'Livro Test', isbn: '123').save(flush: true)
+        new Livro(titulo: 'Livro Test', isbn: '123', stock: stock).save(flush: true)
         book.titulo = 'Livro Copy'
         book.isbn = '123'
 
@@ -110,7 +113,7 @@ class LivroSpec extends Specification {
     void "Test that title is unique"() {
 
         when: 'the isbn repeated try save'
-        new Livro(titulo: 'Livro Test', isbn: '123').save(flush: true)
+        new Livro(titulo: 'Livro Test', isbn: '123', stock: stock).save(flush: true)
         book.titulo = 'Livro Test'
         book.isbn = '123456'
 

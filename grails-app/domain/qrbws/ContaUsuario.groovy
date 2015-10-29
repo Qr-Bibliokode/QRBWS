@@ -22,8 +22,8 @@ class ContaUsuario implements Serializable {
     static transients = ['springSecurityService']
 
     static constraints = {
-        username blank: false, unique: true
-        password blank: false
+        username blank: false, unique: true, size: 5..20
+        password blank: false, size: 5..20
     }
 
     static mapping = {
