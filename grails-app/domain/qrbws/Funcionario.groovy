@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/api/funcionario', formats=['json'])
+@Resource(uri = '/api/funcionario', formats = ['json'])
 class Funcionario extends Pessoa {
 
     String codigo

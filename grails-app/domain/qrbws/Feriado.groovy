@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/api/feriado', formats=['json'])
+@Resource(uri = '/api/feriado', formats = ['json'])
 class Feriado {
 
     String descricao

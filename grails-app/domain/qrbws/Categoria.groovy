@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/api/categoria', formats=['json'])
+@Resource(uri = '/api/categoria', formats = ['json'])
 class Categoria {
 
     String descricao

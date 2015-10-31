@@ -2,7 +2,7 @@ package qrbws
 
 import grails.rest.Resource
 
-@Resource(uri = '/api/autor', formats=['json'])
+@Resource(uri = '/api/autor', formats = ['json'])
 class Autor {
 
     String nome

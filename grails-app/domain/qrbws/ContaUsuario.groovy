@@ -11,11 +11,11 @@ class ContaUsuario implements Serializable {
     String username
     String password
     Pessoa pessoa
-    Boolean ativo
+    Boolean ativo = true
     boolean enabled = true
-    boolean accountExpired
-    boolean accountLocked
-    boolean passwordExpired
+    boolean accountExpired = false
+    boolean accountLocked = false
+    boolean passwordExpired = false
 
     static hasMany = [multas: Multa]
 
@@ -28,10 +28,6 @@ class ContaUsuario implements Serializable {
 
     static mapping = {
         password column: '`password`'
-    }
-
-    ContaUsuario() {
-        this.ativo = true
     }
 
     Set<Role> getAuthorities() {
@@ -71,12 +67,12 @@ class ContaUsuario implements Serializable {
     static void marshaller() {
         JSON.registerObjectMarshaller(ContaUsuario) {
             [
-                    'id'    : it.id,
-                    'username' : it.username,
-                    'password' : it.password,
-                    'pessoa': it.pessoa,
-                    'ativo' : it.ativo,
-                    'multas': it.multas
+                    'id'      : it.id,
+                    'username': it.username,
+                    'password': it.password,
+                    'pessoa'  : it.pessoa,
+                    'ativo'   : it.ativo,
+                    'multas'  : it.multas
             ]
         }
     }
