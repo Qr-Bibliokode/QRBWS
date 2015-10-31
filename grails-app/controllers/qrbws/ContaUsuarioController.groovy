@@ -41,6 +41,8 @@ class ContaUsuarioController {
             return
         }
 
+        verificacoes(contaUsuario)
+
         if (contaUsuario.hasErrors()) {
             transactionStatus.setRollbackOnly()
             respond contaUsuario.errors, view: 'create'
@@ -74,6 +76,8 @@ class ContaUsuarioController {
             notFound()
             return
         }
+
+        verificacoes(contaUsuario)
 
         if (contaUsuario.hasErrors()) {
             transactionStatus.setRollbackOnly()
@@ -110,6 +114,14 @@ class ContaUsuarioController {
             }
             '*' { render status: NO_CONTENT }
         }
+    }
+    
+    ContaUsuario verificacoes(ContaUsuario contaUsuario) {
+        int passwordLength = contaUsuario.password.length()
+        if (passwordLength < 6 || passwordLength > 20) {
+            contaUsuario.errors.reject('contausuario.senha.pequena')
+        }
+        contaUsuario
     }
 
     @Transactional

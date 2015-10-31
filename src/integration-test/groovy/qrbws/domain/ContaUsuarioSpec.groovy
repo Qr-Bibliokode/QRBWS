@@ -81,27 +81,6 @@ class ContaUsuarioSpec extends Specification {
         contaUsuario.validate()
     }
 
-    void "Test password must be between 5 and 20 characters"() {
-
-        when: 'the password have 4 characters'
-        contaUsuario.password = 'Test'
-
-        then: 'validation should fail'
-        !contaUsuario.validate()
-
-        when: 'the password have 21 characters'
-        contaUsuario.password = '123456789112345678912'
-
-        then: 'validation should fail'
-        !contaUsuario.validate()
-
-        when: 'the password have 8 characters'
-        contaUsuario.password = '12345678'
-
-        then: 'validation should pass'
-        contaUsuario.validate()
-    }
-
     void "Test contaUsuario need a person for save"() {
 
         when: 'the pessoa is null'

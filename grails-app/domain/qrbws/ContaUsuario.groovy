@@ -11,7 +11,6 @@ class ContaUsuario implements Serializable {
     String username
     String password
     Pessoa pessoa
-    Boolean ativo = true
     boolean enabled = true
     boolean accountExpired = false
     boolean accountLocked = false
@@ -23,7 +22,7 @@ class ContaUsuario implements Serializable {
 
     static constraints = {
         username blank: false, unique: true, size: 5..20
-        password blank: false, size: 5..20
+        password blank: false
     }
 
     static mapping = {
@@ -48,7 +47,6 @@ class ContaUsuario implements Serializable {
         password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
     }
 
-
     @Override
     int hashCode() {
         username?.hashCode() ?: 0
@@ -71,7 +69,7 @@ class ContaUsuario implements Serializable {
                     'username': it.username,
                     'password': it.password,
                     'pessoa'  : it.pessoa,
-                    'ativo'   : it.ativo,
+                    'enabled' : it.enabled,
                     'multas'  : it.multas
             ]
         }

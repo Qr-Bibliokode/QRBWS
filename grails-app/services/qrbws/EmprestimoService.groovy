@@ -148,6 +148,11 @@ class EmprestimoService {
     }
 
     Emprestimo validaEmprestimo(Emprestimo emprestimo) {
+        if (!emprestimo.contaUsuario.enabled) {
+            emprestimo.errors.reject('contausuario.desabilitada')
+            return emprestimo
+        }
+
         if (temMultasSemPagar(emprestimo.contaUsuario)) {
             emprestimo.errors.reject('contausuario.multa.contem')
             return emprestimo

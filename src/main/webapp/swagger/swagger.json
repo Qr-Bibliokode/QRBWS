@@ -2681,7 +2681,7 @@
         "pessoa": {
           "$ref": "Pessoa"
         },
-        "ativo": {
+        "enabled": {
           "type": "boolean",
           "format": "boolean"
         },
