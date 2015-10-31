@@ -12,9 +12,9 @@ class StockController {
     static responseFormats = ['json']
 
     static allowedMethods = [
-            save           : "POST",
-            update         : "PUT",
-            delete         : "DELETE"
+            save  : "POST",
+            update: "PUT",
+            delete: "DELETE"
     ]
 
     def index(Integer max) {
