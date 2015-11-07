@@ -30,4 +30,11 @@ class FeriadoService {
             return dataDevolucao
         }
     }
+
+    Feriado validaFeriado(Feriado feriado) {
+        if (feriado.dataFim.before(feriado.dataInicio)) {
+            feriado.errors.reject('feriado.data.fim.anterior.data.inicio')
+            return feriado
+        }
+    }
 }
