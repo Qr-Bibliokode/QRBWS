@@ -131,7 +131,7 @@ class EmprestimoService {
                 emprestimo.contaUsuario,
                 emprestimo.livro,
                 false,
-                emprestimo.id).size()
+                emprestimo.id ?: 0).size()
     }
 
     void descontaStock(Livro livro) {
@@ -197,7 +197,7 @@ class EmprestimoService {
 
     Emprestimo solicitaLiberacao(Emprestimo emprestimo, String tipo) {
         emprestimo.solicitacao = new Solicitacao(tipo: tipo)
-        emprestimo.save flush: true
+        emprestimo.save()
     }
 
     List<Emprestimo> obtenhaHistoricoEmprestimosPorLivro(Livro livro) {
