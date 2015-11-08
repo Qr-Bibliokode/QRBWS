@@ -15,6 +15,7 @@ class ContaUsuarioController {
 
     static allowedMethods = [
             save           : "POST",
+            validaUsuario  : "GET",
             update         : "PUT",
             delete         : "DELETE",
             verificarMultas: "GET"
@@ -152,7 +153,7 @@ class ContaUsuarioController {
             return
         }
 
-        ContaUsuario contaUsuario= ContaUsuario.get(params.contaUsuarioId)
+        ContaUsuario contaUsuario = ContaUsuario.get(params.contaUsuarioId)
         contaUsuario = contaUsuarioService.bloquearContaUsuario(contaUsuario)
 
         if (contaUsuario.hasErrors()) {
@@ -172,8 +173,39 @@ class ContaUsuarioController {
             return
         }
 
-        ContaUsuario contaUsuario= ContaUsuario.get(params.contaUsuarioId)
+        ContaUsuario contaUsuario = ContaUsuario.get(params.contaUsuarioId)
         contaUsuario = contaUsuarioService.habilitarContaUsuario(contaUsuario)
+
+        if (contaUsuario.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond contaUsuario.errors, view: 'create'
+            return
+        }
+
+        respond contaUsuario, formats: ['json']
+    }
+
+    @Transactional
+    def validaUsuario() {
+
+        if (params.username == null || params.password == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        ContaUsuario contaParams = new ContaUsuario(
+                username: params.username,
+                password: params.password
+        )
+//        contaParams.encodePassword()
+
+        ContaUsuario contaUsuario = ContaUsuario.findByUsernameAndPassword(contaParams.username, contaParams.password)
+
+        if (!contaUsuario) {
+            contaUsuario = new ContaUsuario()
+            contaUsuario.errors.reject('contausuario.nao.existe')
+        }
 
         if (contaUsuario.hasErrors()) {
             transactionStatus.setRollbackOnly()

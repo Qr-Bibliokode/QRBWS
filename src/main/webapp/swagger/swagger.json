@@ -34,7 +34,7 @@
           "autor"
         ],
         "operationId": "list",
-        "description": "Retorna todos os autores",
+        "description": "Retorna uma lista com todos os autores",
         "produces": [
           "application/json"
         ],
@@ -59,6 +59,7 @@
         ],
         "responses": {
           "200": {
+            "description": "Retorna uma lista de autores.",
             "schema": {
               "type": "array",
               "items": {
@@ -185,7 +186,7 @@
           {
             "in": "path",
             "name": "autorId",
-            "description": "autor id",
+            "description": "Id do autor",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -207,7 +208,7 @@
           "livro"
         ],
         "operationId": "list",
-        "description": "Retorna todos os livros",
+        "description": "Retorna uma lista com todos os livros",
         "produces": [
           "application/json"
         ],
@@ -247,7 +248,7 @@
           "livro"
         ],
         "summary": "Create",
-        "description": "Cria uma livro",
+        "description": "Cria um livro",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -256,7 +257,7 @@
           {
             "in": "body",
             "name": "livro",
-            "description": "livro object",
+            "description": "Objeto livro",
             "required": true,
             "schema": {
               "items": {
@@ -280,7 +281,7 @@
         "tags": [
           "livro"
         ],
-        "summary": "Retorna uma livro",
+        "summary": "Retorna um livro",
         "description": "Para uma resposta válida um livro com livroId deve existir",
         "operationId": "getById",
         "produces": [
@@ -290,7 +291,7 @@
           {
             "in": "path",
             "name": "livroId",
-            "description": "livro id",
+            "description": "Id do livro",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -319,7 +320,7 @@
           {
             "in": "path",
             "name": "livroId",
-            "description": "livro id",
+            "description": "Id do livro",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -348,7 +349,7 @@
           {
             "in": "body",
             "name": "livro",
-            "description": "livro object",
+            "description": "Objeto livro",
             "required": true,
             "schema": {
               "items": {
@@ -359,7 +360,7 @@
           {
             "in": "path",
             "name": "livroId",
-            "description": "livro id",
+            "description": "Id do livro",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -381,7 +382,7 @@
           "categoria"
         ],
         "operationId": "list",
-        "description": "Retorna todas as categorias",
+        "description": "Retorna uma lista com todas as categorias",
         "produces": [
           "application/json"
         ],
@@ -430,7 +431,7 @@
           {
             "in": "body",
             "name": "categoria",
-            "description": "categoria object",
+            "description": "Objeto categoria",
             "required": true,
             "schema": {
               "items": {
@@ -464,7 +465,7 @@
           {
             "in": "path",
             "name": "categoriaId",
-            "description": "categoria id",
+            "description": "Id da categoria",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -483,7 +484,7 @@
         "tags": [
           "categoria"
         ],
-        "summary": "Deleta um categoria",
+        "summary": "Deleta uma categoria",
         "description": "Para uma resposta válida um categoria com categoriaId deve existir",
         "operationId": "delete",
         "produces": [
@@ -493,7 +494,7 @@
           {
             "in": "path",
             "name": "categoriaId",
-            "description": "categoria id",
+            "description": "Id da categoria",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -522,7 +523,7 @@
           {
             "in": "body",
             "name": "categoria",
-            "description": "categoria object",
+            "description": "Objeto categoria",
             "required": true,
             "schema": {
               "items": {
@@ -533,7 +534,7 @@
           {
             "in": "path",
             "name": "categoriaId",
-            "description": "autor id",
+            "description": "Id do autor",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -555,7 +556,7 @@
           "comentario"
         ],
         "operationId": "list",
-        "description": "Retorna todas as categorias",
+        "description": "Retorna uma lista com todos os comentários",
         "produces": [
           "application/json"
         ],
@@ -580,11 +581,11 @@
         ],
         "responses": {
           "200": {
-            "description": "Uma lista de categorias.",
+            "description": "Uma lista de comentários",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Comment"
+                "$ref": "#/definitions/Comentario"
               }
             }
           }
@@ -595,7 +596,7 @@
           "comentario"
         ],
         "summary": "Create",
-        "description": "Cria uma comentario",
+        "description": "Cria um comentário",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -604,11 +605,11 @@
           {
             "in": "body",
             "name": "comentario",
-            "description": "Comment object",
+            "description": "Objeto comentário",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Comment"
+                "$ref": "#/definitions/Comentario"
               }
             }
           }
@@ -628,8 +629,8 @@
         "tags": [
           "comentario"
         ],
-        "summary": "Retorna uma comentario",
-        "description": "Para uma resposta válida um comentario com comentarioId deve existir",
+        "summary": "Retorna um comentario",
+        "description": "Para uma resposta válida um comentário com comentarioId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -638,7 +639,7 @@
           {
             "in": "path",
             "name": "comentarioId",
-            "description": "Comment id",
+            "description": "Id do comentário",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -657,8 +658,8 @@
         "tags": [
           "comentario"
         ],
-        "summary": "Deleta um comentario",
-        "description": "Para uma resposta válida um comentario com comentarioId deve existir",
+        "summary": "Deleta um comentário",
+        "description": "Para uma resposta válida um comentário com comentarioId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -667,7 +668,7 @@
           {
             "in": "path",
             "name": "comentarioId",
-            "description": "Comment id",
+            "description": "Id do comentário",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -696,18 +697,18 @@
           {
             "in": "body",
             "name": "comentario",
-            "description": "Comment object",
+            "description": "Objeto comentário",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Comment"
+                "$ref": "#/definitions/Comentario"
               }
             }
           },
           {
             "in": "path",
             "name": "comentarioId",
-            "description": "autor id",
+            "description": "Id do comentario",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -729,7 +730,7 @@
           "funcionario"
         ],
         "operationId": "list",
-        "description": "Retorna todos os funcionarios",
+        "description": "Retorna uma lista com todos os funcionários",
         "produces": [
           "application/json"
         ],
@@ -754,11 +755,11 @@
         ],
         "responses": {
           "200": {
-            "description": "Uma lista de funcionarios.",
+            "description": "Uma lista de funcionários.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Comment"
+                "$ref": "#/definitions/Funcionario"
               }
             }
           }
@@ -769,7 +770,7 @@
           "funcionario"
         ],
         "summary": "Create",
-        "description": "Cria um funcionario",
+        "description": "Cria um funcionário",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -778,7 +779,7 @@
           {
             "in": "body",
             "name": "funcionario",
-            "description": "Objeto funcionario",
+            "description": "Objeto funcionário",
             "required": true,
             "schema": {
               "items": {
@@ -802,8 +803,8 @@
         "tags": [
           "funcionario"
         ],
-        "summary": "Retorna uma funcionario",
-        "description": "Para uma resposta válida um funcionario com funcionarioId deve existir",
+        "summary": "Retorna um funcionário",
+        "description": "Para uma resposta válida um funcionário com funcionarioId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -812,7 +813,7 @@
           {
             "in": "path",
             "name": "funcionarioId",
-            "description": "Comment id",
+            "description": "Id do funcionário",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -831,8 +832,8 @@
         "tags": [
           "funcionario"
         ],
-        "summary": "Deleta um funcionario",
-        "description": "Para uma resposta válida um funcionario com funcionarioId deve existir",
+        "summary": "Deleta um funcionário",
+        "description": "Para uma resposta válida um funcionário com funcionarioId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -841,7 +842,7 @@
           {
             "in": "path",
             "name": "funcionarioId",
-            "description": "Comment id",
+            "description": "Id do funcionário",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -861,7 +862,7 @@
           "funcionario"
         ],
         "summary": "Update",
-        "description": "Atualiza um funcionario",
+        "description": "Atualiza um funcionário",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -870,18 +871,18 @@
           {
             "in": "body",
             "name": "funcionario",
-            "description": "Objeto funcionario",
+            "description": "Objeto funcionário",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Comment"
+                "$ref": "#/definitions/Funcionario"
               }
             }
           },
           {
             "in": "path",
             "name": "funcionarioId",
-            "description": "Id do funcionario",
+            "description": "Id do funcionário",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -903,7 +904,7 @@
           "feriado"
         ],
         "operationId": "list",
-        "description": "Retorna todos os feriados",
+        "description": "Retorna uma lista com todos os feriados",
         "produces": [
           "application/json"
         ],
@@ -1077,7 +1078,7 @@
           "reserva"
         ],
         "operationId": "list",
-        "description": "Retorna todos os reservas",
+        "description": "Retorna uma lista com todas as reservas",
         "produces": [
           "application/json"
         ],
@@ -1117,7 +1118,7 @@
           "reserva"
         ],
         "summary": "Create",
-        "description": "Cria um reserva",
+        "description": "Cria uma reserva",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -1150,8 +1151,8 @@
         "tags": [
           "reserva"
         ],
-        "summary": "Retorna um reserva",
-        "description": "Para uma resposta válida um reserva com reservaId deve existir",
+        "summary": "Retorna uma reserva",
+        "description": "Para uma resposta válida uma reserva com reservaId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -1160,7 +1161,7 @@
           {
             "in": "path",
             "name": "reservaId",
-            "description": "Id do reserva",
+            "description": "Id da reserva",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1179,8 +1180,8 @@
         "tags": [
           "reserva"
         ],
-        "summary": "Deleta um reserva",
-        "description": "Para uma resposta válida um reserva com reservaId deve existir",
+        "summary": "Deleta uma reserva",
+        "description": "Para uma resposta válida uma reserva com reservaId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -1189,7 +1190,7 @@
           {
             "in": "path",
             "name": "reservaId",
-            "description": "Id do reserva",
+            "description": "Id da reserva",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1209,7 +1210,7 @@
           "reserva"
         ],
         "summary": "Update",
-        "description": "Atualiza um reserva",
+        "description": "Atualiza uma reserva",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -1229,7 +1230,7 @@
           {
             "in": "path",
             "name": "reservaId",
-            "description": "Id do reserva",
+            "description": "Id da reserva",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1251,7 +1252,7 @@
           "idioma"
         ],
         "operationId": "list",
-        "description": "Retorna todos os idiomas",
+        "description": "Retorna uma lista com todos os idiomas",
         "produces": [
           "application/json"
         ],
@@ -1425,7 +1426,7 @@
           "emprestimo"
         ],
         "operationId": "list",
-        "description": "Retorna todos os emprestimos",
+        "description": "Retorna uma lista com todos os empréstimos",
         "produces": [
           "application/json"
         ],
@@ -1450,7 +1451,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Uma lista de emprestimos.",
+            "description": "Uma lista de empréstimos.",
             "schema": {
               "type": "array",
               "items": {
@@ -1476,7 +1477,7 @@
           {
             "in": "body",
             "name": "emprestimo",
-            "description": "Objeto emprestimo",
+            "description": "Objeto empréstimo",
             "required": true,
             "schema": {
               "items": {
@@ -1501,7 +1502,7 @@
           "emprestimo"
         ],
         "summary": "Devolver",
-        "description": "Devolver um livro",
+        "description": "Devolve um livro",
         "operationId": "devolver",
         "produces": [
           "application/json"
@@ -1510,7 +1511,7 @@
           {
             "in": "path",
             "name": "emprestimoId",
-            "description": "Id do emprestimo",
+            "description": "Id do empréstimo",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1532,7 +1533,7 @@
           "emprestimo"
         ],
         "summary": "Renovar",
-        "description": "Renovar um livro",
+        "description": "Renova a locação de um livro",
         "operationId": "renovar",
         "produces": [
           "application/json"
@@ -1541,7 +1542,7 @@
           {
             "in": "path",
             "name": "emprestimoId",
-            "description": "Id do emprestimo",
+            "description": "Id do empréstimo",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1563,7 +1564,7 @@
           "emprestimo"
         ],
         "summary": "Liberar",
-        "description": "Liberar um livro",
+        "description": "Libera a locação de um livro",
         "operationId": "liberar",
         "produces": [
           "application/json"
@@ -1572,7 +1573,7 @@
           {
             "in": "path",
             "name": "emprestimoId",
-            "description": "Id do emprestimo",
+            "description": "Id do empréstimo",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1593,8 +1594,8 @@
         "tags": [
           "emprestimo"
         ],
-        "summary": "obtenha o histórico de emprestimos por livro",
-        "description": "obtenha o histórico de emprestimos por livro",
+        "summary": "Obtém o histórico de empréstimos",
+        "description": "Obtém o histórico de empréstimos por livro",
         "operationId": "obtenhaHistoricoEmprestimosPorLivro",
         "produces": [
           "application/json"
@@ -1624,8 +1625,8 @@
         "tags": [
           "emprestimo"
         ],
-        "summary": "Retorna um emprestimo",
-        "description": "Para uma resposta válida um emprestimo com emprestimoId deve existir",
+        "summary": "Retorna um empréstimo",
+        "description": "Para uma resposta válida um empréstimo com emprestimoId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -1634,7 +1635,7 @@
           {
             "in": "path",
             "name": "emprestimoId",
-            "description": "Id do emprestimo",
+            "description": "Id do empréstimo",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1653,8 +1654,8 @@
         "tags": [
           "emprestimo"
         ],
-        "summary": "Deleta um emprestimo",
-        "description": "Para uma resposta válida um emprestimo com emprestimoId deve existir",
+        "summary": "Deleta um empréstimo",
+        "description": "Para uma resposta válida um empréstimo com emprestimoId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -1663,7 +1664,7 @@
           {
             "in": "path",
             "name": "emprestimoId",
-            "description": "Id do emprestimo",
+            "description": "Id do empréstimo",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1683,7 +1684,7 @@
           "emprestimo"
         ],
         "summary": "Update",
-        "description": "Atualiza um emprestimo",
+        "description": "Atualiza um empréstimo",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -1692,7 +1693,7 @@
           {
             "in": "body",
             "name": "emprestimo",
-            "description": "Objeto emprestimo",
+            "description": "Objeto empréstimo",
             "required": true,
             "schema": {
               "items": {
@@ -1703,7 +1704,7 @@
           {
             "in": "path",
             "name": "emprestimoId",
-            "description": "Id do emprestimo",
+            "description": "Id do empréstimo",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1725,7 +1726,7 @@
           "stock"
         ],
         "operationId": "list",
-        "description": "Retorna todas as stock",
+        "description": "Retorna uma lista com todos os livros que compõem o estoque",
         "produces": [
           "application/json"
         ],
@@ -1750,7 +1751,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Uma lista de stock.",
+            "description": "Uma lista de livros do estoque.",
             "schema": {
               "type": "array",
               "items": {
@@ -1765,7 +1766,7 @@
           "stock"
         ],
         "summary": "Create",
-        "description": "Cria uma stock",
+        "description": "Cria um estoque de livros",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -1774,7 +1775,7 @@
           {
             "in": "body",
             "name": "stock",
-            "description": "Stock object",
+            "description": "Objeto estoque",
             "required": true,
             "schema": {
               "items": {
@@ -1798,8 +1799,8 @@
         "tags": [
           "stock"
         ],
-        "summary": "Retorna uma stock",
-        "description": "Para uma resposta válida um stock com stockId deve existir",
+        "summary": "Retorna o estoque de livros",
+        "description": "Para uma resposta válida um estoquecom stockId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -1827,8 +1828,8 @@
         "tags": [
           "stock"
         ],
-        "summary": "Deleta um stock",
-        "description": "Para uma resposta válida um stock com stockId deve existir",
+        "summary": "Deleta um estoque",
+        "description": "Para uma resposta válida um estoque com stockId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -1837,7 +1838,7 @@
           {
             "in": "path",
             "name": "stockId",
-            "description": "Stock id",
+            "description": "Id do estoque",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1857,7 +1858,7 @@
           "stock"
         ],
         "summary": "Update",
-        "description": "Atualiza um stock",
+        "description": "Atualiza o estoque",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -1866,7 +1867,7 @@
           {
             "in": "body",
             "name": "stock",
-            "description": "Stock object",
+            "description": "Objeto estoque",
             "required": true,
             "schema": {
               "items": {
@@ -1877,7 +1878,7 @@
           {
             "in": "path",
             "name": "stockId",
-            "description": "Stock id",
+            "description": "Id do estoque",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1899,7 +1900,7 @@
           "estudante"
         ],
         "operationId": "list",
-        "description": "Retorna todos os estudantes",
+        "description": "Retorna uma lista com todos os estudantes",
         "produces": [
           "application/json"
         ],
@@ -1939,7 +1940,7 @@
           "estudante"
         ],
         "summary": "Create",
-        "description": "Cria uma estudante",
+        "description": "Cria um estudante",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -1972,7 +1973,7 @@
         "tags": [
           "estudante"
         ],
-        "summary": "Retorna uma estudante",
+        "summary": "Retorna um estudante",
         "description": "Para uma resposta válida um estudante com estudanteId deve existir",
         "operationId": "getById",
         "produces": [
@@ -2073,7 +2074,7 @@
           "contaUsuario"
         ],
         "operationId": "list",
-        "description": "Retorna todas as contas de usuario",
+        "description": "Retorna uma lista com todas as contas de usuário",
         "produces": [
           "application/json"
         ],
@@ -2098,7 +2099,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Uma lista de contas de usuario",
+            "description": "Uma lista de contas de usuários",
             "schema": {
               "type": "array",
               "items": {
@@ -2113,7 +2114,7 @@
           "contaUsuario"
         ],
         "summary": "Create",
-        "description": "Cria uma contaUsuario",
+        "description": "Cria uma conta de usuário",
         "operationId": "create",
         "produces": [
           "application/json"
@@ -2147,7 +2148,7 @@
           "contaUsuario"
         ],
         "summary": "Retorna uma contaUsuario",
-        "description": "Para uma resposta válida um contaUsuario com contaUsuarioId deve existir",
+        "description": "Para uma resposta válida um conta de usuário com contaUsuarioId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -2156,7 +2157,7 @@
           {
             "in": "path",
             "name": "contaUsuarioId",
-            "description": "contaUsuario id",
+            "description": "id contaUsuário",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -2176,7 +2177,7 @@
           "contaUsuario"
         ],
         "summary": "Deleta uma contaUsuario",
-        "description": "Para uma resposta válida um contaUsuario com contaUsuarioId deve existir",
+        "description": "Para uma resposta válida uma contaUsuario com contaUsuarioId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -2185,7 +2186,7 @@
           {
             "in": "path",
             "name": "contaUsuarioId",
-            "description": "Id da contaUsuario",
+            "description": "Id da conta de usuário",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -2205,7 +2206,7 @@
           "contaUsuario"
         ],
         "summary": "Update",
-        "description": "Atualiza um contaUsuario",
+        "description": "Atualiza uma conta de usuário.",
         "operationId": "update",
         "produces": [
           "application/json"
@@ -2246,8 +2247,8 @@
         "tags": [
           "contaUsuario"
         ],
-        "summary": "Gera multa se necessário",
-        "description": "Gera multa se necessário",
+        "summary": "Gera multa",
+        "description": "Gera multa se existir atraso na devolução do livro",
         "operationId": "verificarMultas",
         "produces": [
           "application/json"
@@ -2272,13 +2273,50 @@
         }
       }
     },
+    "/contaUsuario/validaUsuario?username={username}&password={password}": {
+      "get": {
+        "tags": [
+          "contaUsuario"
+        ],
+        "summary": "Consulta usuário pelo username e password",
+        "description": "Consulta usuário pelo username e password",
+        "operationId": "validaUsuario",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "description": "username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "password",
+            "description": "password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
+    },
     "/contaUsuario/pagarMulta?multaId={multaId}": {
       "get": {
         "tags": [
           "contaUsuario"
         ],
         "summary": "Paga multa",
-        "description": "Paga multa",
+        "description": "Paga multa por atraso na devolução do livro",
         "operationId": "pagarMulta",
         "produces": [
           "application/json"
@@ -2287,7 +2325,7 @@
           {
             "in": "path",
             "name": "multaId",
-            "description": "multa id",
+            "description": "Id da multa",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -2454,7 +2492,7 @@
         }
       }
     },
-    "Commentario": {
+    "Comentario": {
       "type": "object",
       "required": [
         "id",

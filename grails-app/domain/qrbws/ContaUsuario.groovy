@@ -44,7 +44,7 @@ class ContaUsuario implements Serializable {
     }
 
     protected void encodePassword() {
-        password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+//        password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
     }
 
     @Override

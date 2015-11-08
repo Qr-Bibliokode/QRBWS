@@ -18,6 +18,7 @@ class UrlMappings {
         "/api/contaUsuario/verificarMultas"(controller: "contaUsuario", action: 'verificarMultas')
         "/api/contaUsuario/bloquearContaUsuario"(controller: "contaUsuario", action: 'bloquearContaUsuario')
         "/api/contaUsuario/habilitarContaUsuario"(controller: "contaUsuario", action: 'habilitarContaUsuario')
+        "/api/contaUsuario/validaUsuario"(controller: "contaUsuario", action: 'validaUsuario')
         "/api/contaUsuario"(resources: "contaUsuario")
 
         "/api/comentario"(resources: "comentario")
