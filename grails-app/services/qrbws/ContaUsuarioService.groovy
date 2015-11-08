@@ -44,4 +44,13 @@ class ContaUsuarioService {
         return diasMulta * 2
     }
 
+    ContaUsuario bloquearContaUsuario(ContaUsuario contaUsuario) {
+        contaUsuario.enabled = false
+        contaUsuario
+    }
+
+    ContaUsuario habilitarContaUsuario(ContaUsuario contaUsuario) {
+        contaUsuario.enabled = true
+        contaUsuario
+    }
 }

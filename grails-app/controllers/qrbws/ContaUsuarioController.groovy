@@ -144,6 +144,46 @@ class ContaUsuarioController {
         }
     }
 
+    @Transactional
+    def bloquearContaUsuario() {
+        if (params.contaUsuarioId == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        ContaUsuario contaUsuario= ContaUsuario.get(params.contaUsuarioId)
+        contaUsuario = contaUsuarioService.bloquearContaUsuario(contaUsuario)
+
+        if (contaUsuario.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond contaUsuario.errors, view: 'create'
+            return
+        }
+
+        respond contaUsuario, formats: ['json']
+    }
+
+    @Transactional
+    def habilitarContaUsuario() {
+        if (params.contaUsuarioId == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        ContaUsuario contaUsuario= ContaUsuario.get(params.contaUsuarioId)
+        contaUsuario = contaUsuarioService.habilitarContaUsuario(contaUsuario)
+
+        if (contaUsuario.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond contaUsuario.errors, view: 'create'
+            return
+        }
+
+        respond contaUsuario, formats: ['json']
+    }
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {

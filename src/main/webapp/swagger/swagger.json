@@ -2302,6 +2302,68 @@
           }
         }
       }
+    },
+    "/contaUsuario/habilitarContaUsuario?contaUsuarioId={contaUsuarioId}": {
+      "get": {
+        "tags": [
+          "contaUsuario"
+        ],
+        "summary": "Habilita conta usuario",
+        "description": "Habilita conta usuario",
+        "operationId": "habilitarContaUsuario",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contaUsuarioId",
+            "description": "conta usuario id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
+    },
+    "/contaUsuario/bloquearContaUsuario?contaUsuarioId={contaUsuarioId}": {
+      "get": {
+        "tags": [
+          "contaUsuario"
+        ],
+        "summary": "Bloqueia conta usuario",
+        "description": "Bloqueia conta usuario",
+        "operationId": "bloquearContaUsuario",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contaUsuarioId",
+            "description": "conta usuario id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
     }
   },
   "definitions": {
