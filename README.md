@@ -4,7 +4,7 @@ Web Service do projeto QRB
 
 ## Instalação
 
-Precisa ter instalado Grails 3.0.9, apenas rode o comando ```grails``` na pasta do projeto para atualizar as dependencias.
+Precisa ter instalado Grails 3.0.9. Apenas rode o comando ```grails``` na pasta do projeto para atualizar as dependencias.
 
 ## Uso
 
@@ -20,7 +20,7 @@ Para iniciar o Web Service bastará rodar o comando ```grails run-app``` na past
 
 ## História
 
-QRB surge de um projeto da faculdade com o intuito de desafiar o nosso inteleto aprendendo novas tecnologias e ferramentas como AngularJS, Grails, Swagger e HapiJS dentre oturos.
+QRB surge de um projeto da faculdade com o intuito de desafiar o nosso intelecto aprendendo novas tecnologias e ferramentas como AngularJS, Grails, Swagger e HapiJS dentre outros.
 
 ## Agradecimentos
 
