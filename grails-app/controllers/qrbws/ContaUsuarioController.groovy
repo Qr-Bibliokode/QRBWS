@@ -198,7 +198,6 @@ class ContaUsuarioController {
                 username: params.username,
                 password: params.password
         )
-//        contaParams.encodePassword()
 
         ContaUsuario contaUsuario = ContaUsuario.findByUsernameAndPassword(contaParams.username, contaParams.password)
 

@@ -7,7 +7,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.NO_CONTENT
 import static org.springframework.http.HttpStatus.OK
 
-class StockController {
+class EstoqueController {
 
     static responseFormats = ['json']
 
@@ -19,89 +19,89 @@ class StockController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Stock.list(params), model: [stockCount: Stock.count()]
+        respond Estoque.list(params), model: [estoqueCount: Estoque.count()]
     }
 
-    def show(Stock stock) {
-        respond stock
+    def show(Estoque estoque) {
+        respond estoque
     }
 
     def create() {
-        respond new Stock(params)
+        respond new Estoque(params)
     }
 
     @Transactional
-    def save(Stock stock) {
-        if (stock == null) {
+    def save(Estoque estoque) {
+        if (estoque == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (stock.disponivel > stock.total) {
-            stock.errors.reject('stock.disponivel.maior.total')
+        if (estoque.disponivel > estoque.total) {
+            estoque.errors.reject('estoque.disponivel.maior.total')
         }
 
-        if (stock.hasErrors()) {
+        if (estoque.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond stock.errors, view: 'create'
+            respond estoque.errors, view: 'create'
             return
         }
 
-        stock.save flush: true
+        estoque.save flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'stock.label', default: 'Stock'), stock.id])
-                redirect stock
+                flash.message = message(code: 'default.created.message', args: [message(code: 'estoque.label', default: 'Estoque'), estoque.id])
+                redirect estoque
             }
-            '*' { respond stock, [status: CREATED] }
+            '*' { respond estoque, [status: CREATED] }
         }
     }
 
     @Transactional
-    def update(Stock stock) {
-        if (stock == null) {
+    def update(Estoque estoque) {
+        if (estoque == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (stock.disponivel > stock.total) {
-            stock.errors.reject('stock.disponivel.maior.total')
+        if (estoque.disponivel > estoque.total) {
+            estoque.errors.reject('estoque.disponivel.maior.total')
         }
 
-        if (stock.hasErrors()) {
+        if (estoque.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond stock.errors, view: 'edit'
+            respond estoque.errors, view: 'edit'
             return
         }
 
-        stock.save flush: true
+        estoque.save flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'stock.label', default: 'Stock'), stock.id])
-                redirect stock
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'estoque.label', default: 'Estoque'), estoque.id])
+                redirect estoque
             }
-            '*' { respond stock, [status: OK] }
+            '*' { respond estoque, [status: OK] }
         }
     }
 
     @Transactional
-    def delete(Stock stock) {
+    def delete(Estoque estoque) {
 
-        if (stock == null) {
+        if (estoque == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        stock.delete flush: true
+        estoque.delete flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'stock.label', default: 'Stock'), stock.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'estoque.label', default: 'Estoque'), estoque.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }
@@ -111,7 +111,7 @@ class StockController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'stock.label', default: 'Stock'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'estoque.label', default: 'Estoque'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NOT_FOUND }

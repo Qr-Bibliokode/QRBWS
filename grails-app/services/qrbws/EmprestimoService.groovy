@@ -8,7 +8,7 @@ import static qrbws.Solicitacao.*
 @Transactional
 class EmprestimoService {
 
-    StockService stockService
+    EstoqueService estoqueService
     MultaService multaService
     ContaUsuarioService contaUsuarioService
     FeriadoService feriadoService
@@ -19,7 +19,7 @@ class EmprestimoService {
             verificaSolicitacaoEmprestimo(emprestimo)
             montaDatasEmprestimo(emprestimo)
             if (emprestimo.solicitacaoLiberada) {
-                descontaStock(emprestimo.livro)
+                descontaEstoque(emprestimo.livro)
             }
             emprestimo.save flush: true
         }
@@ -37,7 +37,7 @@ class EmprestimoService {
         if (emprestimo.solicitacaoLiberada) {
             emprestimo.dataDevolucao = new Date()
             emprestimo.devolvido = true
-            incrementaStock(emprestimo.livro)
+            incrementaEstoque(emprestimo.livro)
         } else {
             solicitaLiberacao(emprestimo, DEVOLUCAO)
         }
@@ -104,8 +104,8 @@ class EmprestimoService {
         feriadoService.calcularDataDevolucao()
     }
 
-    Boolean temStock(Livro livro) {
-        stockService.temStock(livro)
+    Boolean temEstoque(Livro livro) {
+        estoqueService.temEstoque(livro)
     }
 
     Boolean temEmprestimoForaDeData(ContaUsuario contaUsuario, temEmprestimoForaDeData = null) {
@@ -121,8 +121,8 @@ class EmprestimoService {
         Emprestimo.findAllByContaUsuarioAndDevolvido(contaUsuario, false).size() >= 3
     }
 
-    Boolean existemReservasAtivasSuperiorAStockDisponivel(Livro livro) {
-        reservaService.existemReservasAtivasSuperiorADisponivel(livro) >= Stock.findByLivro(livro).disponivel
+    Boolean existemReservasAtivasSuperiorAEstoqueDisponivel(Livro livro) {
+        reservaService.existemReservasAtivasSuperiorADisponivel(livro) >= Estoque.findByLivro(livro).disponivel
     }
 
 
@@ -134,12 +134,12 @@ class EmprestimoService {
                 emprestimo.id ?: 0).size()
     }
 
-    void descontaStock(Livro livro) {
-        stockService.desconta(livro)
+    void descontaEstoque(Livro livro) {
+        estoqueService.desconta(livro)
     }
 
-    void incrementaStock(Livro livro) {
-        stockService.incrementa(livro)
+    void incrementaEstoque(Livro livro) {
+        estoqueService.incrementa(livro)
     }
 
     void montaDatasEmprestimo(Emprestimo emprestimo) {
@@ -158,8 +158,8 @@ class EmprestimoService {
             return emprestimo
         }
 
-        if (!temStock(emprestimo.livro)) {
-            emprestimo.errors.reject('stock.livro.indisponivel')
+        if (!temEstoque(emprestimo.livro)) {
+            emprestimo.errors.reject('estoque.livro.indisponivel')
             return emprestimo
         }
 
@@ -173,7 +173,7 @@ class EmprestimoService {
             return emprestimo
         }
 
-        if (existemReservasAtivasSuperiorAStockDisponivel(emprestimo.livro)) {
+        if (existemReservasAtivasSuperiorAEstoqueDisponivel(emprestimo.livro)) {
             emprestimo.errors.reject('emprestimo.invalido.existem.reservas')
             return emprestimo
         }

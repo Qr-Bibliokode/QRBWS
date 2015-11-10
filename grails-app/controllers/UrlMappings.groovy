@@ -42,7 +42,7 @@ class UrlMappings {
 
         "/api/reserva"(resources: "reserva")
 
-        "/api/stock"(resources: "stock")
+        "/api/estoque"(resources: "estoque")
 
     }
 }

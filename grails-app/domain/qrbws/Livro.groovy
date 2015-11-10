@@ -14,7 +14,7 @@ class Livro {
     Categoria categoria
     // TODO: Implementar capa do livro
 
-    static hasOne = [stock: Stock]
+    static hasOne = [estoque: Estoque]
 
     static hasMany = [autores: Autor, comentarios: Comentario]
 
@@ -42,7 +42,7 @@ class Livro {
                     'categoria'  : it.categoria,
                     'autores'    : it.autores,
                     'comentarios': it.comentarios,
-                    'stock'      : it.stock
+                    'estoque'      : it.estoque
             ]
         }
     }

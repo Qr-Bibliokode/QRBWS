@@ -1720,10 +1720,10 @@
         }
       }
     },
-    "/stock/": {
+    "/estoque/": {
       "get": {
         "tags": [
-          "stock"
+          "estoque"
         ],
         "operationId": "list",
         "description": "Retorna uma lista com todos os livros que compõem o estoque",
@@ -1755,7 +1755,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Stock"
+                "$ref": "#/definitions/Estoque"
               }
             }
           }
@@ -1763,7 +1763,7 @@
       },
       "post": {
         "tags": [
-          "stock"
+          "estoque"
         ],
         "summary": "Create",
         "description": "Cria um estoque de livros",
@@ -1774,12 +1774,12 @@
         "parameters": [
           {
             "in": "body",
-            "name": "stock",
+            "name": "estoque",
             "description": "Objeto estoque",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Stock"
+                "$ref": "#/definitions/Estoque"
               }
             }
           }
@@ -1794,13 +1794,13 @@
         }
       }
     },
-    "/stock/{stockId}": {
+    "/estoque/{estoqueId}": {
       "get": {
         "tags": [
-          "stock"
+          "estoque"
         ],
         "summary": "Retorna o estoque de livros",
-        "description": "Para uma resposta válida um estoquecom stockId deve existir",
+        "description": "Para uma resposta válida um estoquecom estoqueId deve existir",
         "operationId": "getById",
         "produces": [
           "application/json"
@@ -1808,8 +1808,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "stockId",
-            "description": "Stock id",
+            "name": "estoqueId",
+            "description": "Estoque id",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -1826,10 +1826,10 @@
       },
       "delete": {
         "tags": [
-          "stock"
+          "estoque"
         ],
         "summary": "Deleta um estoque",
-        "description": "Para uma resposta válida um estoque com stockId deve existir",
+        "description": "Para uma resposta válida um estoque com estoqueId deve existir",
         "operationId": "delete",
         "produces": [
           "application/json"
@@ -1837,7 +1837,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "stockId",
+            "name": "estoqueId",
             "description": "Id do estoque",
             "required": true,
             "type": "integer",
@@ -1855,7 +1855,7 @@
       },
       "put": {
         "tags": [
-          "stock"
+          "estoque"
         ],
         "summary": "Update",
         "description": "Atualiza o estoque",
@@ -1866,18 +1866,18 @@
         "parameters": [
           {
             "in": "body",
-            "name": "stock",
+            "name": "estoque",
             "description": "Objeto estoque",
             "required": true,
             "schema": {
               "items": {
-                "$ref": "#/definitions/Stock"
+                "$ref": "#/definitions/Estoque"
               }
             }
           },
           {
             "in": "path",
-            "name": "stockId",
+            "name": "estoqueId",
             "description": "Id do estoque",
             "required": true,
             "type": "integer",
@@ -2695,7 +2695,7 @@
         }
       }
     },
-    "Stock": {
+    "Estoque": {
       "type": "object",
       "required": [
         "id",

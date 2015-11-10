@@ -3,9 +3,9 @@ package qrbws
 import grails.converters.JSON
 import grails.rest.Resource
 
-@Resource(uri = '/api/stock', formats = ['json'])
+@Resource(uri = '/api/estoque', formats = ['json'])
 
-class Stock {
+class Estoque {
 
     Livro livro
     Integer disponivel
@@ -18,7 +18,7 @@ class Stock {
     }
 
     static void marshaller() {
-        JSON.registerObjectMarshaller(Stock) {
+        JSON.registerObjectMarshaller(Estoque) {
             [
                     'id'        : it.id,
                     'livro'     : it.livro,

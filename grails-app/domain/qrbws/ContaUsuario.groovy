@@ -44,6 +44,7 @@ class ContaUsuario implements Serializable {
     }
 
     protected void encodePassword() {
+//        Tem que ver como validar usuários con senha encriptada, pra isso tem que ser utilizado https
 //        password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
     }
 
