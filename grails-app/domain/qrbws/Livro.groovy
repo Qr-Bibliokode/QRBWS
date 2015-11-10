@@ -30,6 +30,10 @@ class Livro {
         comentarios nullable: true
     }
 
+    static mapping = {
+        autores cascade: 'none'
+    }
+
     static void marshaller() {
         JSON.registerObjectMarshaller(Livro) {
             [

@@ -8,10 +8,11 @@ class Autor {
     String nome
     String informacoesAdicionais
 
-    static belongsTo = Livro
+    static belongsTo = [livro :Livro]
 
     static constraints = {
         nome blank: false, maxSize: 50, matches: '[^0-9\\-]+'
         informacoesAdicionais nullable: true
+        livro nullable: true
     }
 }
