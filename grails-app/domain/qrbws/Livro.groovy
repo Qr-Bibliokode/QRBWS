@@ -3,7 +3,6 @@ package qrbws
 import grails.converters.JSON
 import grails.rest.Resource
 
-@Resource(uri = '/api/livro', formats = ['json'])
 class Livro {
 
     String isbn
