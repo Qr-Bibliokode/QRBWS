@@ -16,10 +16,11 @@ class EmprestimoService {
 
     Emprestimo emprestar(Emprestimo emprestimo) {
         if (!validaEmprestimo(emprestimo)?.hasErrors()) {
-            verificaSolicitacaoEmprestimo(emprestimo)
+            verificaSolicitacaoEmprestimo(emprestimo, EMPRESTIMO)
             montaDatasEmprestimo(emprestimo)
-            if (emprestimo.solicitacaoLiberada) {
+            if (emprestimo.solicitacao.liberada && emprestimo.solicitacao.ativa) {
                 descontaEstoque(emprestimo.livro)
+                emprestimo.solicitacao.ativa = false
             }
             emprestimo.save flush: true
         }
@@ -28,20 +29,17 @@ class EmprestimoService {
 
     def devolver(Emprestimo emprestimo) {
         contaUsuarioService.verificarMultas(emprestimo.contaUsuario.id)
-
         if (emprestimo.devolvido) {
             emprestimo.errors.reject('emprestimo.invalido.ja.devolvido')
             return emprestimo
         }
-
-        if (emprestimo.solicitacaoLiberada) {
+        verificaSolicitacaoEmprestimo(emprestimo, DEVOLUCAO)
+        if (emprestimo.solicitacao.liberada && emprestimo.solicitacao.ativa) {
             emprestimo.dataDevolucao = new Date()
             emprestimo.devolvido = true
             incrementaEstoque(emprestimo.livro)
-        } else {
-            solicitaLiberacao(emprestimo, DEVOLUCAO)
         }
-        emprestimo
+        emprestimo.save flush: true
     }
 
     Emprestimo renovar(Emprestimo emprestimo) {
@@ -54,7 +52,7 @@ class EmprestimoService {
             // TODO: Incluir este parâmetro na tabela configurações da biblioteca
             emprestimo.errors.reject('emprestimo.invalido.passou.renovacoes', [1] as Object[], null)
         } else {
-            if (emprestimo.solicitacaoLiberada) {
+            if (emprestimo.solicitacao.liberada) {
                 emprestimo.devolvido = false
                 emprestimo.dataLimiteDevolucao = feriadoService.calcularDataDevolucao()
                 emprestimo.dataDevolucao = null
@@ -80,20 +78,12 @@ class EmprestimoService {
                 renovar(emprestimo)
                 break
         }
-        finalizaSolicitacao(emprestimo)
     }
 
     Emprestimo liberaSolicitacao(Emprestimo emprestimo) {
-        emprestimo.solicitacaoLiberada = true
+        emprestimo.solicitacao.liberada = true
+        emprestimo.solicitacao.ativa = true
         emprestimo.save flush: true
-    }
-
-    Emprestimo finalizaSolicitacao(Emprestimo emprestimo) {
-        Solicitacao solicitacao = emprestimo.solicitacao
-        emprestimo.solicitacao = null
-        emprestimo.save flush: true
-        Solicitacao.deleteAll(solicitacao)
-        emprestimo
     }
 
     Boolean temMultasSemPagar(ContaUsuario contaUsuario) {
@@ -186,18 +176,31 @@ class EmprestimoService {
     }
 
 
-    Emprestimo verificaSolicitacaoEmprestimo(Emprestimo emprestimo) {
-        if (!emprestimo.solicitacao) {
+    Emprestimo verificaSolicitacaoEmprestimo(Emprestimo emprestimo, String tipo) {
+        if (!emprestimo.solicitacao?.ativa) {
             // TODO: Verificar usuário logado, se for administrador a solicitação terá que ser liberada
-            emprestimo.solicitacaoLiberada = false
-            emprestimo = solicitaLiberacao(emprestimo, EMPRESTIMO)
+            emprestimo = solicitaLiberacao(emprestimo, tipo)
+        } else {
+            emprestimo = atualizaSolicitacao(emprestimo, tipo)
         }
         emprestimo
     }
 
     Emprestimo solicitaLiberacao(Emprestimo emprestimo, String tipo) {
-        emprestimo.solicitacao = new Solicitacao(tipo: tipo)
-        emprestimo.save()
+        if (emprestimo.solicitacao?.id) {
+            emprestimo.solicitacao.tipo = tipo
+            emprestimo.solicitacao.liberada = false
+            emprestimo.solicitacao.ativa = true
+        } else {
+            emprestimo.solicitacao = new Solicitacao(tipo: tipo, liberada: false, ativa: true)
+        }
+        emprestimo.save(flush: true)
+    }
+
+    Emprestimo atualizaSolicitacao(Emprestimo emprestimo, String tipo) {
+        emprestimo.solicitacao.tipo = tipo
+        emprestimo.solicitacao.ativa = true
+        emprestimo.save(flush: true)
     }
 
     List<Emprestimo> obtenhaHistoricoEmprestimosPorLivro(Livro livro) {

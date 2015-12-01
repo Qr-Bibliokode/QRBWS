@@ -10,18 +10,21 @@ class Solicitacao {
     static final String EMPRESTIMO = "Empréstimo"
 
     String tipo
-    Emprestimo emprestimo
+    Boolean liberada
+    Boolean ativa
+
+    static belongsTo = [emprestimo: Emprestimo]
 
     static constraints = {
-        tipo unique: true
-        emprestimo nullable: false, unique: true
     }
 
     static void marshaller() {
         JSON.registerObjectMarshaller(Solicitacao) {
             [
-                    'id'  : it.id,
-                    'tipo': it.tipo
+                    'id'      : it.id,
+                    'tipo'    : it.tipo,
+                    'liberada': it.liberada,
+                    'ativa'   : it.ativa
             ]
         }
     }

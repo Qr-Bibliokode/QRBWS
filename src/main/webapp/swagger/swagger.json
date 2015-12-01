@@ -2724,8 +2724,7 @@
       "type": "object",
       "required": [
         "id",
-        "tipo",
-        "liberada"
+        "tipo"
       ],
       "properties": {
         "id": {
@@ -2734,6 +2733,10 @@
         },
         "tipo": {
           "type": "string"
+        },
+        "liberada": {
+          "type": "boolean",
+          "format": "boolean"
         },
         "ativa": {
           "type": "boolean",

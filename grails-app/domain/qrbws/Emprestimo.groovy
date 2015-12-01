@@ -9,7 +9,6 @@ class Emprestimo {
     Date dataLimiteDevolucao
     boolean devolvido
     boolean avisado
-    boolean solicitacaoLiberada
     Integer renovacoes
 
     ContaUsuario contaUsuario
@@ -38,7 +37,6 @@ class Emprestimo {
                     'dataLimiteDevolucao': it.dataLimiteDevolucao,
                     'devolvido'          : it.devolvido,
                     'avisado'            : it.avisado,
-                    'solicitacaoLiberada': it.solicitacaoLiberada,
                     'solicitacao'        : it.solicitacao,
                     'renovacoes'         : it.renovacoes,
                     'contaUsuario'       : it.contaUsuario,
