@@ -42,6 +42,7 @@ class UrlMappings {
 
         "/api/reserva"(resources: "reserva")
 
+        "/api/estoque/consultaDisponibilidade"(controller: 'estoque', action: 'consultaDisponibilidade')
         "/api/estoque"(resources: "estoque")
 
     }

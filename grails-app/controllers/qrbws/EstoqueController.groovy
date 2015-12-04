@@ -12,9 +12,10 @@ class EstoqueController {
     static responseFormats = ['json']
 
     static allowedMethods = [
-            save  : "POST",
-            update: "PUT",
-            delete: "DELETE"
+            save                   : "POST",
+            update                 : "PUT",
+            delete                 : "DELETE",
+            consultaDisponibilidade: "GET"
     ]
 
     def index(Integer max) {
@@ -106,6 +107,11 @@ class EstoqueController {
             }
             '*' { render status: NO_CONTENT }
         }
+    }
+
+    def consultaDisponibilidade() {
+        List livros = Livro.findAllByTituloIlike("%"+params.tituloLivro+"%")
+        respond Estoque.findAllByLivroInList(livros)
     }
 
     protected void notFound() {

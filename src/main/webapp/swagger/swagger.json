@@ -1894,6 +1894,36 @@
         }
       }
     },
+    "/estoque/consultaDisponibilidade?tituloLivro={tituloLivro}": {
+      "get": {
+        "tags": [
+          "emprestimo"
+        ],
+        "summary": "Busca disponibilidade do livro",
+        "description": "Consulta disponibilidade",
+        "operationId": "consultaDisponibilidade",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tituloLivro",
+            "description": "Título do livro",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Erro 400: Parâmetros inválidos"
+          },
+          "404": {
+            "description": "Erro 404: Página não encontrada"
+          }
+        }
+      }
+    },
     "/estudante/": {
       "get": {
         "tags": [
