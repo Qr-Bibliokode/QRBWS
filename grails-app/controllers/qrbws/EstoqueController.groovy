@@ -2,125 +2,128 @@ package qrbws
 
 import grails.transaction.Transactional
 
-import static org.springframework.http.HttpStatus.CREATED
-import static org.springframework.http.HttpStatus.NOT_FOUND
-import static org.springframework.http.HttpStatus.NO_CONTENT
-import static org.springframework.http.HttpStatus.OK
+import static org.springframework.http.HttpStatus.*
 
 class EstoqueController {
 
-    static responseFormats = ['json']
+	def estoqueService
 
-    static allowedMethods = [
-            save                   : "POST",
-            update                 : "PUT",
-            delete                 : "DELETE",
-            consultaDisponibilidade: "GET"
-    ]
+	static responseFormats = ['json']
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Estoque.list(params), model: [estoqueCount: Estoque.count()]
-    }
+	static allowedMethods = [
+			save                   : "POST",
+			update                 : "PUT",
+			delete                 : "DELETE",
+			consultaDisponibilidade: "GET"
+	]
 
-    def show(Estoque estoque) {
-        respond estoque
-    }
+	def index(Integer max) {
+		params.max = Math.min(max ?: 10, 100)
+		respond Estoque.list(params), model: [estoqueCount: Estoque.count()]
+	}
 
-    def create() {
-        respond new Estoque(params)
-    }
+	def show(Estoque estoque) {
+		respond estoque
+	}
 
-    @Transactional
-    def save(Estoque estoque) {
-        if (estoque == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
+	def create() {
+		respond new Estoque(params)
+	}
 
-        if (estoque.disponivel > estoque.total) {
-            estoque.errors.reject('estoque.disponivel.maior.total')
-        }
+	@Transactional
+	def save(Estoque estoque) {
+		if (estoque == null) {
+			transactionStatus.setRollbackOnly()
+			notFound()
+			return
+		}
 
-        if (estoque.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond estoque.errors, view: 'create'
-            return
-        }
+		if (estoque.disponivel > estoque.total) {
+			estoque.errors.reject('estoque.disponivel.maior.total')
+		}
 
-        estoque.save flush: true
+		if (estoque.hasErrors()) {
+			transactionStatus.setRollbackOnly()
+			respond estoque.errors, view: 'create'
+			return
+		}
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'estoque.label', default: 'Estoque'), estoque.id])
-                redirect estoque
-            }
-            '*' { respond estoque, [status: CREATED] }
-        }
-    }
+		estoque.save flush: true
 
-    @Transactional
-    def update(Estoque estoque) {
-        if (estoque == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.created.message', args: [message(code: 'estoque.label', default: 'Estoque'), estoque.id])
+				redirect estoque
+			}
+			'*' { respond estoque, [status: CREATED] }
+		}
+	}
 
-        if (estoque.disponivel > estoque.total) {
-            estoque.errors.reject('estoque.disponivel.maior.total')
-        }
+	@Transactional
+	def update(Estoque estoque) {
+		if (estoque == null) {
+			transactionStatus.setRollbackOnly()
+			notFound()
+			return
+		}
 
-        if (estoque.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond estoque.errors, view: 'edit'
-            return
-        }
+		if (estoque.disponivel > estoque.total) {
+			estoque.errors.reject('estoque.disponivel.maior.total')
+		}
 
-        estoque.save flush: true
+		if (estoque.hasErrors()) {
+			transactionStatus.setRollbackOnly()
+			respond estoque.errors, view: 'edit'
+			return
+		}
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'estoque.label', default: 'Estoque'), estoque.id])
-                redirect estoque
-            }
-            '*' { respond estoque, [status: OK] }
-        }
-    }
+		estoque.save flush: true
 
-    @Transactional
-    def delete(Estoque estoque) {
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.updated.message', args: [message(code: 'estoque.label', default: 'Estoque'), estoque.id])
+				redirect estoque
+			}
+			'*' { respond estoque, [status: OK] }
+		}
+	}
 
-        if (estoque == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
+	@Transactional
+	def delete(Estoque estoque) {
 
-        estoque.delete flush: true
+		if (estoque == null) {
+			transactionStatus.setRollbackOnly()
+			notFound()
+			return
+		}
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'estoque.label', default: 'Estoque'), estoque.id])
-                redirect action: "index", method: "GET"
-            }
-            '*' { render status: NO_CONTENT }
-        }
-    }
+		estoque.delete flush: true
 
-    def consultaDisponibilidade() {
-        List livros = Livro.findAllByTituloIlike("%"+params.tituloLivro+"%")
-        respond Estoque.findAllByLivroInList(livros)
-    }
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.deleted.message', args: [message(code: 'estoque.label', default: 'Estoque'), estoque.id])
+				redirect action: "index", method: "GET"
+			}
+			'*' { render status: NO_CONTENT }
+		}
+	}
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'estoque.label', default: 'Estoque'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*' { render status: NOT_FOUND }
-        }
-    }
+	def consultaDisponibilidade() {
+		if (!params.tituloLivro || params.tituloLivro.length() < 3) {
+			Estoque estoque = new Estoque()
+			estoque.errors.reject('estoque.consulta.carateres')
+			respond estoque.errors
+		}
+		respond estoqueService.consultaDisponibilidade(params.tituloLivro)
+	}
+
+	protected void notFound() {
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.not.found.message', args: [message(code: 'estoque.label', default: 'Estoque'), params.id])
+				redirect action: "index", method: "GET"
+			}
+			'*' { render status: NOT_FOUND }
+		}
+	}
 }
